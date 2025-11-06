@@ -25,8 +25,7 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     private int patternCount;
 
     [Header("Pattern Settings")]
-    public float patternInterval = 10f;
-    [SerializeField] private float dashSpeed = 20f; // 돌진 속도
+    public float patternInterval = 4f;
     [SerializeField] private float dashDuration = 1.5f; // 돌진 최대 지속 시간
 
     private Transform playerTransform;
@@ -80,6 +79,7 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     /// </summary>
     IEnumerator BossPatternCycle()
     {
+        yield return new WaitForSeconds(2f);
         Debug.Log("보스 패턴 시작.");
         while (true) // (보스가 살아있는 동안)
         {
@@ -144,42 +144,56 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     // --- 패턴 2: 플레이어 방향으로 돌진 ---
     IEnumerator ExecutePattern2()
     {
-        Debug.Log("보스: 패턴 2 시작 (돌진)");
-
-        // 1. 돌진 상태 활성화 (OnCollisionEnter가 이 값을 참조)
+        Debug.Log("보스: 패턴 2 시작 (위치 변경 돌진)");
         isDashing = true;
 
-        // 2. 돌진 시작 시점의 플레이어 방향으로 방향 고정
-        Vector3 dashDirection = (playerTransform.position - transform.position).normalized;
+        // 2. 목표 위치 및 시작 위치 설정
+        Vector3 targetPos = playerTransform.position; // 돌진 시작 시점의 플레이어 위치
+        Vector3 startPos = transform.position;
 
-        // 3. Rigidbody에 힘(속도) 적용
-        rigid.velocity = dashDirection * dashSpeed;
+        Vector3 dirPosVec = targetPos - startPos;
 
-        // 4. 돌진 지속 시간동안 대기 (혹은 충돌할 때까지)
+        int dir = (int)dirPosVec.magnitude;
+
+        EightDirection dirPos = EightDirection.FromVector3(dirPosVec);
+
+        Vector3 endPos = dirPos.VectorGrid * 5f;
+
         float dashTimer = 0f;
 
-        // isDashing이 true이고(아직 충돌 안함) && 설정된 시간이 다 안됐을 때
+        // 3. dashDuration 동안 startPos에서 targetPos로 이동 (Lerp)
         while (isDashing && dashTimer < dashDuration)
         {
+            // 경과 시간을 0~1 사이의 비율(t)로 변환
+            float t = dashTimer / dashDuration;
+
+            // (선택적: 돌진을 더 부드럽게)
+            // t = Mathf.SmoothStep(0, 1, t); // 처음과 끝을 부드럽게
+
+            // Lerp를 사용하여 현재 프레임의 위치 계산
+            transform.position = Vector3.Lerp(startPos, endPos, t);
+
             dashTimer += Time.deltaTime;
             yield return null; // 1프레임 대기
         }
 
-        // 5. 돌진 종료 (시간이 다 됐거나, OnCollisionEnter에서 isDashing이 false로 바뀜)
-        rigid.velocity = Vector3.zero; // 돌진 속도 초기화
-        isDashing = false; // 상태 확실하게 종료
+        // 4. (혹시 모를 오차 보정) 돌진이 끝나면 목표 위치로 정확히 이동
+        if (isDashing)
+        {
+            transform.position = endPos;
+        }
+
+        // 5. 돌진 상태 종료 및 Kinematic 해제
+        isDashing = false;
         Debug.Log("보스: 돌진 종료");
     }
 
     // [ 패턴 2: 돌진 충돌 처리 ]
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (isDashing && collision.gameObject.CompareTag("Player"))
+        if (isDashing && other.gameObject.CompareTag("Player"))
         {
-            if (collision.gameObject.TryGetComponent<IDamageable>(out var playerDamageable))
-            {
-                playerDamageable.ReceiveAttack(this);
-            }
+            other.gameObject.GetComponent<IDamageable>().ReceiveAttack(this);
         }
     }
 

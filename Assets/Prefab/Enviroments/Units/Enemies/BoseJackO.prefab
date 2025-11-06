@@ -173,8 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 6356717255941525640, guid: 4e5c62f0a43fb3c44b0a3713507fc88f, type: 3}
   vinePrefab: {fileID: 9000149023572132206, guid: eb2f0167e6b99434f835ceef3a95366a, type: 3}
-  patternInterval: 10
-  dashSpeed: 20
+  patternInterval: 4
   dashDuration: 1.5
   maxHealth: 100
   damage: 30
