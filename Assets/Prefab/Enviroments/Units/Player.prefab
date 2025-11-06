@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e6883d6aaf1dec42aa2c03958dff440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChargingAttackProjectilePrefab: {fileID: 6356717255941525640, guid: 4e5c62f0a43fb3c44b0a3713507fc88f, type: 3}
+  ChargingAttackProjectilePrefab: {fileID: 981296870417409643, guid: bb5c42681fe556741a930cbc0a78dfa9, type: 3}
   ShildObject: {fileID: 9067431425046162136}
 --- !u!114 &3929650873939202661
 MonoBehaviour:

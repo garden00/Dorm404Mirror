@@ -12,6 +12,11 @@ public class PlayerStatus
         viewDirection = EightDirection.Down;
     }
 
+    public void Healing()
+    {
+        CurrentHealth = maxHealth;
+    }
+
     public event Action OnPlayerDeath;
     public event Action<float> OnHealthChanged;
 
