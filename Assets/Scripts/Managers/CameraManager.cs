@@ -94,6 +94,11 @@ public class CameraManager : MonoBehaviour
         float timer = 0f;
         float time = 0.3f;
 
+        if(dir == EightDirection.None)
+        {
+            dir = EightDirection.Right;
+        }
+
         while (timer < time)
         {
             offset = new Vector3(dir.x * magnitude * Mathf.Cos(30 * timer), dir.y * magnitude * Mathf.Cos(30 * timer), 0);

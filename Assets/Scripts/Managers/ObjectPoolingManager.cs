@@ -3,19 +3,27 @@ using UnityEngine;
 
 public class ObjectPoolingManager : MonoBehaviour
 {
-
-    #region Singleton
+    #region Scene Singleton
 
     public static ObjectPoolingManager Instance { get; private set; }
 
     void Awake()
     {
-        if (Instance == null || Instance.gameObject == null)
-            Instance = this;
-        else
+        // 씬 싱글톤의 표준적인 구현
+        if (Instance != null && Instance != this)
+        {
             Destroy(gameObject);
+            return;
+        }
+        Instance = this;
     }
 
+    void OnDestroy()
+    {
+        // 자신이 Instance일 경우에만 null로 설정
+        if (Instance == this)
+            Instance = null;
+    }
     #endregion
 
     [SerializeField] private GameObject[] prefabs;
@@ -73,7 +81,7 @@ public class ObjectPoolingManager : MonoBehaviour
             // --- 여기가 핵심 디버깅 코드 ---
             Debug.LogWarning($"[ObjectPool] 생성 에러: '{prefab.name}' (ID: {prefab.GetInstanceID()}) prefab은 풀에 없습니다!");
 
-            Debug.LogWarning("--- 현재 풀에 등록된 키 목록 ---");
+            Debug.LogWarning("--- 현재 풀에 등록된 키 목록 --- : " + poolingDict.Count);
             foreach (GameObject key in poolingDict.Keys)
             {
                 if (key == null)

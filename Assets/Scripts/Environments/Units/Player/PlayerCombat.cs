@@ -10,6 +10,10 @@ public class PlayerCombat : MonoBehaviour, IDamageable
     public PlayerStatus status;
 
     [SerializeField]
+    private float invincibleTime;//무적시간
+    private float invincibleTimer;
+
+    [SerializeField]
     private GameObject ChargingAttackProjectilePrefab;
 
     private EightDirection shildDirection;
@@ -34,6 +38,12 @@ public class PlayerCombat : MonoBehaviour, IDamageable
         {
             isCharging = false;
             ReleaseAttack();
+        }
+
+
+        if (invincibleTimer > 0)
+        {
+            invincibleTimer -= Time.deltaTime;
         }
     }
 
@@ -103,7 +113,13 @@ public class PlayerCombat : MonoBehaviour, IDamageable
 
     private void TakeDamage(IProjectile projectile)
     {
+        if (invincibleTimer > 0)
+        {
+            return;
+        }
+
         status.CurrentHealth = status.CurrentHealth - projectile.Damage;
+        invincibleTimer = invincibleTime;
     }
 
     private void Charging(IProjectile projectile)
