@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aee54cb80353b248b473321358d0f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDefensible: 1
   damage: 10
   laserBeamVisual: {fileID: 1717374468940187692}
   maxDistance: 100

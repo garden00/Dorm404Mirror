@@ -14,6 +14,9 @@ public class EnemyExample : MonoBehaviour, IDamageable
     private float throwCycleTime;
     float throwTimer = 0;
 
+    // 읽기 전용, 애니메이션 넣을 때 쓸 거예요!!
+    public float ThrowCycleTime => throwCycleTime;
+
     [SerializeField]
     private int maxHealth = 100;
     private int currentHealth;
