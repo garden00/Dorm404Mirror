@@ -59,7 +59,7 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     int damage = 30;
     int IProjectile.Damage => damage;
 
-    EightDirection IProjectile.MoveDirection => EightDirection.None;
+    Vector3 IProjectile.MoveDirection => Vector3.zero;
 
     void Start()
     {
@@ -131,11 +131,11 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
             Vector3 throwDirectionVec = (playerTransform.position - shootPos).normalized;
 
             // Vector3를 EightDirection으로 변환
-            EightDirection shootDir = EightDirection.FromVector3(throwDirectionVec);
+            //EightDirection shootDir = EightDirection.FromVector3(throwDirectionVec);
 
             ObjectPoolingManager.Instance.GetPrefab(projectilePrefab)
                 .GetComponent<IProjectile>().
-                Fire(shootPos, shootDir, gameObject.tag);
+                Fire(shootPos, throwDirectionVec, gameObject.tag);
 
             yield return new WaitForSeconds(0.3f);
         }
@@ -220,8 +220,14 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     IEnumerator ExecutePattern4()
     {
         Debug.Log("보스: 패턴 4 시작 (덩쿨 소환)");
-        // 덩쿨(Vine)은 'IDamageable'을 구현한 프리팹이어야 합니다.
-        Instantiate(vinePrefab, playerTransform.position + Vector3.up * 2f, Quaternion.identity);
+
+        Vector3 dirVec = playerTransform.position - transform.position;
+        Quaternion dirRot = Quaternion.FromToRotation(playerTransform.position, transform.position);
+
+        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dirVec.normalized * +1f, Quaternion.identity)
+            .transform.right = dirVec.normalized;
+        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dirVec.normalized * -1f, Quaternion.identity)
+            .transform.right = dirVec.normalized;
         yield return null;
     }
 
@@ -231,12 +237,12 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
         Destroy(gameObject);
     }
 
-    void IProjectile.Fire(Vector3 _position, EightDirection _direction, string _ownerTag)
+    void IProjectile.Fire(Vector3 _position, Vector3 _direction, string _ownerTag)
     {
         throw new System.NotImplementedException();
     }
 
-    void IProjectile.Reflect(Vector3 _position, EightDirection _direction, string _ownerTag)
+    void IProjectile.Reflect(Vector3 _position, Vector3 _direction, string _ownerTag)
     {
         throw new System.NotImplementedException();
     }

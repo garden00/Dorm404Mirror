@@ -16,8 +16,8 @@ public class SingularProjectile : MonoBehaviour, IProjectile
     [SerializeField]
     private float moveSpeed;
 
-    private EightDirection moveDirection;
-    public EightDirection MoveDirection { get => moveDirection; }
+    private Vector3 moveDirection;
+    public Vector3 MoveDirection { get => moveDirection; }
 
     private string ownerTag;
 
@@ -48,14 +48,14 @@ public class SingularProjectile : MonoBehaviour, IProjectile
 
     }
 
-    public void Fire(Vector3 _position, EightDirection _direction, string _ownerTag)
+    public void Fire(Vector3 _position, Vector3 _direction, string _ownerTag)
     {
         ownerTag = _ownerTag;
         moveDirection = _direction;
         gameObject.transform.position = _position + moveDirection;
     }
 
-    public void Reflect(Vector3 _position, EightDirection _direction, string _ownerTag)
+    public void Reflect(Vector3 _position, Vector3 _direction, string _ownerTag)
     {
         GameObject myOriginalPrefab = ObjectPoolingManager.Instance.GetOriginalPrefab(gameObject);
 
@@ -84,6 +84,6 @@ public class SingularProjectile : MonoBehaviour, IProjectile
 
     private void Move()
     {
-        transform.position += moveDirection.VectorGrid * moveSpeed * Time.deltaTime;
+        transform.position += moveDirection * moveSpeed * Time.deltaTime;
     }
 }

@@ -10,8 +10,8 @@ public class SplitBeam : MonoBehaviour, IProjectile
     private int damage = 10;
     public int Damage => damage;
 
-    private EightDirection laserDirection;
-    public EightDirection MoveDirection => laserDirection;
+    private Vector3 laserDirection;
+    public Vector3 MoveDirection => laserDirection;
 
     private string ownerTag;
 
@@ -44,7 +44,7 @@ public class SplitBeam : MonoBehaviour, IProjectile
         }
     }
 
-    public void Fire(Vector3 _position, EightDirection _direction, string _ownerTag)
+    public void Fire(Vector3 _position, Vector3 _direction, string _ownerTag)
     {
         transform.position = _position;
         laserDirection = _direction;
@@ -52,7 +52,7 @@ public class SplitBeam : MonoBehaviour, IProjectile
 
         Vector2 rayOrigin = _position;
         Vector2 rayDirection = laserDirection;
-        Vector3 endPoint = _position + laserDirection.VectorGrid * maxDistance;
+        Vector3 endPoint = _position + laserDirection * maxDistance;
 
 
         int ownerLayerIndex = LayerMask.NameToLayer(_ownerTag);
@@ -72,13 +72,13 @@ public class SplitBeam : MonoBehaviour, IProjectile
         }
         else
         {
-            endPoint = _position + _direction.VectorGrid * maxDistance;
+            endPoint = _position + _direction * maxDistance;
         }
 
         StartCoroutine(ShowLaserEffect(_position, endPoint));
     }
 
-    public void Reflect(Vector3 _position, EightDirection _direction, string _ownerTag)
+    public void Reflect(Vector3 _position, Vector3 _direction, string _ownerTag)
     {
         GameObject myOriginalPrefab = ObjectPoolingManager.Instance.GetOriginalPrefab(gameObject);
 
@@ -94,11 +94,11 @@ public class SplitBeam : MonoBehaviour, IProjectile
 
         ObjectPoolingManager.Instance.GetPrefab(myOriginalPrefab)
             .GetComponent<IProjectile>().
-            Fire(_position, _direction - 1, _ownerTag);
+            Fire(_position, Quaternion.Euler(0, 0, -45) * _direction, _ownerTag);
 
         ObjectPoolingManager.Instance.GetPrefab(myOriginalPrefab)
             .GetComponent<IProjectile>().
-            Fire(_position, _direction + 1, _ownerTag);
+            Fire(_position, Quaternion.Euler(0, 0, 45) * _direction, _ownerTag);
     }
 
     /// <summary>

@@ -15,6 +15,15 @@ public class PlayerMovement : MonoBehaviour
     private enum Axis { Horizontal, Vertical }
     private Axis lastPressedAxis;
 
+    Coroutine moveCoroutine;
+
+    Vector3 prev_pos;
+
+    private void Start()
+    {
+         PlayerManager.Instance.Status.OnHealthChanged += HandleDamageKnockback;
+    }
+
     private void LateUpdate()
     {
         Move();
@@ -96,13 +105,21 @@ public class PlayerMovement : MonoBehaviour
                     return;
                 }
 
-                StartCoroutine(MoveToPosition(transform.position + status.viewDirection.VectorNormalized));
+                moveCoroutine = StartCoroutine(MoveToPosition(transform.position + status.viewDirection.VectorNormalized));
             }
         }
     }
     IEnumerator MoveToPosition(Vector3 _targetPosition)
     {
         status.isAction = true;
+
+        bool isInt = Mathf.Approximately(transform.position.x % 1, 0f) &&
+             Mathf.Approximately(transform.position.y % 1, 0f) &&
+             Mathf.Approximately(transform.position.z % 1, 0f);
+
+        if (isInt)
+            prev_pos = transform.position;
+
         while ((_targetPosition - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
             transform.position = Vector3.MoveTowards(transform.position, _targetPosition, moveSpeed * Time.deltaTime);
@@ -110,5 +127,25 @@ public class PlayerMovement : MonoBehaviour
         }
         transform.position = _targetPosition;
         status.isAction = false;
+        moveCoroutine = null;
+    }
+
+    // 이벤트 처리 함수
+    private void HandleDamageKnockback(float hp)
+    {
+        if (hp == 1) return;
+
+        if (moveCoroutine != null)
+        {
+            StopCoroutine(moveCoroutine);
+            moveCoroutine = null;
+            StartCoroutine(MoveToPosition(prev_pos));
+            return;
+        }
+
+
+        Vector3 target_pos = transform.position - status.viewDirection;
+        StartCoroutine(MoveToPosition(target_pos));
+
     }
 }
