@@ -16,7 +16,7 @@ public class PlayerCombat : MonoBehaviour, IDamageable
     [SerializeField]
     private GameObject ChargingAttackProjectilePrefab;
 
-    private EightDirection shildDirection;
+    private Vector3 shildDirection;
 
     private bool isCharging;
 
@@ -56,7 +56,7 @@ public class PlayerCombat : MonoBehaviour, IDamageable
         else shildDirection = EightDirection.FromVector3(horizontal, vertical, 0);
 
         // view 이므로 나중에 분리될 수 있음
-        ShildObject.transform.localPosition = shildDirection.VectorGrid/2;
+        ShildObject.transform.localPosition = shildDirection/2;
         float angle = Mathf.Atan2(shildDirection.y, shildDirection.x) * Mathf.Rad2Deg;
 
         ShildObject.transform.localRotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -88,27 +88,22 @@ public class PlayerCombat : MonoBehaviour, IDamageable
 
     private bool IsReflectable(IProjectile projectile)
     {
-        EightDirection porjectileDirection = projectile.MoveDirection;
-        bool isReflectable = -porjectileDirection == shildDirection || -porjectileDirection +1 == shildDirection || -porjectileDirection -1 == shildDirection;
+        if (projectile.MoveDirection == Vector3.zero) return false;
+
+        Vector3 porjectileDirection = projectile.MoveDirection;
+        float angle = Vector2.SignedAngle(-projectile.MoveDirection, shildDirection);
+        bool isReflectable = angle >= -45f && angle <= 45f;
 
         return isReflectable;
     }
 
     private void Reflect(IProjectile projectile)
     {
-        EightDirection porjectileDirection = projectile.MoveDirection;
-        if (-porjectileDirection == shildDirection)
-        {
-            projectile.Reflect(transform.position, -porjectileDirection, gameObject.tag);
-        }
-        else if (-porjectileDirection +1 == shildDirection)
-        {
-            projectile.Reflect(transform.position, porjectileDirection - 2, gameObject.tag);
-        }
-        else if(-porjectileDirection -1 == shildDirection)
-        {
-            projectile.Reflect(transform.position, porjectileDirection + 2, gameObject.tag);
-        }
+        Vector3 porjectileDirection = projectile.MoveDirection;
+        Vector3 R = 2f * Vector3.Dot(porjectileDirection, shildDirection.normalized) * shildDirection.normalized - porjectileDirection;
+
+        projectile.Reflect(transform.position, -R, gameObject.tag);
+
     }
 
     private void TakeDamage(IProjectile projectile)

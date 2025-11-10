@@ -9,7 +9,7 @@ public class Vine : MonoBehaviour, IDamageable, IProjectile
     int damage = 10;
     int IProjectile.Damage => damage;
 
-    EightDirection IProjectile.MoveDirection => EightDirection.None;
+    Vector3 IProjectile.MoveDirection => Vector3.zero;
 
 
     [SerializeField]
@@ -63,12 +63,12 @@ public class Vine : MonoBehaviour, IDamageable, IProjectile
         CurrentHealth -= 1;
     }
 
-    void IProjectile.Fire(Vector3 _position, EightDirection _direction, string _ownerTag)
+    void IProjectile.Fire(Vector3 _position, Vector3 _direction, string _ownerTag)
     {
         throw new System.NotImplementedException();
     }
 
-    void IProjectile.Reflect(Vector3 _position, EightDirection _direction, string _ownerTag)
+    void IProjectile.Reflect(Vector3 _position, Vector3 _direction, string _ownerTag)
     {
         throw new System.NotImplementedException();
     }

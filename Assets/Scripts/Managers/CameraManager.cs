@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 // 2D 카메라이므로 Camera 컴포넌트가 반드시 필요하다고 명시
 [RequireComponent(typeof(Camera))]
@@ -43,7 +44,7 @@ public class CameraManager : MonoBehaviour
 
     void Start()
     {
-
+        target = PlayerManager.Instance.gameObject.transform;
 
         offset = Vector3.zero;
 
@@ -89,14 +90,14 @@ public class CameraManager : MonoBehaviour
     }
 
     // ---  수정된 WobbleEffect ---
-    public IEnumerator WobbleEffect(EightDirection dir, float magnitude = 0.005f)
+    public IEnumerator WobbleEffect(Vector3 dir, float magnitude = 0.005f)
     {
         float timer = 0f;
         float time = 0.3f;
 
-        if(dir == EightDirection.None)
+        if(dir == Vector3.zero)
         {
-            dir = EightDirection.Right;
+            dir = Vector3.right;
         }
 
         while (timer < time)
