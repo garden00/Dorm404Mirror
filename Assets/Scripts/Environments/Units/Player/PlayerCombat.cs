@@ -16,14 +16,30 @@ public class PlayerCombat : MonoBehaviour, IDamageable
     [SerializeField]
     private GameObject ChargingAttackProjectilePrefab;
 
-    private Vector3 shildDirection;
 
+    // 방패 스프라이트 (애니메이션 필요 x)
+    [Header("Shield Sprites (8-way)")]
+    [SerializeField] private Sprite shieldUp;
+    [SerializeField] private Sprite shieldDown;
+    [SerializeField] private Sprite shieldLeft;
+    [SerializeField] private Sprite shieldRight;
+    [SerializeField] private Sprite shieldUpLeft;
+    [SerializeField] private Sprite shieldUpRight;
+    [SerializeField] private Sprite shieldDownLeft;
+    [SerializeField] private Sprite shieldDownRight;
+
+    // 방패 오브젝트 및 렌더러
+    [SerializeField] private GameObject ShildObject;
+    private SpriteRenderer shieldSR;
+
+    private Vector3 shildDirection;
     private bool isCharging;
 
+    void Awake()
+    {
+        if (ShildObject != null) shieldSR = ShildObject.GetComponent<SpriteRenderer>();
+    }
 
-    // view 이므로 나중에 분리될 수 있음
-    [SerializeField]
-    private GameObject ShildObject;
 
     private void Update()
     {
@@ -49,18 +65,52 @@ public class PlayerCombat : MonoBehaviour, IDamageable
 
     private void MoveShild()
     {
-
         float horizontal = (Input.GetKey(KeyCode.A) ? -1 : 0) + (Input.GetKey(KeyCode.D) ? 1 : 0);
         float vertical = (Input.GetKey(KeyCode.S) ? -1 : 0) + (Input.GetKey(KeyCode.W) ? 1 : 0);
-        if(horizontal == 0 && vertical == 0) shildDirection = status.viewDirection;
-        else shildDirection = EightDirection.FromVector3(horizontal, vertical, 0);
 
-        // view 이므로 나중에 분리될 수 있음
-        ShildObject.transform.localPosition = shildDirection/2;
-        float angle = Mathf.Atan2(shildDirection.y, shildDirection.x) * Mathf.Rad2Deg;
+        Vector3 shieldInput = new Vector3(horizontal, vertical, 0);
 
-        ShildObject.transform.localRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        // 입력x -> 마지막으로 바라본 방향 유지
+        if (shieldInput == Vector3.zero)
+        {
+            shildDirection = status.viewDirection;
+        }
+        else
+        {
+            shildDirection = EightDirection.FromVector3(horizontal, vertical, 0);
+        }
+
+        // 위치 그대로
+        ShildObject.transform.localPosition = Vector3.zero; //shildDirection / 1f; // 2f
+
+        // 스프라이트 교체
+        UpdateShieldSprite(shildDirection);
     }
+
+    private void UpdateShieldSprite(Vector3 dir)
+    {
+        if (shieldSR == null) return;
+
+        int sx = dir.x > 0.1f ? 1 : (dir.x < -0.1f ? -1 : 0);
+        int sy = dir.y > 0.1f ? 1 : (dir.y < -0.1f ? -1 : 0);
+
+        Sprite s = shieldDown;
+        if (sx == 0 && sy > 0) s = shieldUp;
+        else if (sx == 0 && sy < 0) s = shieldDown;
+        else if (sx > 0 && sy == 0) s = shieldRight;
+        else if (sx < 0 && sy == 0) s = shieldLeft;
+        else if (sx > 0 && sy > 0) s = shieldUpRight;
+        else if (sx < 0 && sy > 0) s = shieldUpLeft;
+        else if (sx > 0 && sy < 0) s = shieldDownRight;
+        else if (sx < 0 && sy < 0) s = shieldDownLeft;
+
+        shieldSR.sprite = s;
+
+        // 깔끔할지도 ??
+        ShildObject.transform.localRotation = Quaternion.identity;
+    }
+
+
 
     public void ReceiveAttack(IProjectile projectile)
     {
