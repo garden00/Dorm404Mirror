@@ -50,6 +50,8 @@ public class SingularProjectile : MonoBehaviour, IProjectile
 
     public void Fire(Vector3 _position, Vector3 _direction, string _ownerTag)
     {
+        currentLifeTime = 0;
+
         ownerTag = _ownerTag;
         moveDirection = _direction;
         gameObject.transform.position = _position + moveDirection;
@@ -57,6 +59,8 @@ public class SingularProjectile : MonoBehaviour, IProjectile
 
     public void Reflect(Vector3 _position, Vector3 _direction, string _ownerTag)
     {
+        currentLifeTime = 0;
+
         GameObject myOriginalPrefab = ObjectPoolingManager.Instance.GetOriginalPrefab(gameObject);
 
         if (myOriginalPrefab == null)
