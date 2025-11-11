@@ -5,14 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
 {
-    // (이전과 동일한 변수들...)
     [Header("Prefabs")]
     [SerializeField]
     private GameObject projectilePrefab;
     [SerializeField]
     private GameObject vinePrefab;
 
-    // [필수] 여기에 보스 패턴 enum을 정의합니다.
     private enum BossPattern
     {
         Pattern1,
@@ -20,7 +18,7 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
         Pattern3,
         Pattern4
     }
-    // 이 변수가 위의 enum을 사용할 수 있게 됩니다.
+
     private BossPattern currentPattern = BossPattern.Pattern1;
     private int patternCount;
 
@@ -131,11 +129,11 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
             Vector3 throwDirectionVec = (playerTransform.position - shootPos).normalized;
 
             // Vector3를 EightDirection으로 변환
-            //EightDirection shootDir = EightDirection.FromVector3(throwDirectionVec);
+            EightDirection shootDir = EightDirection.FromVector3(throwDirectionVec);
 
             ObjectPoolingManager.Instance.GetPrefab(projectilePrefab)
                 .GetComponent<IProjectile>().
-                Fire(shootPos, throwDirectionVec, gameObject.tag);
+                Fire(shootPos, shootDir, gameObject.tag);
 
             yield return new WaitForSeconds(0.3f);
         }
@@ -202,15 +200,31 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     {
         Debug.Log("보스: 패턴 3 시작");
         Vector3 playerPos = playerTransform.position;
-        // ... (좌우 스폰 위치 계산) ...
+        Vector3 spawnPosDown = playerPos - playerTransform.up * 10f;
         Vector3 spawnPosLeft = playerPos - playerTransform.right * 10f;
+        Vector3 spawnPosRight = playerPos + playerTransform.right * 10f;
+        Vector3 spawnPosUp = playerPos + playerTransform.up * 10f;
 
         Vector3 dirVecLeft = (playerPos - spawnPosLeft).normalized;
-        EightDirection eightDirLeft = EightDirection.FromVector3(dirVecLeft);
+        Vector3 dirVecDown = (playerPos - spawnPosDown).normalized;
+        Vector3 dirVecRight = (playerPos - spawnPosRight).normalized;
+        Vector3 dirVecUp = (playerPos - spawnPosUp).normalized;
 
         ObjectPoolingManager.Instance.GetPrefab(projectilePrefab)
             .GetComponent<IProjectile>()
-            .Fire(spawnPosLeft, eightDirLeft, gameObject.tag);
+            .Fire(spawnPosLeft, dirVecLeft, gameObject.tag);
+        yield return new WaitForSeconds(0.3f);
+        ObjectPoolingManager.Instance.GetPrefab(projectilePrefab)
+            .GetComponent<IProjectile>()
+            .Fire(spawnPosDown, dirVecDown, gameObject.tag);
+        yield return new WaitForSeconds(0.3f);
+        ObjectPoolingManager.Instance.GetPrefab(projectilePrefab)
+            .GetComponent<IProjectile>()
+            .Fire(spawnPosRight, dirVecRight, gameObject.tag);
+        yield return new WaitForSeconds(0.3f);
+        ObjectPoolingManager.Instance.GetPrefab(projectilePrefab)
+            .GetComponent<IProjectile>()
+            .Fire(spawnPosUp, dirVecUp, gameObject.tag);
 
         // ... (오른쪽도 동일) ...
         yield return null;
@@ -224,9 +238,9 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
         Vector3 dirVec = playerTransform.position - transform.position;
         Quaternion dirRot = Quaternion.FromToRotation(playerTransform.position, transform.position);
 
-        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dirVec.normalized * +1f, Quaternion.identity)
+        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dirVec.normalized * +2f, Quaternion.identity)
             .transform.right = dirVec.normalized;
-        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dirVec.normalized * -1f, Quaternion.identity)
+        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dirVec.normalized * -2f, Quaternion.identity)
             .transform.right = dirVec.normalized;
         yield return null;
     }
