@@ -133,7 +133,7 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
 
             ObjectPoolingManager.Instance.GetPrefab(projectilePrefab)
                 .GetComponent<IProjectile>().
-                Fire(shootPos, shootDir, gameObject.tag);
+                Fire(shootPos, throwDirectionVec, gameObject.tag);
 
             yield return new WaitForSeconds(0.3f);
         }
@@ -236,12 +236,13 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
         Debug.Log("∫∏Ω∫: ∆–≈œ 4 Ω√¿€ (µ¢ƒ º“»Ø)");
 
         Vector3 dirVec = playerTransform.position - transform.position;
-        Quaternion dirRot = Quaternion.FromToRotation(playerTransform.position, transform.position);
+        EightDirection dir = EightDirection.FromVector3(dirVec);
+        if (dir.x != 0 && dir.y != 0) dir++;
 
-        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dirVec.normalized * +2f, Quaternion.identity)
-            .transform.right = dirVec.normalized;
-        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dirVec.normalized * -2f, Quaternion.identity)
-            .transform.right = dirVec.normalized;
+        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dir.VectorNormalized * +2f, Quaternion.identity)
+            .transform.right = dir.VectorNormalized;
+        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dir.VectorNormalized * -2f, Quaternion.identity)
+            .transform.right = dir.VectorNormalized;
         yield return null;
     }
 
