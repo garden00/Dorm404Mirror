@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d68cd8348ea0e044a60c8af451d706b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 6356717255941525640, guid: 4e5c62f0a43fb3c44b0a3713507fc88f, type: 3}
+  projectilePrefab: {fileID: 2232517015468564534, guid: c9e34bd4af8e5584f96218f52cd7f546, type: 3}
   throwDirection:
     _index: 6
   throwCycleTime: 2
@@ -189,7 +189,7 @@ Animator:
   m_GameObject: {fileID: 7732674747094474180}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 141a00ea153525b4fad7b7a3354c33ab, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7f0921ba15d0e0645a6a98826fd1ffa2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -212,4 +212,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9756496156027c341b79ce6d486a1a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: down
+  directionIndex: 0

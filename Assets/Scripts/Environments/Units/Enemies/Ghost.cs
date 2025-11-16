@@ -27,7 +27,6 @@ public class Ghost : MonoBehaviour, IDamageable
 
         ApplyDirection(initialDirection);
 
-        // ½ÃÀÛÇÒ ¶§ ±âº» idle Àç»ý
         if (anim != null)
             anim.PlayIdle();
     }
@@ -39,9 +38,7 @@ public class Ghost : MonoBehaviour, IDamageable
         AttackCycle();
     }
 
-    // -------------------------
-    // Attack
-    // -------------------------
+
     private void AttackCycle()
     {
         attackTimer += Time.deltaTime;
@@ -50,12 +47,8 @@ public class Ghost : MonoBehaviour, IDamageable
         {
             attackTimer = 0f;
 
-            // 1) Åº ¹ß»ç
             ThrowProjectile();
-
-            // 2) °ø°Ý ¾Ö´Ï¸ÞÀÌ¼Ç
-            if (anim != null)
-                anim.PlayAttack();
+            anim.PlayAttack();
         }
     }
 
@@ -63,7 +56,7 @@ public class Ghost : MonoBehaviour, IDamageable
     {
         if (projectilePrefab == null)
         {
-            Debug.LogWarning($"{name} : projectilePrefabÀÌ ¾È ¿Ã¶ó°¡ ÀÖÀ½");
+            Debug.LogWarning($"{name} : projectilePrefabï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             return;
         }
 
@@ -72,29 +65,29 @@ public class Ghost : MonoBehaviour, IDamageable
 
         if (proj == null)
         {
-            Debug.LogWarning($"{name} : IProjectile ÄÄÆ÷³ÍÆ® ¾øÀ½");
+            Debug.LogWarning($"{name} : IProjectile ï¿½ï¿½ï¿½ï¿½");
             return;
         }
 
         proj.Fire(transform.position, throwDirection.VectorNormalized, gameObject.tag);
     }
 
-    // -------------------------
-    // Damage / Death
-    // -------------------------
+
     public void ReceiveAttack(IProjectile projectile)
     {
         if (IsDead) return;
 
         currentHealth -= projectile.Damage;
 
-        if (anim != null)
-            anim.PlayHit();
-
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            Die();
+            Die();                      // ì¹˜ëª…íƒ€ë©´ ë°”ë¡œ Deathë§Œ
+        }
+        else
+        {
+            if (anim != null)
+                anim.PlayHit();         // ì‚´ì•˜ì„ ë•Œë§Œ Hit
         }
     }
 
@@ -119,27 +112,24 @@ public class Ghost : MonoBehaviour, IDamageable
         Destroy(gameObject, 0.7f);
     }
 
-    // -------------------------
-    // Direction
-    // -------------------------
     public void ApplyDirection(GhostDirection dir)
     {
         switch (dir)
         {
             case GhostDirection.Down:
-                if (anim != null) anim.SetDirection("down");
+                anim.SetDirection(0);
                 throwDirection = EightDirection.Down;
                 break;
             case GhostDirection.Left:
-                if (anim != null) anim.SetDirection("left");
+                anim.SetDirection(1);
                 throwDirection = EightDirection.Left;
                 break;
             case GhostDirection.Up:
-                if (anim != null) anim.SetDirection("up");
+                anim.SetDirection(2);
                 throwDirection = EightDirection.Up;
                 break;
             case GhostDirection.Right:
-                if (anim != null) anim.SetDirection("right");
+                anim.SetDirection(3);
                 throwDirection = EightDirection.Right;
                 break;
         }
