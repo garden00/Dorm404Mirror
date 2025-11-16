@@ -19,7 +19,7 @@ public class SceneController : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         // Unity의 씬 로드 완료 이벤트에 구독
         SceneManager.sceneLoaded += OnSceneLoaded;

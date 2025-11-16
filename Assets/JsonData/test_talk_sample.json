@@ -1,0 +1,29 @@
+[
+  {
+    "sceneId": 101,
+    "lines": [
+      { "speaker": "안내자", "portrait": 0, "effect": 0, "text": "test_1!@$%^*&*(*()_" },
+      { "speaker": "주인공", "portrait": 1, "effect": 0, "text": "테스트 2    ㅁㄴㅇㄴㅁㅇㅁ" },
+      { "speaker": "안내자", "portrait": 0, "effect": 0, "text": "테스트 테스트" },
+      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "'이예이'" }
+    ]
+  },
+  {
+    "sceneId": 102,
+    "lines": [
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "ㄴㅇㅍㄴㅍㅇ" },
+      { "speaker": "의문의 남자", "portrait": 0, "effect": 1, "text": "ㅁㄴㄻㄻㄹㄴㄹㄴㅁㄻㄻㄹㄴㅁㄹㄴㅁㄹㄴㅁㄹㄴㅁㄹㄴㅁㄹㄴㅁㄹㄴㄻㄴㄹㄴㅁㄹㄴㅁㄹㄴㅁㄻㄴㄹㄴㅁㄻㄴㄹㄴㅁㄻㄴㄹㄴㅁㄻㄴㅁㄴㄻㄴㄹㄴㅁ" },
+      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ" },
+      { "speaker": "의문의 남자", "portrait": 1, "effect": 0, "text": "ㅁ" }
+    ]
+  },
+  {
+    "sceneId": 200,
+    "lines": [
+      { "speaker": "나", "portrait": 0, "effect": 0, "text": "안녕" },
+      { "speaker": "드라큘라", "portrait": 1, "effect": 1, "text": "" },
+      { "speaker": "잡몹", "portrait": 0, "effect": 0, "text": "안녕안녕." },
+      { "speaker": "드라큘라", "portrait": 0, "effect": 0, "text": " " }
+    ]
+  }
+]

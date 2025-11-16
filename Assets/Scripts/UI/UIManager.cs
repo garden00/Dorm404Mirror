@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour, IDialogueView
 {
     #region Singleton
     public static UIManager Instance { get; private set; }
@@ -15,7 +16,7 @@ public class UIManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 씬이 바뀌어도 이 오브젝트를 파괴하지 않음
+            //DontDestroyOnLoad(gameObject); // 씬이 바뀌어도 이 오브젝트를 파괴하지 않음
         }
         else
         {
@@ -27,12 +28,52 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
+    // --- 기존 UI 관리 ---
+    [Header("UI Systems")]
     [SerializeField]
     private FadeEffect fadeEffect;
     [SerializeField]
     private SceneLoadingUI loadingUI;
 
+    // --- 대화창 UI 참조 ---
+    [Header("Dialogue System")]
+    [SerializeField]
+    private DialogueUIView dialogueView; // 실제 대화창 로직을 가진 컴포넌트
+
     // --- 외부에서 요청할 공개 함수들 (파사드 역할) ---
+
+    // --- IDialogueView 인터페이스 구현부 ---
+    // TalkManager가 요청하는 모든 UI 작업을
+    // UIManager는 dialogueView에게 그대로 위임
+
+    TMP_Text IDialogueView.DialogueTextComponent => dialogueView.DialogueTextComponent;
+
+    void IDialogueView.Show()
+    {
+        dialogueView.Show();
+    }
+
+    void IDialogueView.Hide()
+    {
+        dialogueView.Hide();
+    }
+
+    void IDialogueView.SetSpeakerName(string name)
+    {
+        dialogueView.SetSpeakerName(name);
+    }
+
+    void IDialogueView.SetPortrait(Sprite portrait)
+    {
+        dialogueView.SetPortrait(portrait);
+    }
+
+    void IDialogueView.UpdateText(string text)
+    {
+        dialogueView.UpdateText(text);
+    }
+
+    // --- FadeEffect ---
 
     /// <summary>
     /// 화면을 검게 페이드 아웃시킵니다.
@@ -74,7 +115,7 @@ public class UIManager : MonoBehaviour
         yield return StartCoroutine(fadeEffect.FadeRoutine(0.0f, duration));
     }
 
-    //
+    // --- SceneLoading ---
 
     public void ShowLoadingScreen(bool show)
     {
