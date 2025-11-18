@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
@@ -59,8 +61,12 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
 
     Vector3 IProjectile.MoveDirection => Vector3.zero;
 
+    bool isDetected;
+
     void Start()
     {
+        isDetected = false;
+
         rigid = GetComponent<Rigidbody2D>();
         CurrentHealth = maxHealth;
 
@@ -69,7 +75,21 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
 
         // 보스 패턴 사이클 시작
         playerTransform = PlayerManager.Instance.gameObject.transform;
-        StartCoroutine(BossPatternCycle());
+
+    }
+
+    void Update()
+    {
+        if(isDetected is false)
+        {
+            float dir = Vector3.Distance(playerTransform.position, transform.position);
+
+            if (dir < 20f)
+            {
+                isDetected = true;
+                StartCoroutine(BossPatternCycle());
+            }
+        }
     }
 
     /// <summary>

@@ -31,17 +31,13 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator TeleportFadeEffect(Vector3 newPos)
     {
-        while (status.isAction)
-        {
-            yield return null;
-        }
-        status.isAction = true;
+        yield return status.StopAction();
 
         UIManager.Instance.FadeOut(0.5f);
         yield return new WaitForSeconds(0.5f);
 
         transform.position = newPos;
-        status.isAction = false;
+        yield return status.StartAction();
 
         UIManager.Instance.FadeIn(0.5f);
         yield return new WaitForSeconds(0.5f);
@@ -137,9 +133,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (moveCoroutine != null)
         {
-            StopCoroutine(moveCoroutine);
-            moveCoroutine = null;
-            StartCoroutine(MoveToPosition(prev_pos));
+            UndoMoveCoroutine();
             return;
         }
 
@@ -148,4 +142,17 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(MoveToPosition(target_pos));
 
     }
+
+    public void UndoMoveCoroutine()
+    {
+        if (moveCoroutine != null)
+        {
+            StopCoroutine(moveCoroutine);
+            moveCoroutine = null;
+
+            StartCoroutine(MoveToPosition(prev_pos));
+        }
+    }
+
+
 }

@@ -68,4 +68,16 @@ public class PlayerManager : MonoBehaviour
         StartCoroutine(movement.TeleportFadeEffect(destinationPosition));
     }
 
+    public void StopPlayer()
+    {
+        //movement.UndoMoveCoroutine();
+        StartCoroutine(status.StopAction());
+        Debug.Log("stop player");
+    }
+
+    public void StartPlayer()
+    {
+        StartCoroutine(status.StartAction());
+        Debug.Log("start player");
+    }
 }

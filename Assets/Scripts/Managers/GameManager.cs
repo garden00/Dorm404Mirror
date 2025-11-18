@@ -38,4 +38,20 @@ public class GameManager : MonoBehaviour
 
         }
     }
+
+    private void Start()
+    {
+        TalkManager.Instance.OnTalkStarted += PauseGame;
+        TalkManager.Instance.OnTalkEnded += ResumeGame;
+    }
+
+    void PauseGame()
+    {
+        PlayerManager.Instance.StopPlayer();
+    }
+
+    void ResumeGame()
+    {
+        PlayerManager.Instance.StartPlayer();
+    }
 }

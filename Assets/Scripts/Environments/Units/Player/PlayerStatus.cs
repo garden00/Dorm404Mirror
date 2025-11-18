@@ -75,4 +75,22 @@ public class PlayerStatus
 
     [NonSerialized]
     public EightDirection viewDirection;
+
+    public IEnumerator StopAction()
+    {
+        while (isAction)
+        {
+            yield return null;
+        }
+        isAction = true;
+        yield return null;
+        Debug.Log("stop action");
+    }
+
+    public IEnumerator StartAction()
+    {
+        isAction = false;
+        yield return null;
+        Debug.Log("start action");
+    }
 }
