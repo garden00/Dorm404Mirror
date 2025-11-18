@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: scarecrow_down_death
+  m_Name: scarecrow_left_death
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,11 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: df2c8427ce2604747b1846b0f8f21c6a, type: 3}
+      value: {fileID: 21300000, guid: 16baae83b6f04ad409b27afc207e1010, type: 3}
     - time: 0.33333334
-      value: {fileID: 21300000, guid: fc56d7c002a11ee47a18ee07dc8ae539, type: 3}
+      value: {fileID: 21300000, guid: f314966254f5c29478fe17a6dd9173ab, type: 3}
     - time: 0.6666667
-      value: {fileID: 21300000, guid: 9ab1dedcd363ead418ecb79734016ae7, type: 3}
+      value: {fileID: 21300000, guid: 3e2bd4db7eab7d6448be0d5159d9ab12, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,9 +48,9 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: df2c8427ce2604747b1846b0f8f21c6a, type: 3}
-    - {fileID: 21300000, guid: fc56d7c002a11ee47a18ee07dc8ae539, type: 3}
-    - {fileID: 21300000, guid: 9ab1dedcd363ead418ecb79734016ae7, type: 3}
+    - {fileID: 21300000, guid: 16baae83b6f04ad409b27afc207e1010, type: 3}
+    - {fileID: 21300000, guid: f314966254f5c29478fe17a6dd9173ab, type: 3}
+    - {fileID: 21300000, guid: 3e2bd4db7eab7d6448be0d5159d9ab12, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

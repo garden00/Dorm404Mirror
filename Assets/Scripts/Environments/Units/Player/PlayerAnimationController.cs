@@ -73,7 +73,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private IEnumerator EndHitRoutine()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.5f);
         anim.SetBool("Hit", false);
     }
 }
