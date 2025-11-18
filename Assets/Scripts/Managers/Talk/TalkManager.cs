@@ -101,7 +101,8 @@ public class TalkManager : MonoBehaviour
 
     private TalkSession _session;
 
-
+    public event Action OnTalkStarted;
+    public event Action OnTalkEnded;
 
     // (예시) 플레이어 입력 처리 (Space 키)
     void Update()
@@ -130,6 +131,8 @@ public class TalkManager : MonoBehaviour
         _session.StartSession(data);
         _view.Show();
         ShowNextLine();
+
+        OnTalkStarted?.Invoke();
     }
 
     /// <summary>
@@ -190,5 +193,7 @@ public class TalkManager : MonoBehaviour
         _session.EndSession();
         _view.Hide();
         Debug.Log("Dialogue ended.");
+
+        OnTalkEnded?.Invoke();
     }
 }
