@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScarecrowAnimatorController : MonoBehaviour, IDamageable
+public class ScarecrowAnimationController : MonoBehaviour, IDamageable
 {
     [Header("투사체 발사 관련")]
     [SerializeField] private GameObject projectlie;              // 투사체 프리팹

@@ -1,43 +1,79 @@
+using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-public class PlayerDirectionAnimator : MonoBehaviour
+public class PlayerAnimationController : MonoBehaviour
 {
-    private Animator animator;
-    private Vector2 input;
-    private Vector2 lastLook;
+    private Animator anim;
+    private PlayerCombat combat;
+    private PlayerMovement movement;
+    private PlayerStatus status;
+
+    [SerializeField] private float reflectAnimDuration = 0.15f;
 
     void Awake()
     {
-        animator = GetComponent<Animator>();
-        lastLook = Vector2.down;
-        animator.SetFloat("lastX", lastLook.x);
-        animator.SetFloat("lastY", lastLook.y);
+        anim = GetComponent<Animator>();
+        combat = GetComponent<PlayerCombat>();
+        movement = GetComponent<PlayerMovement>();
     }
+
+    void Start()
+    {
+        status = PlayerManager.Instance.Status;
+    }
+
 
     void Update()
     {
-        // 화살표 키로
-        input.x = (Input.GetKey(KeyCode.RightArrow) ? 1 : 0) +
-                  (Input.GetKey(KeyCode.LeftArrow) ? -1 : 0);
-        input.y = (Input.GetKey(KeyCode.UpArrow) ? 1 : 0) +
-                  (Input.GetKey(KeyCode.DownArrow) ? -1 : 0);
+        UpdateDirection();
+    }
 
-        animator.SetFloat("moveX", input.x);
-        animator.SetFloat("moveY", input.y);
 
-        // 방향 전환
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-            lastLook = Vector2.up;
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-            lastLook = Vector2.down;
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            lastLook = Vector2.left;
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-            lastLook = Vector2.right;
+    private void UpdateDirection()
+    {
+        Vector3 dir = status.viewDirection.VectorNormalized;
 
-        // 마지막 방향을 Animator에 반영
-        animator.SetFloat("lastX", lastLook.x);
-        animator.SetFloat("lastY", lastLook.y);
+        float x = dir.x;
+        float y = dir.y;
+
+        anim.SetFloat("lastX", x);
+        anim.SetFloat("lastY", y);
+
+        if (status.isAction)   // 이동 중이면 moveX/moveY도 갱신
+        {
+            anim.SetFloat("moveX", x);
+            anim.SetFloat("moveY", y);
+        }
+        else
+        {
+            anim.SetFloat("moveX", 0);
+            anim.SetFloat("moveY", 0);
+        }
+    }
+
+
+    public void PlayReflectAnimation()
+    {
+        StopAllCoroutines();
+        StartCoroutine(ReflectRoutine());
+    }
+
+    private IEnumerator ReflectRoutine()
+    {
+        anim.SetBool("Reflect", true);
+        yield return new WaitForSeconds(reflectAnimDuration);
+        anim.SetBool("Reflect", false);
+    }
+
+    public void PlayHitAnimation()
+    {
+        anim.SetBool("Hit", true);
+        StartCoroutine(EndHitRoutine());
+    }
+
+    private IEnumerator EndHitRoutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        anim.SetBool("Hit", false);
     }
 }
