@@ -81,6 +81,8 @@ public class PlayerCombat : MonoBehaviour, IDamageable
         Vector3 R = 2f * Vector3.Dot(d, n) * n - d;
 
         projectile.Reflect(transform.position, -R, gameObject.tag);
+
+        GetComponent<PlayerAnimationController>().PlayReflectAnimation();
     }
 
     private void TakeDamage(IProjectile projectile)
@@ -89,6 +91,9 @@ public class PlayerCombat : MonoBehaviour, IDamageable
 
         status.CurrentHealth -= projectile.Damage;
         invincibleTimer = invincibleTime;
+
+        GetComponent<PlayerAnimationController>().PlayHitAnimation();
+
     }
 
     private void Charging(IProjectile projectile)
