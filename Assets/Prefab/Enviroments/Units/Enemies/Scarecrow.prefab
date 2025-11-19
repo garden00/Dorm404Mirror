@@ -173,17 +173,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3465b764badfe9640a197af1610d8319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 2627319501095591754, guid: c7d008bbc092b8f41aadf2e9b6f8e898, type: 3}
+  projectlie: {fileID: 2627319501095591754, guid: c7d008bbc092b8f41aadf2e9b6f8e898, type: 3}
   throwDirection:
     _index: 6
-  throwCycleTime: 1.8
+  throwCycleTime: 1.83
   maxHealth: 100
-  initialDirection: 0
-  enableTileMove: 1
-  horizontal: 0
-  tileSize: 1
-  moveInterval: 3
-  moveSpeed: 8
 --- !u!95 &5335232087439676104
 Animator:
   serializedVersion: 5
