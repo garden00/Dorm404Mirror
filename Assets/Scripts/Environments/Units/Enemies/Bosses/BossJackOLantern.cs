@@ -84,7 +84,7 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
 
     void Update()
     {
-        if(isDetected is false)
+        if (isDetected is false)
         {
             float dir = Vector3.Distance(playerTransform.position, transform.position);
 
@@ -95,12 +95,10 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
             }
         }
 
-        if (!isDashing)
-        {
-            Vector2 moveDir = playerTransform.position - transform.position;
-            bossAnim.SetMoveDirection(moveDir);
-        }
+        Vector2 faceDir = playerTransform.position - transform.position;
+        bossAnim.SetFacingDirection(faceDir);
     }
+
 
     /// <summary>
     /// 보스의 핵심 패턴 관리 코루틴
@@ -144,9 +142,18 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     // [ IDamageable 인터페이스 구현 ]
     public void ReceiveAttack(IProjectile _projectile)
     {
+        int prev = CurrentHealth;
         CurrentHealth -= _projectile.Damage;
+
+        if (CurrentHealth <= 0)
+        {
+            return;
+        }
+
+        // 살아있는 히트일 때만 hit 재생
         bossAnim.PlayHit();
     }
+
 
     // --- 패턴 1: 플레이어 방향으로 투사체 여러 발 발사 ---
     IEnumerator ExecutePattern1()
@@ -178,7 +185,8 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     {
         Debug.Log("보스: 패턴 2 시작 (위치 변경 돌진)");
         isDashing = true;
-        bossAnim.IsDashing = true;
+        bossAnim.SetMoveSpeed(1f);
+        bossAnim.FaceTarget(playerTransform);
 
 
         // 2. 목표 위치 및 시작 위치 설정
@@ -186,15 +194,8 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
         Vector3 startPos = transform.position;
 
         Vector3 dirPosVec = targetPos - startPos;
-
-        int dir = (int)dirPosVec.magnitude;
-
         EightDirection dirPos = EightDirection.FromVector3(dirPosVec);
-
-        //Vector3 endPos = dirPos.VectorGrid * 5f;
-        //Vector3 endPos = startPos + dirPos.VectorGrid * 5f;
-        Vector3 dashDir = (targetPos - startPos).normalized;
-        Vector3 endPos = startPos + dashDir * 5f;
+        Vector3 endPos = startPos + dirPos.VectorGrid * 5f;
 
 
         float dashTimer = 0f;
@@ -223,7 +224,7 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
 
         // 5. 돌진 상태 종료 및 Kinematic 해제
         isDashing = false;
-        bossAnim.IsDashing = false;
+        bossAnim.SetMoveSpeed(0f);
 
         Debug.Log("보스: 돌진 종료");
 
