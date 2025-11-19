@@ -259,6 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e852c16f01adce4d8e8a6fbab458956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reflectAnimDuration: 0.15
 --- !u!1 &7649088794144628868
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,7 +414,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 51
+  m_SortingOrder: 61
   m_Sprite: {fileID: -279635514, guid: 22873669741df664ea0e0092ac42754d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

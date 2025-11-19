@@ -96,8 +96,7 @@ public class Scarecrow : MonoBehaviour, IDamageable
     private void Die()
     {
         isDead = true;
-        //animatorController?.PlayDie();
-
+        animatorController?.PlayDeath();
         StartCoroutine(DeactivateAfterDelay(1f));
     }
 
