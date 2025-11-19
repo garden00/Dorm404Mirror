@@ -33,10 +33,12 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return status.StopAction();
 
-        UIManager.Instance.FadeOut(0.5f);
-        yield return new WaitForSeconds(0.5f);
+        UIManager.Instance.FadeOut(0.3f);
+        yield return new WaitForSeconds(0.8f);
+
 
         transform.position = newPos;
+        CameraManager.Instance.Teleport(newPos);
         yield return status.StartAction();
 
         UIManager.Instance.FadeIn(0.5f);
