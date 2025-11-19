@@ -4,216 +4,107 @@ using UnityEngine;
 
 public class Scarecrow : MonoBehaviour, IDamageable
 {
-    [Header("Attack")]
-    [SerializeField] private GameObject projectilePrefab;
+    [Header("투사체 발사 관련")]
+    [SerializeField] private GameObject projectlie;
     [SerializeField] private EightDirection throwDirection;
     [SerializeField] private float throwCycleTime = 2f;
+    private float throwTimer = 0f;
+
     public float ThrowCycleTime => throwCycleTime;
 
-    private float attackTimer = 0f;
-
-    [Header("Health")]
+    [Header("체력 관련")]
     [SerializeField] private int maxHealth = 100;
     private int currentHealth;
-    public bool IsDead { get; private set; } = false;
+    private bool isDead = false;
 
-    [Header("Animation")]
-    private ScarecrowAnimatorController anim;
+    private ScarecrowAnimatorController animatorController;
 
-    [SerializeField] private SCDirection initialDirection;
-
-    [Header("Movement")]
-    [SerializeField] private bool enableTileMove = true;
-    [SerializeField] private bool horizontal = true;    // true=좌우, false=상하
-    [SerializeField] private float tileSize = 1f;
-    [SerializeField] private float moveInterval = 0.6f;  // 이동 간격(뚝딱 느낌)
-    [SerializeField] private float moveSpeed = 6f;       // 타일 이동 속도
-
-    private int moveDir = 1; // 1 또는 -1
-    private bool isMoving = false;
-
-
-    private void Start()
+    public int CurrentHealth
     {
-        anim = GetComponent<ScarecrowAnimatorController>();
-        currentHealth = maxHealth;
-
-        ApplyDirection(initialDirection);
-
-        if (anim != null)
-            anim.PlayIdle();
-        if (enableTileMove)
-            StartCoroutine(TileMoveRoutine());
-    }
-
-    private void Update()
-    {
-        if (IsDead) return;
-
-        AttackCycle();
-    }
-
-
-    private void AttackCycle()
-    {
-        attackTimer += Time.deltaTime;
-
-        if (attackTimer >= throwCycleTime)
+        get => currentHealth;
+        set
         {
-            attackTimer = 0f;
+            currentHealth = Mathf.Clamp(value, 0, maxHealth);
+            if (currentHealth <= 0 && !isDead)
+            {
+                Die();
+            }
+        }
+    }
 
+    void Start()
+    {
+        CurrentHealth = maxHealth;
+        animatorController = GetComponent<ScarecrowAnimatorController>();
+
+        // 시작 시 방향 설정 (원하는 방향으로)
+        animatorController?.SetDirection("down"); // 또는 "left", "right", "up"
+    }
+
+    void Update()
+    {
+        if (!isDead)
+        {
+            UpdateDirectionToPlayer();
+            ThrowCycle();
+        }
+    }
+    void UpdateDirectionToPlayer()
+    {
+        Vector2 toPlayer = (PlayerManager.Instance.transform.position - transform.position);
+        int directionIndex = GetDirectionIndex(toPlayer);
+        animatorController?.SetDirection(directionIndex); // 애니메이션 방향 갱신
+    }
+
+    int GetDirectionIndex(Vector2 dir)
+    {
+        // 0: down, 1: left, 2: up, 3: right
+        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+            return dir.x > 0 ? 3 : 1;
+        else
+            return dir.y > 0 ? 2 : 0;
+    }
+
+    public void ReceiveAttack(IProjectile projectile)
+    {
+        if (isDead) return;
+
+        CurrentHealth -= projectile.Damage;
+        animatorController?.PlayHit();
+    }
+
+    private void ThrowCycle()
+    {
+        throwTimer += Time.deltaTime;
+
+        if (throwTimer > throwCycleTime)
+        {
+            throwTimer = 0f;
             ThrowProjectile();
-            anim.PlayAttack();
+            animatorController?.PlayAttack(); // 공격 애니메이션
         }
     }
 
     private void ThrowProjectile()
     {
-        if (projectilePrefab == null)
-        {
-            Debug.LogWarning($"{name} : projectilePrefab?? ????");
-            return;
-        }
+        var obj = ObjectPoolingManager.Instance.GetPrefab(projectlie);
+        obj.transform.position = transform.position;
 
-        var projObj = ObjectPoolingManager.Instance.GetPrefab(projectilePrefab);
-        var proj = projObj.GetComponent<IProjectile>();
-
-        if (proj == null)
-        {
-            Debug.LogWarning($"{name} : IProjectile ????");
-            return;
-        }
-
-        proj.Fire(transform.position, throwDirection.VectorNormalized, gameObject.tag);
-    }
-
-
-    public void ReceiveAttack(IProjectile projectile)
-    {
-        if (IsDead) return;
-
-        currentHealth -= projectile.Damage;
-
-        if (currentHealth <= 0)
-        {
-            currentHealth = 0;
-            Die();                      // 치명타면 바로 Death만
-        }
-        else
-        {
-            if (anim != null)
-                anim.PlayHit();         // 살았을 때만 Hit
-        }
+        obj.GetComponent<IProjectile>()?.Fire(transform.position, throwDirection, gameObject.tag);
     }
 
     private void Die()
     {
-        if (IsDead) return;
-        IsDead = true;
+        isDead = true;
+        //animatorController?.PlayDie();
 
-        if (anim != null)
-            anim.PlayDeath();
-
-        var col = GetComponent<Collider2D>();
-        if (col != null) col.enabled = false;
-
-        var rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.velocity = Vector2.zero;
-            rb.isKinematic = true;
-        }
-
-        Destroy(gameObject, 0.7f);
+        StartCoroutine(DeactivateAfterDelay(1f));
     }
 
-    public void ApplyDirection(SCDirection dir)
+    private IEnumerator DeactivateAfterDelay(float delay)
     {
-        switch (dir)
-        {
-            case SCDirection.Down:
-                anim.SetDirection(0);
-                throwDirection = EightDirection.Down;
-                break;
-            case SCDirection.Left:
-                anim.SetDirection(1);
-                throwDirection = EightDirection.Left;
-                break;
-            case SCDirection.Up:
-                anim.SetDirection(2);
-                throwDirection = EightDirection.Up;
-                break;
-            case SCDirection.Right:
-                anim.SetDirection(3);
-                throwDirection = EightDirection.Right;
-                break;
-        }
+        yield return new WaitForSeconds(delay);
+        gameObject.SetActive(false);
     }
 
-    private IEnumerator MoveToTile(Vector3 target)
-    {
-        isMoving = true;
-
-        while (Vector3.Distance(transform.position, target) > 0.01f)
-        {
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                target,
-                moveSpeed * Time.deltaTime
-            );
-            yield return null;
-        }
-
-        transform.position = target;
-        isMoving = false;
-    }
-
-    private IEnumerator TileMoveRoutine()
-    {
-        while (!IsDead)
-        {
-            if (!enableTileMove)
-            {
-                yield return null;
-                continue;
-            }
-
-            if (!isMoving)
-            {
-                Vector3 dir = horizontal
-                    ? new Vector3(moveDir, 0, 0)
-                    : new Vector3(0, moveDir, 0);
-
-                if (horizontal)
-                {
-                    if (moveDir == 1) ApplyDirection(SCDirection.Right); // 방향 바꾸기
-                    else ApplyDirection(SCDirection.Left);
-                }
-                else
-                {
-                    if (moveDir == 1) ApplyDirection(SCDirection.Up);
-                    else ApplyDirection(SCDirection.Down);
-                }
-
-                Vector3 targetPos = transform.position + dir * tileSize;
-
-                yield return StartCoroutine(MoveToTile(targetPos)); // 이동
-                moveDir *= -1; // 방향 반전
-                yield return new WaitForSeconds(moveInterval); // delay
-            }
-
-            yield return null;
-        }
-    }
-
-
-
-}
-
-public enum SCDirection
-{
-    Down,
-    Left,
-    Up,
-    Right
 }
