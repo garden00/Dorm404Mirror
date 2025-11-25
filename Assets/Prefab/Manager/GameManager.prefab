@@ -501,7 +501,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 110
+  m_SortingOrder: 80
   m_TargetDisplay: 0
 --- !u!114 &3446288488848562233
 MonoBehaviour:
@@ -1233,6 +1233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1cc7e2f685a46d45b11c2c3ba768a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStatusData: {fileID: 11400000, guid: 82dc898152d36dd42a38a5cf6aaddb24, type: 2}
 --- !u!1 &4762908200727966612
 GameObject:
   m_ObjectHideFlags: 0

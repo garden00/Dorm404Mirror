@@ -7,11 +7,12 @@ public class TalkTrigger : MonoBehaviour
     [SerializeField]
     private int talkSceneId;
 
+    bool isTalked = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision != null && collision.CompareTag("Player"))
+        if(collision != null && collision.CompareTag("Player") && !isTalked)
         {
-            Debug.Log("talk");
+            isTalked = true;
             TalkManager.Instance.StartDialogue(talkSceneId);
         }
 

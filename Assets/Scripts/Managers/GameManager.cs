@@ -27,6 +27,10 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    [SerializeField]
+    PlayerStatusData playerStatusData;
+
+
     void Update()
     {
         // test용 코드
@@ -37,21 +41,36 @@ public class GameManager : MonoBehaviour
             SceneController.Instance.LoadScene(currentSceneNumber);
 
         }
+
+        if(playerStatusData.CurrentState == PlayerState.Dead)
+        {
+            playerStatusData.ResetData();
+
+            StartCoroutine(RestartGame());
+        }
     }
 
     private void Start()
     {
-        TalkManager.Instance.OnTalkStarted += PauseGame;
-        TalkManager.Instance.OnTalkEnded += ResumeGame;
+        //playerStatusData.OnPlayerDeath += PlayerDeath;
     }
 
-    void PauseGame()
+    public void StartGame()
     {
-        PlayerManager.Instance.StopPlayer();
+        SceneController.Instance.LoadScene(1);
     }
 
-    void ResumeGame()
+    private IEnumerator RestartGame()
     {
-        PlayerManager.Instance.StartPlayer();
+
+
+        UIManager.Instance.FadeOut(1f);
+        yield return new WaitForSeconds(1.5f);
+
+
+        // 나중에 save system이랑 연결
+        SceneController.Instance.LoadScene(SceneController.Instance.SceneNumber);
+
+        yield return null;
     }
 }

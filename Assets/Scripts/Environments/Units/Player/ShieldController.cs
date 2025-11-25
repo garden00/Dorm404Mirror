@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class ShieldController : MonoBehaviour
 {
@@ -15,15 +16,17 @@ public class ShieldController : MonoBehaviour
     [SerializeField] private Sprite shieldDownRight;
 
     private SpriteRenderer shieldSR;
-    private PlayerStatus status;
+    private PlayerStatusData status;
     private PlayerCombat combat;
 
     public Vector3 Direction { get; private set; }
 
-    void Awake()
+    public void Initialize(PlayerStatusData playerStatus)
     {
+        status = playerStatus;
         combat = GetComponent<PlayerCombat>();
         shieldSR = shieldObject.GetComponent<SpriteRenderer>();
+        Direction = EightDirection.Down;
     }
 
     void Update()
@@ -34,6 +37,8 @@ public class ShieldController : MonoBehaviour
 
     private void UpdateDirection()
     {
+        if (!status.IsActionable) return;
+
         float h = 0;
         float v = 0;
 
@@ -47,7 +52,7 @@ public class ShieldController : MonoBehaviour
         // 입력 없으면 플레이어가 마지막으로 본 방향 유지
         if (input == Vector3.zero)
         {
-            Direction = combat.status.viewDirection;
+            Direction = status.ViewDirection;
         }
         else
         {
