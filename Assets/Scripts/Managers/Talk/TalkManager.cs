@@ -104,10 +104,8 @@ public class TalkManager : MonoBehaviour
     public event Action OnTalkStarted;
     public event Action OnTalkEnded;
 
-    // (예시) 플레이어 입력 처리 (Space 키)
     void Update()
     {
-        // (참고: 실제 프로젝트에서는 새 Input System의 .performed 이벤트를 사용하는 것이 좋습니다)
         if (_session.IsActive && Input.GetKeyDown(KeyCode.Space))
         {
             OnNextLineInput();

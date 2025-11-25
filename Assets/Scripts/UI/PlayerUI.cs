@@ -13,7 +13,7 @@ public class PlayerUI : MonoBehaviour
         PlayerManager.Instance.Status.OnHealthChanged += UpdateHealth;
     }
 
-    void OnDisable()
+    private void OnDestroy()
     {
         if (PlayerManager.Instance != null)
         {

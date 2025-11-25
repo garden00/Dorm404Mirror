@@ -9,7 +9,7 @@ public class MainMenuUI : MonoBehaviour
         if (GameManager.Instance != null)
         {
             // 나중에 Save/Load System 연결해서 GameManager가 SceneController.Instance.LoadScene(1)을 호출하도록 할 예정
-            SceneController.Instance.LoadScene(1);
+            GameManager.Instance.StartGame();
         }
     }
 
