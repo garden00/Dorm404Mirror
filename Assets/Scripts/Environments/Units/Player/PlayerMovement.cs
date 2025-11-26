@@ -29,77 +29,52 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (status != null) 
+        if (status != null)
             status.OnHit -= HandleKnockback;
     }
 
     private void Update()
     {
         HandleInput();
-
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            status.SetState(PlayerState.Locked);
-        }
     }
 
     private void HandleInput()
     {
-        if (!status.IsMoveable) return;
+        int h = (Input.GetKey(KeyCode.LeftArrow) ? -1 : 0) + (Input.GetKey(KeyCode.RightArrow) ? 1 : 0);
+        int v = (Input.GetKey(KeyCode.DownArrow) ? -1 : 0) + (Input.GetKey(KeyCode.UpArrow) ? 1 : 0);
 
-        UpdateAxisMemory();
-        EightDirection inputDir = GetPriorityInputDirection();
+        bool newH = Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow);
+        bool newV = Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow);
+
+        if (newH) lastPressedAxis = Axis.Horizontal;
+        if (newV) lastPressedAxis = Axis.Vertical;
+
+        if (lastPressedAxis == Axis.Horizontal && h == 0 && v != 0)
+        {
+            lastPressedAxis = Axis.Vertical;
+        }
+        else if (lastPressedAxis == Axis.Vertical && v == 0 && h != 0)
+        {
+            lastPressedAxis = Axis.Horizontal;
+        }
+
+        EightDirection inputDir = EightDirection.None;
+
+        if (lastPressedAxis == Axis.Horizontal && h != 0)
+        {
+            inputDir = EightDirection.FromVector3(h, 0, 0);
+        }
+        else if (lastPressedAxis == Axis.Vertical && v != 0)
+        {
+            inputDir = EightDirection.FromVector3(0, v, 0);
+        }
+
+        if (!status.IsMoveable) return;
 
         if (inputDir != EightDirection.None)
         {
             TryMove(inputDir);
         }
-    }
-
-    // 최근에 누른 축을 기억하여 조작감 개선 (대각선 입력 방지 및 우선순위 결정)
-    private void UpdateAxisMemory()
-    {
-        bool h = Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow);
-        bool v = Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow);
-
-        if (h) lastPressedAxis = Axis.Horizontal;
-        else if (v) lastPressedAxis = Axis.Vertical;
-    }
-
-    private EightDirection GetPriorityInputDirection()
-    {
-        int h = (Input.GetKey(KeyCode.LeftArrow) ? -1 : 0) + (Input.GetKey(KeyCode.RightArrow) ? 1 : 0);
-        int v = (Input.GetKey(KeyCode.DownArrow) ? -1 : 0) + (Input.GetKey(KeyCode.UpArrow) ? 1 : 0);
-
-        EightDirection inputDirection = EightDirection.None;
-
-        //마지막으로 눌린 축 우선으로 입력 처리
-        if (lastPressedAxis == Axis.Horizontal)
-        {
-            if (h != 0)
-            {
-                inputDirection = EightDirection.FromVector3(h, 0, 0);
-            }
-            else if (v != 0)
-            {
-                inputDirection = EightDirection.FromVector3(0, v, 0);
-                lastPressedAxis = Axis.Vertical;
-            }
-        }
-        else // lastPressedAxis == Axis.Vertical
-        {
-            if (v != 0)
-            {
-                inputDirection = EightDirection.FromVector3(0, v, 0);
-            }
-            else if (h != 0)
-            {
-                inputDirection = EightDirection.FromVector3(h, 0, 0);
-                lastPressedAxis = Axis.Horizontal;
-            }
-        }
-
-        return inputDirection;
     }
 
     private void TryMove(EightDirection dir)
@@ -125,11 +100,6 @@ public class PlayerMovement : MonoBehaviour
         // 정확한 그리드 이동을 위해 sqrMagnitude 사용
         while ((targetPosition - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
-            if (Input.GetKey(KeyCode.K))
-            {
-                Debug.Log("targetPosition=" + targetPosition + ", transform.position=" + transform.position + ", gap=" + (targetPosition - transform.position).sqrMagnitude + ", Epsilon=" + Mathf.Epsilon);
-            }
-
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
             yield return null;
@@ -138,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = targetPosition;
 
 
-        if(status.IsMoving)
+        if (status.IsMoving)
         {
             status.SetState(PlayerState.Idle);
         }
