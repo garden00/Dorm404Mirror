@@ -30,8 +30,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     PlayerStatusData playerStatusData;
 
-    public SaveData saveData;
-
 
     void Update()
     {

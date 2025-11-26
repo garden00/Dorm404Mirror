@@ -5,25 +5,13 @@ using UnityEngine;
 
 public class SavePoint : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision != null && collision.CompareTag("Player"))
         {
-            SavePointManager.Instance.OnEnterSavePoint(this);
+            SavePointManager.Instance.OnStaySavePoint(this);
         }
+
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision != null && collision.CompareTag("Player"))
-        {
-            SavePointManager.Instance.OnExitSavePoint(this);
-        }
-    }
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    if (collision != null && collision.CompareTag("Player"))
-    //    {
-    //        SavePointManager.Instance.OnStaySavePoint(this);
-    //    }
-    //}
 }
