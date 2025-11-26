@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 5409215495911262184}
   - component: {fileID: 1538189906139720067}
   - component: {fileID: 2953041441668019835}
+  - component: {fileID: -1985505917640715752}
+  - component: {fileID: 8325368817450318634}
   m_Layer: 7
   m_Name: BoseJackO
   m_TagString: Enemy
@@ -76,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 53
-  m_Sprite: {fileID: 21300000, guid: 34e23f0673c427040ac21c0f91db0638, type: 3}
+  m_Sprite: {fileID: 82174258, guid: fa6f901bf720a884abfe28b4c088713f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -177,3 +179,36 @@ MonoBehaviour:
   dashDuration: 1.5
   maxHealth: 100
   damage: 30
+--- !u!114 &-1985505917640715752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878724284346137650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdffa99821a633a4c8614734cc489eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &8325368817450318634
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878724284346137650}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3a74a1a2abad05940ac9c724082afebf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

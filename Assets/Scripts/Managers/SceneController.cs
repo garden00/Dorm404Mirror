@@ -86,7 +86,11 @@ public class SceneController : MonoBehaviour
     private IEnumerator LoadSceneAsync(string sceneName)
     {
         // UIManager에게 로딩 화면 표시 요청
+        UIManager.Instance?.FadeOut(0.5f);
+        yield return new WaitForSeconds(0.7f);
         UIManager.Instance.ShowLoadingScreen(true);
+        UIManager.Instance?.FadeIn(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
 
@@ -100,12 +104,19 @@ public class SceneController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         // UIManager에게 로딩 화면 숨기기 요청
+        UIManager.Instance?.FadeOut(0.5f);
+        yield return new WaitForSeconds(0.7f);
         UIManager.Instance.ShowLoadingScreen(false);
+        UIManager.Instance?.FadeIn(0.5f);
     }
     private IEnumerator LoadSceneAsync(int sceneNumber)
     {
         // UIManager에게 로딩 화면 표시 요청
+        UIManager.Instance?.FadeOut(0.5f);
+        yield return new WaitForSeconds(0.7f);
         UIManager.Instance.ShowLoadingScreen(true);
+        UIManager.Instance?.FadeIn(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneNumber);
 
@@ -119,6 +130,9 @@ public class SceneController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         // UIManager에게 로딩 화면 숨기기 요청
+        UIManager.Instance?.FadeOut(0.5f);
+        yield return new WaitForSeconds(0.7f);
         UIManager.Instance.ShowLoadingScreen(false);
+        UIManager.Instance?.FadeIn(0.5f);
     }
 }

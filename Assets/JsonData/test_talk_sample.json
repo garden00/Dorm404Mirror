@@ -1,29 +1,141 @@
 [
   {
-    "sceneId": 101,
+    "sceneId": 1,
     "lines": [
-      { "speaker": "안내자", "portrait": 0, "effect": 0, "text": "test_1!@$%^*&*(*()_" },
-      { "speaker": "주인공", "portrait": 1, "effect": 0, "text": "테스트 2    ㅁㄴㅇㄴㅁㅇㅁ" },
-      { "speaker": "안내자", "portrait": 0, "effect": 0, "text": "테스트 테스트" },
-      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "'이예이'" }
+      {
+        "speaker": "안내자",
+        "portrait": 0,
+        "effect": 0,
+        "text": "test_1!@$%^*&*(*()_"
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 1,
+        "effect": 0,
+        "text": "테스트 2    ㅁㄴㅇㄴㅁㅇㅁ"
+      },
+      {
+        "speaker": "안내자",
+        "portrait": 0,
+        "effect": 0,
+        "text": "테스트 테스트"
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 2,
+        "effect": 0,
+        "text": "'이예이'"
+      }
     ]
   },
   {
-    "sceneId": 102,
+    "sceneId": 2,
     "lines": [
-      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "ㄴㅇㅍㄴㅍㅇ" },
-      { "speaker": "의문의 남자", "portrait": 0, "effect": 1, "text": "ㅁㄴㄻㄻㄹㄴㄹㄴㅁㄻㄻㄹㄴㅁㄹㄴㅁㄹㄴㅁㄹㄴㅁㄹㄴㅁㄹㄴㅁㄹㄴㄻㄴㄹㄴㅁㄹㄴㅁㄹㄴㅁㄻㄴㄹㄴㅁㄻㄴㄹㄴㅁㄻㄴㄹㄴㅁㄻㄴㅁㄴㄻㄴㄹㄴㅁ" },
-      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ" },
-      { "speaker": "의문의 남자", "portrait": 1, "effect": 0, "text": "ㅁ" }
+      {
+        "speaker": "주인공",
+        "portrait": 0,
+        "effect": 0,
+        "text": "ㄴㅇㅍㄴㅍㅇ"
+      },
+      {
+        "speaker": "의문의 남자",
+        "portrait": 0,
+        "effect": 1,
+        "text": "ㅁㄴㄻㄻㄹㄴㄹㄴㅁㄻㄻㄹㄴㅁㄹㄴㅁㄹㄴㅁㄹㄴㅁㄹㄴㅁㄹㄴㅁㄹㄴㄻㄴㄹㄴㅁㄹㄴㅁㄹㄴㅁㄻㄴㄹㄴㅁㄻㄴㄹㄴㅁㄻㄴㄹㄴㅁㄻㄴㅁㄴㄻㄴㄹㄴㅁ"
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 2,
+        "effect": 0,
+        "text": "ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ"
+      },
+      {
+        "speaker": "의문의 남자",
+        "portrait": 1,
+        "effect": 0,
+        "text": "ㅁ"
+      }
+    ]
+  },
+  {
+    "sceneId": 3,
+    "lines": [
+      {
+        "speaker": "나",
+        "portrait": 0,
+        "effect": 0,
+        "text": "안녕"
+      },
+      {
+        "speaker": "드라큘라",
+        "portrait": 1,
+        "effect": 1,
+        "text": ""
+      },
+      {
+        "speaker": "잡몹",
+        "portrait": 0,
+        "effect": 0,
+        "text": "안녕안녕."
+      },
+      {
+        "speaker": "드라큘라",
+        "portrait": 0,
+        "effect": 0,
+        "text": " "
+      }
+    ]
+  },
+  {
+    "sceneId": 100,
+    "lines": [
+      {
+        "speaker": "주인공",
+        "portrait": 0,
+        "effect": 0,
+        "text": ""
+      }
     ]
   },
   {
     "sceneId": 200,
     "lines": [
-      { "speaker": "나", "portrait": 0, "effect": 0, "text": "안녕" },
-      { "speaker": "드라큘라", "portrait": 1, "effect": 1, "text": "" },
-      { "speaker": "잡몹", "portrait": 0, "effect": 0, "text": "안녕안녕." },
-      { "speaker": "드라큘라", "portrait": 0, "effect": 0, "text": " " }
+      {
+        "speaker": "주인공",
+        "portrait": 0,
+        "effect": 0,
+        "text": "하…아니 시험이 무슨 9시에 끝나냐? 시험 준비하느라 저녁도 못 먹었네…."
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 0,
+        "effect": 0,
+        "text": "그래도 중간고사 끝나니까 좋네. 쇼츠나 보고 자야지."
+      },
+      {
+        "speaker": "???",
+        "portrait": 0,
+        "effect": 0,
+        "text": "꺄아아악!"
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 0,
+        "effect": 0,
+        "text": "음? 지금 시간이 몇 시인데 밖이 왜 이렇게 시끄러운거야?"
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 0,
+        "effect": 0,
+        "text": "근데 이상한데? 사람들이 도망치고 있잖아?"
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 0,
+        "effect": 0,
+        "text": "으아악!! 이것들은 또 뭔데? 일단 도망치자!"
+      }
     ]
   }
 ]

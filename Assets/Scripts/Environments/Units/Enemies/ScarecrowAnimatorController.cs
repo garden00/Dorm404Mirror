@@ -14,10 +14,12 @@ public class ScarecrowAnimatorController : MonoBehaviour
 
     // 0: down, 1: left, 2: up, 3: right
     [SerializeField] private int directionIndex = 0;
+    private Scarecrow owner;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        owner = GetComponent<Scarecrow>();
     }
 
     private void Start()
@@ -58,6 +60,10 @@ public class ScarecrowAnimatorController : MonoBehaviour
 
     public void PlayHit()
     {
+        if (owner.CurrentHealth <= 0)
+        {
+            animator.SetTrigger(DieHash); return;
+        }
         animator.SetTrigger(HitHash);
     }
 

@@ -62,6 +62,9 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     Vector3 IProjectile.MoveDirection => Vector3.zero;
 
     bool isDetected;
+    private bool isDead = false;
+
+    private JOAnimatorController bossAnim;
 
     void Start()
     {
@@ -76,11 +79,12 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
         // 보스 패턴 사이클 시작
         playerTransform = PlayerManager.Instance.gameObject.transform;
 
+        bossAnim = GetComponent<JOAnimatorController>();
     }
 
     void Update()
     {
-        if(isDetected is false)
+        if (isDetected is false)
         {
             float dir = Vector3.Distance(playerTransform.position, transform.position);
 
@@ -90,7 +94,11 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
                 StartCoroutine(BossPatternCycle());
             }
         }
+
+        Vector2 faceDir = playerTransform.position - transform.position;
+        bossAnim.SetFacingDirection(faceDir);
     }
+
 
     /// <summary>
     /// 보스의 핵심 패턴 관리 코루틴
@@ -134,13 +142,26 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     // [ IDamageable 인터페이스 구현 ]
     public void ReceiveAttack(IProjectile _projectile)
     {
+        int prev = CurrentHealth;
         CurrentHealth -= _projectile.Damage;
+
+        if (CurrentHealth <= 0)
+        {
+            return;
+        }
+
+        // 살아있는 히트일 때만 hit 재생
+        bossAnim.PlayHit();
     }
+
 
     // --- 패턴 1: 플레이어 방향으로 투사체 여러 발 발사 ---
     IEnumerator ExecutePattern1()
     {
         Debug.Log("보스: 패턴 1 시작");
+        bossAnim.FaceTarget(playerTransform);
+        bossAnim.PlayAttack1();
+
         int shotCount = 5;
 
         for (int i = 0; i < shotCount; i++)
@@ -164,18 +185,18 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     {
         Debug.Log("보스: 패턴 2 시작 (위치 변경 돌진)");
         isDashing = true;
+        bossAnim.SetMoveSpeed(1f);
+        bossAnim.FaceTarget(playerTransform);
+
 
         // 2. 목표 위치 및 시작 위치 설정
         Vector3 targetPos = playerTransform.position; // 돌진 시작 시점의 플레이어 위치
         Vector3 startPos = transform.position;
 
         Vector3 dirPosVec = targetPos - startPos;
-
-        int dir = (int)dirPosVec.magnitude;
-
         EightDirection dirPos = EightDirection.FromVector3(dirPosVec);
+        Vector3 endPos = startPos + dirPos.VectorGrid * 5f;
 
-        Vector3 endPos = dirPos.VectorGrid * 5f;
 
         float dashTimer = 0f;
 
@@ -203,7 +224,10 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
 
         // 5. 돌진 상태 종료 및 Kinematic 해제
         isDashing = false;
+        bossAnim.SetMoveSpeed(0f);
+
         Debug.Log("보스: 돌진 종료");
+
     }
 
     // [ 패턴 2: 돌진 충돌 처리 ]
@@ -219,6 +243,9 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     IEnumerator ExecutePattern3()
     {
         Debug.Log("보스: 패턴 3 시작");
+
+        
+
         Vector3 playerPos = playerTransform.position;
         Vector3 spawnPosDown = playerPos - playerTransform.up * 10f;
         Vector3 spawnPosLeft = playerPos - playerTransform.right * 10f;
@@ -255,6 +282,9 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     {
         Debug.Log("보스: 패턴 4 시작 (덩쿨 소환)");
 
+        bossAnim.FaceTarget(playerTransform);
+        bossAnim.PlayAttack2();
+
         Vector3 dirVec = playerTransform.position - transform.position;
         EightDirection dir = EightDirection.FromVector3(dirVec);
         if (dir.x != 0 && dir.y != 0) dir++;
@@ -269,8 +299,23 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
 
     public void Die()
     {
+        if (isDead) return;
+        isDead = true;
+
+        StopAllCoroutines();
+        isDashing = false;
+        bossAnim.IsDashing = false;
+
+        bossAnim.PlayDeath();
+        StartCoroutine(DieRoutine());
+    }
+
+    private IEnumerator DieRoutine()
+    {
+        yield return new WaitForSeconds(2f);
         Destroy(gameObject);
     }
+
 
     void IProjectile.Fire(Vector3 _position, Vector3 _direction, string _ownerTag)
     {

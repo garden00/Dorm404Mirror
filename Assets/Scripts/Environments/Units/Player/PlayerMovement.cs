@@ -3,156 +3,180 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
+
+// 할것 조작감 개선
 
 public class PlayerMovement : MonoBehaviour
 {
-    [NonSerialized]
-    public PlayerStatus status;
+    private PlayerStatusData status;
 
-    [SerializeField]
-    private float moveSpeed = 10f;
+    [Header("Settings")]
+    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private LayerMask wallLayer;
 
-    private enum Axis { Horizontal, Vertical }
-    private Axis lastPressedAxis;
+    private Coroutine moveCoroutine;
+    private Vector3 preMovePosition;
+    private enum Axis { None, Horizontal, Vertical }
+    private Axis lastPressedAxis = Axis.None;
 
-    Coroutine moveCoroutine;
-
-    Vector3 prev_pos;
-
-    private void Start()
+    public void Initialize(PlayerStatusData playerStatus)
     {
-         PlayerManager.Instance.Status.OnHealthChanged += HandleDamageKnockback;
+        status = playerStatus;
+
+        status.OnHit += HandleKnockback;
     }
 
-    private void LateUpdate()
+    private void OnDestroy()
     {
-        Move();
+        if (status != null)
+            status.OnHit -= HandleKnockback;
     }
 
-    public IEnumerator TeleportFadeEffect(Vector3 newPos)
+    private void Update()
     {
-        yield return status.StopAction();
-
-        UIManager.Instance.FadeOut(0.5f);
-        yield return new WaitForSeconds(0.5f);
-
-        transform.position = newPos;
-        yield return status.StartAction();
-
-        UIManager.Instance.FadeIn(0.5f);
-        yield return new WaitForSeconds(0.5f);
+        HandleInput();
     }
 
-    public void Move()
+    private void HandleInput()
     {
-        // 마지막으로 눌린 축 감지
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            lastPressedAxis = Axis.Horizontal;
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+        int h = (Input.GetKey(KeyCode.LeftArrow) ? -1 : 0) + (Input.GetKey(KeyCode.RightArrow) ? 1 : 0);
+        int v = (Input.GetKey(KeyCode.DownArrow) ? -1 : 0) + (Input.GetKey(KeyCode.UpArrow) ? 1 : 0);
+
+        bool newH = Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow);
+        bool newV = Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow);
+
+        if (newH) lastPressedAxis = Axis.Horizontal;
+        if (newV) lastPressedAxis = Axis.Vertical;
+
+        if (lastPressedAxis == Axis.Horizontal && h == 0 && v != 0)
         {
             lastPressedAxis = Axis.Vertical;
         }
-
-        // 움직이는 중이 아닐 때만 새 입력을 받기
-        if (!status.isAction)
+        else if (lastPressedAxis == Axis.Vertical && v == 0 && h != 0)
         {
-            float horizontal = (Input.GetKey(KeyCode.LeftArrow) ? -1 : 0) + (Input.GetKey(KeyCode.RightArrow) ? 1 : 0);
-            float vertical = (Input.GetKey(KeyCode.DownArrow) ? -1 : 0) + (Input.GetKey(KeyCode.UpArrow) ? 1 : 0);
+            lastPressedAxis = Axis.Horizontal;
+        }
 
-            EightDirection inputDirection = EightDirection.None;
+        EightDirection inputDir = EightDirection.None;
 
-            //마지막으로 눌린 축 우선으로 입력 처리
-            if (lastPressedAxis == Axis.Horizontal)
-            {
-                if (horizontal != 0)
-                {
-                    inputDirection = EightDirection.FromVector3(horizontal, 0, 0);
-                }
-                else if (vertical != 0)
-                {
-                    inputDirection = EightDirection.FromVector3(0, vertical, 0);
-                    lastPressedAxis = Axis.Vertical;
-                }
-            }
-            else // lastPressedAxis == Axis.Vertical
-            {
-                if (vertical != 0)
-                {
-                    inputDirection = EightDirection.FromVector3(0, vertical, 0);
-                }
-                else if (horizontal != 0)
-                {
-                    inputDirection = EightDirection.FromVector3(horizontal, 0, 0);
-                    lastPressedAxis = Axis.Horizontal;
-                }
-            }
+        if (lastPressedAxis == Axis.Horizontal && h != 0)
+        {
+            inputDir = EightDirection.FromVector3(h, 0, 0);
+        }
+        else if (lastPressedAxis == Axis.Vertical && v != 0)
+        {
+            inputDir = EightDirection.FromVector3(0, v, 0);
+        }
 
-            // 최종 입력 벡터가 있을 경우에만 움직임을 시작
-            if (inputDirection != EightDirection.None)
-            {
-                status.viewDirection = inputDirection;
+        if (!status.IsMoveable) return;
 
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, status.viewDirection, 1.0f, LayerMask.GetMask("Wall"));
-                if (hit.collider != null)
-                {
-                    // 앞에 막혔으면 중단
-                    return;
-                }
-
-                moveCoroutine = StartCoroutine(MoveToPosition(transform.position + status.viewDirection.VectorNormalized));
-            }
+        if (inputDir != EightDirection.None)
+        {
+            TryMove(inputDir);
         }
     }
-    IEnumerator MoveToPosition(Vector3 _targetPosition)
+
+    private void TryMove(EightDirection dir)
     {
-        status.isAction = true;
+        status.ViewDirection = dir;
 
-        bool isInt = Mathf.Approximately(transform.position.x % 1, 0f) &&
-             Mathf.Approximately(transform.position.y % 1, 0f) &&
-             Mathf.Approximately(transform.position.z % 1, 0f);
+        Vector3 targetPos = transform.position + dir;
 
-        if (isInt)
-            prev_pos = transform.position;
+        // 벽 충돌 체크
+        if (Physics2D.Raycast(transform.position, dir, 1.0f, wallLayer)) return;
 
-        while ((_targetPosition - transform.position).sqrMagnitude > Mathf.Epsilon)
+        if (status.IsMoveable)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, moveSpeed * Time.deltaTime);
+            moveCoroutine = StartCoroutine(MoveRoutine(targetPos));
+        }
+    }
+
+    private IEnumerator MoveRoutine(Vector3 targetPosition)
+    {
+        status.SetState(PlayerState.Moving);
+        preMovePosition = transform.position; // 롤백용 위치 저장
+
+        // 정확한 그리드 이동을 위해 sqrMagnitude 사용
+        while ((targetPosition - transform.position).sqrMagnitude > Mathf.Epsilon)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+
             yield return null;
         }
-        transform.position = _targetPosition;
-        status.isAction = false;
+
+        transform.position = targetPosition;
+
+
+        if (status.IsMoving)
+        {
+            status.SetState(PlayerState.Idle);
+        }
+        else
+        {
+            // 이동 도중 상태가 변했을 경우
+            // 그 변한 상태 유지
+        }
+
         moveCoroutine = null;
     }
 
-    // 이벤트 처리 함수
-    private void HandleDamageKnockback(float hp)
+    private void HandleKnockback(Vector3 hitSourcePos)
     {
-        if (hp == 1) return;
-
-        if (moveCoroutine != null)
-        {
-            UndoMoveCoroutine();
-            return;
-        }
-
-
-        Vector3 target_pos = transform.position - status.viewDirection;
-        StartCoroutine(MoveToPosition(target_pos));
-
-    }
-
-    public void UndoMoveCoroutine()
-    {
+        // 이동 중 피격 시 이동 취소 및 롤백
         if (moveCoroutine != null)
         {
             StopCoroutine(moveCoroutine);
             moveCoroutine = null;
 
-            StartCoroutine(MoveToPosition(prev_pos));
+            // 원래 위치로 튕겨나가는 연출
+            StartCoroutine(KnockbackRoutine(preMovePosition));
+        }
+        else
+        {
+            // 제자리에 서있다가 맞았을 때 뒤로 밀림
+            moveCoroutine = StartCoroutine(KnockbackRoutine(transform.position + hitSourcePos));
         }
     }
 
+    private IEnumerator KnockbackRoutine(Vector3 rollbackPos)
+    {
+        status.SetState(PlayerState.Moving);
+        // 빠르게 원래 위치로 복귀
+        float knockbackSpeed = moveSpeed * 2f;
+        while ((rollbackPos - transform.position).sqrMagnitude > Mathf.Epsilon)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, rollbackPos, knockbackSpeed * Time.deltaTime);
+            yield return null;
+        }
+        transform.position = rollbackPos;
 
+        if (status.IsMoving)
+        {
+            status.SetState(PlayerState.Idle);
+        }
+        else
+        {
+            // 이동 도중 상태가 변했을 경우
+            // 그 변한 상태 유지
+        }
+
+        moveCoroutine = null;
+    }
+
+    public IEnumerator TeleportSequence(Vector3 newPos)
+    {
+        status.SetState(PlayerState.Locked);
+
+        UIManager.Instance?.FadeOut(0.3f);
+        yield return new WaitForSeconds(0.8f);
+
+        transform.position = newPos;
+        CameraManager.Instance?.Teleport(newPos);
+
+        UIManager.Instance?.FadeIn(0.5f);
+        yield return new WaitForSeconds(0.5f);
+
+        status.SetState(PlayerState.Idle);
+    }
 }

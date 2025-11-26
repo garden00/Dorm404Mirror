@@ -72,6 +72,11 @@ public class CameraManager : MonoBehaviour
         hasBounds = true;
     }
 
+    public void Teleport(Vector3 pos)
+    {
+        transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+    }
+
     void LateUpdate()
     {
         if (target == null) return;
