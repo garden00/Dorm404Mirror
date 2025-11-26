@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f34784e09720ba64c8af7c7aa02dbbf4
+guid: 4c6b1f1901c16e54585a1cfc03a9cb2f
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - NanumGothicOTF
+  - Noto Sans KR
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
