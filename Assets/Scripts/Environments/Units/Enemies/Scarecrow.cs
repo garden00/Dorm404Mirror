@@ -51,11 +51,22 @@ public class Scarecrow : MonoBehaviour, IDamageable
     }
     void UpdateDirectionToPlayer()
     {
-        Vector2 toPlayer = (PlayerManager.Instance.transform.position - transform.position);
-        int directionIndex = GetDirectionIndex(toPlayer);
-        animatorController?.SetDirection(directionIndex); // 애니메이션 방향 갱신
-    }
+        if (PlayerManager.Instance == null) return;
 
+        Vector2 toPlayer = (PlayerManager.Instance.transform.position - transform.position);
+        if (toPlayer.sqrMagnitude < 0.001f) return;
+
+        int directionIndex = GetDirectionIndex(toPlayer);
+        animatorController?.SetDirection(directionIndex);
+
+        switch (directionIndex)
+        {
+            case 0: throwDirection = EightDirection.Down; break;
+            case 1: throwDirection = EightDirection.Left; break;
+            case 2: throwDirection = EightDirection.Up; break;
+            case 3: throwDirection = EightDirection.Right; break;
+        }
+    }
     int GetDirectionIndex(Vector2 dir)
     {
         // 0: down, 1: left, 2: up, 3: right
@@ -87,12 +98,22 @@ public class Scarecrow : MonoBehaviour, IDamageable
 
     private void ThrowProjectile()
     {
+        if (projectlie == null)
+        {
+            Debug.LogWarning($"{name} : projectlie가 설정되지 않았습니다.");
+            return;
+        }
+
         var obj = ObjectPoolingManager.Instance.GetPrefab(projectlie);
+        if (obj == null) return;
+
         obj.transform.position = transform.position;
 
-        obj.GetComponent<IProjectile>()?.Fire(transform.position, throwDirection, gameObject.tag);
-    }
+        var proj = obj.GetComponent<IProjectile>();
+        if (proj == null) return;
 
+        proj.Fire(transform.position, throwDirection.VectorNormalized, gameObject.tag);
+    }
     private void Die()
     {
         isDead = true;
