@@ -372,7 +372,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1f5568a8b1178994da556c42d6ad58dc, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fd8ca68137457b148bf6085ecc240cbf, type: 2}
   m_sharedMaterial: {fileID: -2458211763466052691, guid: 1f5568a8b1178994da556c42d6ad58dc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -436,7 +436,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &2869978169939858472
@@ -908,7 +908,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1f5568a8b1178994da556c42d6ad58dc, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0bb1c600caad2514686383558902d532, type: 2}
   m_sharedMaterial: {fileID: -2458211763466052691, guid: 1f5568a8b1178994da556c42d6ad58dc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -972,7 +972,7 @@ MonoBehaviour:
   m_margin: {x: 10.862915, y: 13.276794, z: 15.380859, w: 12.069855}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &4314356994631496587
@@ -1100,6 +1100,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStatusData: {fileID: 11400000, guid: 82dc898152d36dd42a38a5cf6aaddb24, type: 2}
+  saveData:
+    LastSaveTime: "2025-11-27 \uC624\uC804 2:23:07"
+    PlayerSaveData:
+      currentHp: 100
+    GameSaveData:
+      saveNumber: 1
+      SceneIndex: 1
 --- !u!1 &4762908200727966612
 GameObject:
   m_ObjectHideFlags: 0
