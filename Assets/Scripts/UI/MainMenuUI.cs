@@ -4,21 +4,114 @@ using UnityEngine;
 
 public class MainMenuUI : MonoBehaviour
 {
+    enum Frame
+    {
+        Main,
+        Select,
+        Setteing
+    }
+
+    Frame currentFrame;
+
+    private void Start()
+    {
+        Hide_SelecFrame();
+        Show_MainFrame();
+    }
+
+    // === main frame ===
+
+    [SerializeField]
+    GameObject MainFrame;
+
+    private void Show_MainFrame()
+    {
+        currentFrame = Frame.Main;
+
+        MainFrame.SetActive(true);
+    }
+
+    private void Hide_MainFrame()
+    {
+        currentFrame = Frame.Main;
+
+        MainFrame.SetActive(false);
+    }
+
+    // --- button ---
+
     public void OnClick_StartButton()
     {
-        if (GameManager.Instance != null)
-        {
-            // 나중에 Save/Load System 연결해서 GameManager가 SceneController.Instance.LoadScene(1)을 호출하도록 할 예정
-            GameManager.Instance.StartGame();
-        }
+        // show UI
+        Hide_MainFrame();
+        Show_SelectFrame();
+
+
+        //GameManager.Instance.StartGame();
     }
 
     public void OnClick_ExitButton()
     {
-        #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
                 Application.Quit();
-        #endif
+#endif
     }
+
+    // === Select frame ===
+
+    [SerializeField]
+    GameObject SelectFrame;
+
+    private void Show_SelectFrame()
+    {
+        currentFrame = Frame.Select;
+
+        SelectFrame.SetActive(true);
+    }
+
+    private void Hide_SelecFrame()
+    {
+        currentFrame = Frame.Select;
+
+        SelectFrame.SetActive(false);
+    }
+
+    // --- button ---
+    public void OnClick_SelectButton(int number)
+    {
+        if (GameManager.Instance != null)
+        {
+            SaveData data;
+
+
+            if (SaveSystem.Exists("Save" + number))
+            {
+                data = SaveSystem.Load<SaveData>("Save" + number);
+            }
+            else
+            {
+                data = new SaveData();
+                data.GameSaveData.saveNumber = number;
+            }
+
+            GameManager.Instance.saveData = data;
+
+            GameManager.Instance.StartGame();
+        }
+    }
+
+    public void OnClick_SelectFrameBackButton()
+    {
+        Hide_SelecFrame();
+        Show_MainFrame();
+    }
+
+    // Setteing frame
+
+    [SerializeField]
+    GameObject SetteingFrame;
+
+
 }

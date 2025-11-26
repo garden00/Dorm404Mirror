@@ -1,13 +1,13 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!21 &-7481680898699898345
+--- !u!21 &-3112337193997109997
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NanumGothicLight Atlas Material
+  m_Name: NotoSansKR-Medium Atlas Material
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -36,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 8934090845375826190}
+        m_Texture: {fileID: 1128243008747129680}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
@@ -118,42 +118,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: NanumGothicLight SDF
+  m_Name: NotoSansKR-Medium SDF
   m_EditorClassIdentifier: 
   hashCode: 0
-  material: {fileID: -7481680898699898345}
+  material: {fileID: -3112337193997109997}
   materialHashCode: 0
   m_Version: 1.1.0
-  m_SourceFontFileGUID: 991e99430fe92b7468241913929a80b7
-  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 991e99430fe92b7468241913929a80b7, type: 3}
-  m_SourceFontFile: {fileID: 12800000, guid: 991e99430fe92b7468241913929a80b7, type: 3}
+  m_SourceFontFileGUID: 3c0cbdd13e512f24296e307b051d6c8b
+  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 3c0cbdd13e512f24296e307b051d6c8b, type: 3}
+  m_SourceFontFile: {fileID: 12800000, guid: 3c0cbdd13e512f24296e307b051d6c8b, type: 3}
   m_AtlasPopulationMode: 1
   m_FaceInfo:
     m_FaceIndex: 0
-    m_FamilyName: NanumGothicOTF
-    m_StyleName: Light
+    m_FamilyName: Noto Sans KR
+    m_StyleName: Medium
     m_PointSize: 90
     m_Scale: 1
     m_UnitsPerEM: 1000
-    m_LineHeight: 99
-    m_AscentLine: 72
-    m_CapLine: 64
-    m_MeanLine: 45
+    m_LineHeight: 130.32
+    m_AscentLine: 104.4
+    m_CapLine: 67
+    m_MeanLine: 50
     m_Baseline: 0
-    m_DescentLine: -27.000002
-    m_SuperscriptOffset: 72
+    m_DescentLine: -25.92
+    m_SuperscriptOffset: 104.4
     m_SuperscriptSize: 0.5
-    m_SubscriptOffset: -27.000002
+    m_SubscriptOffset: -25.92
     m_SubscriptSize: 0.5
-    m_UnderlineOffset: -23.400002
+    m_UnderlineOffset: -13.500001
     m_UnderlineThickness: 4.5
-    m_StrikethroughOffset: 18
+    m_StrikethroughOffset: 20
     m_StrikethroughThickness: 4.5
-    m_TabWidth: 25
+    m_TabWidth: 20
   m_GlyphTable: []
   m_CharacterTable: []
   m_AtlasTextures:
-  - {fileID: 8934090845375826190}
+  - {fileID: 1128243008747129680}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 0
   m_ClearDynamicDataOnBuild: 0
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_FallbackFontAssetTable: []
   m_CreationSettings:
     sourceFontFileName: 
-    sourceFontFileGUID: 991e99430fe92b7468241913929a80b7
+    sourceFontFileGUID: 3c0cbdd13e512f24296e307b051d6c8b
     pointSizeSamplingMode: 0
     pointSize: 90
     padding: 9
@@ -242,13 +242,13 @@ MonoBehaviour:
   boldSpacing: 7
   italicStyle: 35
   tabSize: 10
---- !u!28 &8934090845375826190
+--- !u!28 &1128243008747129680
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NanumGothicLight Atlas
+  m_Name: NotoSansKR-Medium Atlas
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000

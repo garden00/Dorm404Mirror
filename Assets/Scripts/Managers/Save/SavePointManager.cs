@@ -26,25 +26,35 @@ public class SavePointManager : MonoBehaviour
     }
     #endregion
 
+    SavePoint curSavePoint;
+
+    private void Update()
+    {
+        if (curSavePoint && Input.GetKeyDown(KeyCode.I))
+        {
+            // save
+            Debug.Log("Saved");
+            SaveSystem.Save<SaveData>(GameManager.Instance.saveData, "Save" + GameManager.Instance.saveData.GameSaveData.saveNumber);
+
+            // player heal
+            PlayerManager.Instance.Status.Healing(); 
+        }
+    }
+
     public void OnEnterSavePoint(SavePoint savePoint)
     {
         // show UI
+        curSavePoint = savePoint;
     }
 
-    public void OnStaySavePoint(SavePoint savePoint)
-    {
+    //public void OnStaySavePoint(SavePoint savePoint)
+    //{
 
-
-
-        if(Input.GetKeyDown(KeyCode.I))
-        {
-            //SaveSystem.Save <= GameManager.gameData, player.position, savePoint
-            //PlayerManager.playerStatus.Healing()
-        }
-    }
+    //}
 
     public void OnExitSavePoint(SavePoint savePoint)
     {
         // hide UI
+        curSavePoint = null;
     }
 }

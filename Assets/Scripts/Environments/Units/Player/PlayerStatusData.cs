@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum PlayerState
@@ -101,6 +99,11 @@ public class PlayerStatusData : ScriptableObject
         currentChargingPower = 0;
         ViewDirection = EightDirection.Down;
         CurrentState = PlayerState.Idle;
+    }
+
+    public void Healing()
+    {
+        currentHealth = maxHealth;
     }
 
     public void SetState(PlayerState newState)
