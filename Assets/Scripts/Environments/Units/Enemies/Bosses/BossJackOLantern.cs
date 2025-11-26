@@ -307,6 +307,13 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
         bossAnim.IsDashing = false;
 
         bossAnim.PlayDeath();
+
+        GateOpenTrigger gateTrigger = FindObjectOfType<GateOpenTrigger>();
+        if (gateTrigger != null)
+        {
+            gateTrigger.SetBossDead();
+        }
+
         StartCoroutine(DieRoutine());
     }
 
