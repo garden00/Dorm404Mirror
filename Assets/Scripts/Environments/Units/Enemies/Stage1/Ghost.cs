@@ -11,7 +11,7 @@ public class Ghost : MonoBehaviour, IDamageable
     private float attackTimer = 0f;
 
     [Header("Health")]
-    [SerializeField] private int maxHealth = 1;   
+    [SerializeField] private int maxHealth = 1;
     private int currentHealth;
     public bool IsDead { get; private set; } = false;
 
@@ -26,21 +26,35 @@ public class Ghost : MonoBehaviour, IDamageable
     [SerializeField] private LayerMask obstacleMask;  // 벽/문 타일맵 레이어
 
     [Header("Random Move")]
-    [SerializeField] private float moveSpeed = 2f;          // 이동 속도
-    [SerializeField] private float moveDuration = 0.3f;     // 한 번 움직이는 시간
+    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float moveDuration = 0.3f;     // 한 칸 이동하는 데 걸리는 시간
     [SerializeField] private Vector2 moveIntervalRange = new Vector2(1f, 3f); // 다음 이동까지 대기시간 랜덤
+    [SerializeField] private float gridSize = 1f;           // 타일 한 칸 크기 (타일이 1x1이면 1)
 
     private float moveTimer = 0f;
-    private float moveTimeLeft = 0f;
     private float currentMoveWait = 1f;
-    private Vector3 currentMoveDir = Vector3.zero;
+
+    // 그리드 이동용
+    private bool isMoving = false;
+    private Vector3 moveStartPos;
+    private Vector3 moveTargetPos;
+    private float moveProgress = 0f;
+
 
     // 투사체가 살아있는 동안은 이동/공격 금지
     private bool waitingProjectile = false;
     private GameObject currentProjectile;
+    private Vector3 SnapToGrid(Vector3 pos)
+    {
+        float x = Mathf.Round(pos.x / gridSize) * gridSize;
+        float y = Mathf.Round(pos.y / gridSize) * gridSize;
+        return new Vector3(x, y, pos.z);
+    }
+
 
     private void Start()
     {
+        transform.position = SnapToGrid(transform.position);
         anim = GetComponent<GhostAnimatorController>();
         currentHealth = maxHealth;
 
@@ -186,55 +200,76 @@ public class Ghost : MonoBehaviour, IDamageable
     #endregion
 
     #region 랜덤 이동
-
     private void Wander()
     {
-        // 현재 이동 중이면 계속 이동
-        if (moveTimeLeft > 0f)
+        // 이미 한 칸으로 이동 중이면 Lerp
+        if (isMoving)
         {
-            float dt = Time.deltaTime;
-            Vector3 nextPos = transform.position + currentMoveDir * moveSpeed * dt;
+            moveProgress += Time.deltaTime / moveDuration;
+            moveProgress = Mathf.Clamp01(moveProgress);
 
-            // 앞에 벽이 있으면 이동 취소
-            if (obstacleMask.value != 0)
+            transform.position = Vector3.Lerp(moveStartPos, moveTargetPos, moveProgress);
+
+            if (moveProgress >= 1f)
             {
-                RaycastHit2D hit = Physics2D.Linecast(transform.position, nextPos, obstacleMask);
-                if (hit.collider != null)
-                {
-                    moveTimeLeft = 0f;
-                    return;
-                }
+                isMoving = false;
+                transform.position = moveTargetPos; // 오차 보정
             }
 
-            transform.position = nextPos;
-            moveTimeLeft -= dt;
             return;
         }
 
-        // 이동 중이 아니면, 일정 시간 기다렸다가 랜덤 방향으로 한 번 이동
+        // 이동 중이 아니면 대기했다가 한 칸 이동 시도
         moveTimer += Time.deltaTime;
-        if (moveTimer >= currentMoveWait)
+        if (moveTimer < currentMoveWait)
+            return;
+
+        // 대기 시간 경과 → 다음 이동 준비
+        moveTimer = 0f;
+        currentMoveWait = Random.Range(moveIntervalRange.x, moveIntervalRange.y);
+
+        // 현재 위치를 먼저 그리드에 맞춤
+        Vector3 origin = SnapToGrid(transform.position);
+        transform.position = origin;
+
+        // 4방향 중 하나 랜덤 선택
+        int idx = Random.Range(0, 4);
+        EightDirection d8;
+        switch (idx)
         {
-            moveTimer = 0f;
-            currentMoveWait = Random.Range(moveIntervalRange.x, moveIntervalRange.y);
-
-            // 4방향 중 하나 랜덤 선택 (유령 스프라이트가 4방향이니까)
-            int idx = Random.Range(0, 4);
-            EightDirection d8;
-            switch (idx)
-            {
-                case 0: d8 = EightDirection.Down; break;
-                case 1: d8 = EightDirection.Left; break;
-                case 2: d8 = EightDirection.Up; break;
-                default: d8 = EightDirection.Right; break;
-            }
-
-            throwDirection = d8;                      // 바라보는 방향 업데이트
-            currentMoveDir = d8.VectorNormalized;     // 실제 이동 방향
-            UpdateAnimatorDirectionByVector(currentMoveDir);
-
-            moveTimeLeft = moveDuration;
+            case 0: d8 = EightDirection.Down; break;
+            case 1: d8 = EightDirection.Left; break;
+            case 2: d8 = EightDirection.Up; break;
+            default: d8 = EightDirection.Right; break;
         }
+
+        Vector3 dir = d8.VectorNormalized;
+        if (dir.sqrMagnitude < 0.0001f)
+            return;
+
+        // 목표 위치 = 한 칸( gridSize ) 이동한 위치
+        Vector3 target = origin + dir * gridSize;
+
+        // 이동 경로에 벽/문이 있는지 미리 체크
+        if (obstacleMask.value != 0)
+        {
+            RaycastHit2D hit = Physics2D.Linecast(origin, target, obstacleMask);
+            if (hit.collider != null)
+            {
+                // 앞에 벽이 있으면 그냥 그 자리에서 멈춤 (이동 취소)
+                return;
+            }
+        }
+
+        // 실제 이동 시작
+        isMoving = true;
+        moveProgress = 0f;
+        moveStartPos = origin;
+        moveTargetPos = target;
+
+        // 바라보는 방향 & 애니 방향도 갱신
+        throwDirection = d8;
+        UpdateAnimatorDirectionByVector(dir);
     }
 
     // 이동/조준 방향 벡터를 가지고 유령 애니 방향(0:down,1:left,2:up,3:right) 바꾸기
