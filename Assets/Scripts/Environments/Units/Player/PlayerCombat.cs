@@ -106,6 +106,31 @@ public class PlayerCombat : MonoBehaviour, IDamageable
         status.RaiseOnHitEvent(projectile.MoveDirection == EightDirection.None ? -status.ViewDirection: projectile.MoveDirection);
     }
 
+
+    // 개구리 같은 근접 공격용
+    public void ReceiveMeleeDamage(int damage, Vector3 attackDir)
+    {
+        if (invincibleTimer > 0) return;
+
+        status.CurrentHealth -= damage;
+        invincibleTimer = invincibleTime;
+
+        // ★★★ 넉백 방향 정수
+        Vector3 kbDir = attackDir;
+
+        if (kbDir.sqrMagnitude < 0.001f)
+            kbDir = -status.ViewDirection;
+
+        if (Mathf.Abs(kbDir.x) > Mathf.Abs(kbDir.y))
+            kbDir = new Vector3(Mathf.Sign(kbDir.x), 0, 0);   // 좌우 고정
+        else
+            kbDir = new Vector3(0, Mathf.Sign(kbDir.y), 0);   // 상하 고정
+
+        // 넉백 이벤트 전달
+        status.RaiseOnHitEvent(kbDir);
+    }
+
+
     private void TryReleaseChargedAttack()
     {
         if (status.IsMaxCharged)
