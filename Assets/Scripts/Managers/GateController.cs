@@ -18,4 +18,11 @@ public class GateController : MonoBehaviour
         if (gateAnimator != null)
             gateAnimator.SetTrigger("Open");
     }
+
+    void OnDestroy()
+    {
+        if (EnemyManager.Instance != null)
+            EnemyManager.Instance.OnAllEnemiesDead -= OpenGate;
+    }
+
 }

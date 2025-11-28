@@ -218,7 +218,8 @@ MonoBehaviour:
   sightAngle: 90
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   moveSpeed: 2
   moveDuration: 0.3
   moveIntervalRange: {x: 1, y: 3}
+  gridSize: 1

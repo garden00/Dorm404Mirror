@@ -34,10 +34,14 @@ public class PortraitManager : MonoBehaviour, IPortraitProvider
 
     public Sprite GetPortrait(string speakerName, int expressionId)
     {
+        Debug.Log($"GetPortrait »£√‚µ  / Speaker: {speakerName}, ID: {expressionId}");
+
         if (_portraitDict.TryGetValue(speakerName, out List<Sprite> expressions))
         {
+            Debug.Log($"Speaker ∏≈ƒ™µ , expression count = {expressions.Count}");
             if (expressionId >= 0 && expressionId < expressions.Count)
             {
+                Debug.Log("√ ªÛ»≠ π›»Ø«‘");
                 return expressions[expressionId];
             }
             Debug.LogWarning($"Expression ID {expressionId} out of range for {speakerName}.");
