@@ -73,7 +73,7 @@ public class TalkManager : MonoBehaviour
         _repository = repositoryProvider as ITalkRepository;
         _view = viewProvider as IDialogueView;
         _typer = typeEffectProvider as ITypeEffect;
-        //_portraits = portraitProvider as IPortraitProvider;
+        _portraits = portraitProvider as IPortraitProvider;
 
         _session = new TalkSession();
 
@@ -97,7 +97,7 @@ public class TalkManager : MonoBehaviour
     private ITalkRepository _repository;
     private IDialogueView _view;
     private ITypeEffect _typer;
-    //private IPortraitProvider _portraits;
+    private IPortraitProvider _portraits;
 
     private TalkSession _session;
 
@@ -173,8 +173,8 @@ public class TalkManager : MonoBehaviour
         _view.SetSpeakerName(line.Speaker);
 
         // 2. 초상화 설정
-        //Sprite portrait = _portraits.GetPortrait(line.Speaker, line.PortraitId);
-        //_view.SetPortrait(portrait);
+        Sprite portrait = _portraits.GetPortrait(line.Speaker, line.PortraitId);
+        _view.SetPortrait(portrait);
 
         // 3. 텍스트 효과 적용 (ITypeEffect에 위임)
         _typer.Run(line.Text, _view.DialogueTextComponent, OnTypingComplete);

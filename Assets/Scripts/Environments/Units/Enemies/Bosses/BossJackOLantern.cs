@@ -314,6 +314,9 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
             gateTrigger.SetBossDead();
         }
 
+        EnemyManager.Instance.NotifyBossDead();
+
+
         StartCoroutine(DieRoutine());
     }
 

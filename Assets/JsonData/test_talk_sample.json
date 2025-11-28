@@ -87,17 +87,6 @@
     ]
   },
   {
-    "sceneId": 100,
-    "lines": [
-      {
-        "speaker": "주인공",
-        "portrait": 0,
-        "effect": 0,
-        "text": ""
-      }
-    ]
-  },
-  {
     "sceneId": 200,
     "lines": [
       {

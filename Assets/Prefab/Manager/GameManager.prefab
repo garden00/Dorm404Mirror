@@ -373,7 +373,7 @@ MonoBehaviour:
   m_text: Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fd8ca68137457b148bf6085ecc240cbf, type: 2}
-  m_sharedMaterial: {fileID: -2458211763466052691, guid: 1f5568a8b1178994da556c42d6ad58dc, type: 2}
+  m_sharedMaterial: {fileID: 9207388187906446011, guid: fd8ca68137457b148bf6085ecc240cbf, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -790,8 +790,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4403034078309886896}
-  - component: {fileID: 2618894918709990285}
   - component: {fileID: 2158975447456571323}
+  - component: {fileID: 2618894918709990285}
   m_Layer: 0
   m_Name: DataManager
   m_TagString: Untagged
@@ -814,19 +814,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 274757144188799030}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2618894918709990285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3191472949585768636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a62d2f6f3f63d8b45b288b03bd4ff16e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  talkJsonFile: {fileID: 4900000, guid: ea89c7c27bc0f884a80e64052f76e733, type: 3}
 --- !u!114 &2158975447456571323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -839,7 +826,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd2bf57e75dcb364b89d3ccd1c70b071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portraitDatabase: []
+  portraitDatabase:
+  - speakerName: "\uC8FC\uC778\uACF5"
+    expressions:
+    - {fileID: 21300000, guid: 43ef6d9d17520b04db33c49163908d4b, type: 3}
+    - {fileID: 21300000, guid: 17cbe347cc5e09a48b54a45157385009, type: 3}
+    - {fileID: 21300000, guid: 2465c507490da234ebd450ce1a4c0ecb, type: 3}
+    - {fileID: 21300000, guid: 0c81188bd19d6814a839606adc1a1785, type: 3}
+    - {fileID: 21300000, guid: f266147f432c993488f3822488e73b75, type: 3}
+--- !u!114 &2618894918709990285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3191472949585768636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62d2f6f3f63d8b45b288b03bd4ff16e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  talkJsonFile: {fileID: 4900000, guid: 9e1713b3d4acf2b4f9c7885329c11c8e, type: 3}
 --- !u!1 &3650508079457509324
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +916,7 @@ MonoBehaviour:
   m_text: Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0bb1c600caad2514686383558902d532, type: 2}
-  m_sharedMaterial: {fileID: -2458211763466052691, guid: 1f5568a8b1178994da556c42d6ad58dc, type: 2}
+  m_sharedMaterial: {fileID: 2788546172123799544, guid: 0bb1c600caad2514686383558902d532, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1141,8 +1148,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: 100}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 66.7, y: -87.3}
+  m_SizeDelta: {x: 190, y: 190}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6964620584189202037
 CanvasRenderer:
@@ -1165,7 +1172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.89019614, g: 0.9215687, b: 0.8196079, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1279,7 +1286,7 @@ MonoBehaviour:
   repositoryProvider: {fileID: 2618894918709990285}
   viewProvider: {fileID: 4332346492751603745}
   typeEffectProvider: {fileID: 2301658734006946545}
-  portraitProvider: {fileID: 2618894918709990285}
+  portraitProvider: {fileID: 2158975447456571323}
 --- !u!1 &7490298432195546030
 GameObject:
   m_ObjectHideFlags: 0

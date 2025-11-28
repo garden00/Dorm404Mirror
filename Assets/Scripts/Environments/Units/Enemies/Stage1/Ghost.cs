@@ -331,6 +331,12 @@ public class Ghost : MonoBehaviour, IDamageable
             rb.isKinematic = true;
         }
 
+        if (EnemyManager.Instance != null)
+        {
+            EnemyManager.Instance.NotifyEnemyDead();
+        }
+        // death enemy cnt
+
         Destroy(gameObject, 0.7f);
     }
 
