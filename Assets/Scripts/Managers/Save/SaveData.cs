@@ -1,6 +1,36 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
+
+[Serializable]
+public struct Vector3Data
+{
+    public float x;
+    public float y;
+    public float z;
+
+    public Vector3Data(Vector3 v)
+    {
+        x = v.x;
+        y = v.y;
+        z = v.z;
+    }
+    public Vector3Data(float _x, float _y, float _z)
+    {
+        x = _x;
+        y = _y;
+        z = _z;
+    }
+
+    public Vector3 ToVector3() => new Vector3(x, y, z);
+
+    public static implicit operator Vector3(Vector3Data v)
+    => new Vector3(v.x, v.y, v.z);
+
+    public static implicit operator Vector3Data(Vector3 v)
+        => new Vector3Data(v.x, v.y, v.z);
+}
 
 [Serializable]
 public class SaveData
@@ -30,26 +60,26 @@ public class SaveData
 [Serializable]
 public class PlayerSaveData
 {
-    public int currentHp;
+    public Vector3Data pos;
 
     public PlayerSaveData()
     {
-        currentHp = 100;
+        pos = new Vector3Data();
     }
 }
 
 [Serializable]
 public class GameSaveData
 {
-    public int saveNumber;
+    public int saveNumber; 
     public int SceneIndex;
-    public Vector3? savePointPosition;
+    //public Vector3 savePointPosition;
 
     public GameSaveData()
     {
         saveNumber = 1;
         SceneIndex = 1;
-        savePointPosition = null;
+        //savePointPosition = Vector3.zero;
     }
 }
 

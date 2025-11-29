@@ -16,6 +16,8 @@ public class SavePointManager : MonoBehaviour
             return;
         }
         Instance = this;
+
+        curSavePoint = null;
     }
 
     void OnDestroy()
@@ -30,14 +32,30 @@ public class SavePointManager : MonoBehaviour
 
     private void Update()
     {
-        if (curSavePoint && Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.O))
         {
-            // save
-            Debug.Log("Saved");
-            SaveSystem.Save<SaveData>(GameManager.Instance.saveData, "Save" + GameManager.Instance.saveData.GameSaveData.saveNumber);
+
 
             // player heal
-            PlayerManager.Instance.Status.Healing(); 
+            PlayerManager.Instance.Status.Healing();
+
+            // save
+            Debug.Log("Saved f");
+            GameManager.Instance.Save(curSavePoint);
+
+        }
+
+        if (curSavePoint && Input.GetKeyDown(KeyCode.I))
+        {
+
+
+            // player heal
+            PlayerManager.Instance.Status.Healing();
+
+            // save
+            Debug.Log("Saved");
+            GameManager.Instance.Save(curSavePoint);
+
         }
     }
 

@@ -57,21 +57,47 @@ public class GameManager : MonoBehaviour
         //playerStatusData.OnPlayerDeath += PlayerDeath;
     }
 
-    public void StartGame()
+    public void StartGame(SaveData data)
     {
-        SceneController.Instance.LoadScene(1);
+        //
+        saveData = data;
+        StartCoroutine(ApplyData());
     }
+
+    public void Save(SavePoint point)
+    {
+
+
+        saveData.GameSaveData.SceneIndex = SceneController.Instance.SceneNumber;
+        if (point != null)
+            saveData.PlayerSaveData.pos = point.transform.position;
+
+        Debug.Log("save scene : " + saveData.GameSaveData.SceneIndex);
+        SaveSystem.Save<SaveData>(saveData, "Save" + saveData.GameSaveData.saveNumber);
+    }
+
+    private IEnumerator ApplyData()
+    {
+        // load 까지 기다리기
+        yield return SceneController.Instance.LoadSceneAsync(saveData.GameSaveData.SceneIndex);
+
+        // load 완료 후 player 위치
+        if (saveData.PlayerSaveData.pos != Vector3.zero)
+            yield return PlayerManager.Instance.transform.position = saveData.PlayerSaveData.pos;
+
+        yield return null;
+
+    }
+
+
 
     private IEnumerator RestartGame()
     {
-
-
         UIManager.Instance.FadeOut(1f);
         yield return new WaitForSeconds(1.5f);
 
-
-        // 나중에 save system이랑 연결
-        SceneController.Instance.LoadScene(SceneController.Instance.SceneNumber);
+        // save data 적용
+        yield return ApplyData();
 
         yield return null;
     }

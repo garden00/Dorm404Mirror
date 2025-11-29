@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class MainMenuUI : MonoBehaviour
 {
-    enum Frame
-    {
-        Main,
-        Select,
-        Setteing
-    }
+    //enum Frame
+    //{
+    //    Main,
+    //    Select,
+    //    Setteing
+    //}
 
-    Frame currentFrame;
+    //Frame currentFrame;
 
     private void Start()
     {
@@ -26,14 +26,14 @@ public class MainMenuUI : MonoBehaviour
 
     private void Show_MainFrame()
     {
-        currentFrame = Frame.Main;
+        //currentFrame = Frame.Main;
 
         MainFrame.SetActive(true);
     }
 
     private void Hide_MainFrame()
     {
-        currentFrame = Frame.Main;
+        //currentFrame = Frame.Main;
 
         MainFrame.SetActive(false);
     }
@@ -66,14 +66,14 @@ public class MainMenuUI : MonoBehaviour
 
     private void Show_SelectFrame()
     {
-        currentFrame = Frame.Select;
+        //currentFrame = Frame.Select;
 
         SelectFrame.SetActive(true);
     }
 
     private void Hide_SelecFrame()
     {
-        currentFrame = Frame.Select;
+        //currentFrame = Frame.Select;
 
         SelectFrame.SetActive(false);
     }
@@ -96,9 +96,7 @@ public class MainMenuUI : MonoBehaviour
                 data.GameSaveData.saveNumber = number;
             }
 
-            GameManager.Instance.saveData = data;
-
-            GameManager.Instance.StartGame();
+            GameManager.Instance.StartGame(data);
         }
     }
 

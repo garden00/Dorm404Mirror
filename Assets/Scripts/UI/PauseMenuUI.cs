@@ -77,11 +77,12 @@ public class PauseMenuController : MonoBehaviour
         Debug.Log("[PauseMenu] Exit 버튼 클릭");
 
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Title");
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+        SceneController.Instance.LoadScene(0);
+//#if UNITY_EDITOR
+//        UnityEditor.EditorApplication.isPlaying = false;
+//#endif
     }
-#endif
+
     private void Save()
     {
     }

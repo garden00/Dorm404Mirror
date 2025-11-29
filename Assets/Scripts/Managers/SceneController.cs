@@ -83,7 +83,7 @@ public class SceneController : MonoBehaviour
         StartCoroutine(LoadSceneAsync(sceneNumber));
     }
 
-    private IEnumerator LoadSceneAsync(string sceneName)
+    public IEnumerator LoadSceneAsync(string sceneName)
     {
         // UIManager에게 로딩 화면 표시 요청
         UIManager.Instance?.FadeOut(0.5f);
@@ -109,7 +109,7 @@ public class SceneController : MonoBehaviour
         UIManager.Instance.ShowLoadingScreen(false);
         UIManager.Instance?.FadeIn(0.5f);
     }
-    private IEnumerator LoadSceneAsync(int sceneNumber)
+    public IEnumerator LoadSceneAsync(int sceneNumber)
     {
         // UIManager에게 로딩 화면 표시 요청
         UIManager.Instance?.FadeOut(0.5f);
