@@ -162,8 +162,9 @@ GameObject:
   - component: {fileID: 6423820717417729544}
   - component: {fileID: 1691111507442437835}
   - component: {fileID: 3641998164104198303}
+  - component: {fileID: 8676816788041401807}
   m_Layer: 5
-  m_Name: UnitUI
+  m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -186,7 +187,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.7000122}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6423820717417729544
@@ -234,7 +235,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &3641998164104198303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,6 +253,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8676816788041401807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4560363198186205043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa87bd362f8b150468ce1e92b5067bae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpSlider: {fileID: 3300258872517013196}
 --- !u!1 &7775104403992656675
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +276,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4517463233987501417}
   - component: {fileID: 3300258872517013196}
-  - component: {fileID: 4014897540081882752}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -342,19 +355,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4014897540081882752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7775104403992656675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa87bd362f8b150468ce1e92b5067bae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hpSlider: {fileID: 3300258872517013196}
 --- !u!1 &8985294622832706671
 GameObject:
   m_ObjectHideFlags: 0
