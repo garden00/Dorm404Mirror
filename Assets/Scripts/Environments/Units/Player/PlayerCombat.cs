@@ -56,19 +56,31 @@ public class PlayerCombat : MonoBehaviour, IDamageable
         }
     }
 
-    public void ReceiveAttack(IProjectile projectile)
+    public void ReceiveAttack(DamageInfo info)
     {
-        //CameraManager.Instance?.WobbleEffect(projectile.MoveDirection, 0.1f * projectile.Damage);
+        // 카메라 흔들림
+        // CameraManager.Instance?.WobbleEffect(info.direction, 0.1f * info.damage);
 
-        if (IsReflectable(projectile))
+        // info.type이 Projectile이고, source가 IProjectile로 변환 가능하다면 'proj'에 담음
+        if (info.type == AttackType.Projectile && info.source is IProjectile proj)
         {
-            if (isCharging) AbsorbProjectile(projectile);
-            else ReflectProjectile(projectile);
+            // 투사체 반사 가능 여부 체크 (기존 함수 재활용)
+            if (IsReflectable(proj))
+            {
+                if (isCharging)
+                {
+                    AbsorbProjectile(proj); // 흡수
+                }
+                else
+                {
+                    ReflectProjectile(proj); // 반사
+                }
+                return; // 반사/흡수했으면 데미지 안 입고 종료
+            }
         }
-        else
-        {
-            TakeDamage(projectile);
-        }
+
+        // 3. 그 외 (근접 공격이거나, 반사 불가능한 투사체인 경우)
+        TakeDamage(info);
     }
 
     private bool IsReflectable(IProjectile projectile)
@@ -95,15 +107,15 @@ public class PlayerCombat : MonoBehaviour, IDamageable
         //projectile.Deactivate();
     }
 
-    private void TakeDamage(IProjectile projectile)
+    private void TakeDamage(DamageInfo damageInfo)
     {
         if (invincibleTimer > 0) return;
 
-        status.CurrentHealth -= projectile.Damage;
+        status.CurrentHealth -= damageInfo.damage;
         invincibleTimer = invincibleTime;
 
         // 피격 위치 전달 (넉백 계산용)
-        status.RaiseOnHitEvent(projectile.MoveDirection == EightDirection.None ? -status.ViewDirection: projectile.MoveDirection);
+        status.RaiseOnHitEvent(damageInfo.direction == EightDirection.None ? -status.ViewDirection : damageInfo.direction);
     }
 
 

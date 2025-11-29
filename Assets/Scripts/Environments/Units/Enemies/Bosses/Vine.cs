@@ -1,16 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Vine : MonoBehaviour, IDamageable, IProjectile
+public class Vine : MonoBehaviour, IDamageable, IAttacker
 {
 
     [SerializeField]
     int damage = 10;
-    int IProjectile.Damage => damage;
-
-    Vector3 IProjectile.MoveDirection => Vector3.zero;
-
+    int IAttacker.Damage => damage;
 
     [SerializeField]
     private int maxHealth = 3;
@@ -50,18 +48,14 @@ public class Vine : MonoBehaviour, IDamageable, IProjectile
         CurrentHealth = maxHealth;
     }
 
-    void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if (!active) return;
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            var damageable = other.GetComponent<IDamageable>();
-            if (damageable != null)
-            {
-                damageable.ReceiveAttack(this);
-            }
-        }
+            DamageInfo info = new DamageInfo(this, AttackType.Melee, damage);
 
+            other.gameObject.GetComponent<IDamageable>().ReceiveAttack(info);
+        }
     }
 
     [SerializeField] float previewTime = 1.0f;
@@ -118,20 +112,10 @@ public class Vine : MonoBehaviour, IDamageable, IProjectile
 
 
     // [ IDamageable 인터페이스 구현 ]
-    public void ReceiveAttack(IProjectile _projectile)
+    void IDamageable.ReceiveAttack(DamageInfo damageInfo)
     {
         if (!active) return;
         CurrentHealth -= 1;
-    }
-
-    void IProjectile.Fire(Vector3 _position, Vector3 _direction, string _ownerTag)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    void IProjectile.Reflect(Vector3 _position, Vector3 _direction, string _ownerTag)
-    {
-        throw new System.NotImplementedException();
     }
 
     void Die()

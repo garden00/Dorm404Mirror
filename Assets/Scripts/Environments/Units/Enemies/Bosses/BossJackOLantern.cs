@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
+public class BossJackOLantern : MonoBehaviour, IDamageable, IAttacker
 {
     [Header("Prefabs")]
     [SerializeField]
@@ -57,9 +57,7 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
 
     [SerializeField]
     int damage = 30;
-    int IProjectile.Damage => damage;
-
-    Vector3 IProjectile.MoveDirection => Vector3.zero;
+    int IAttacker.Damage => damage;
 
     bool isDetected;
     private bool isDead = false;
@@ -140,10 +138,10 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
 
 
     // [ IDamageable 인터페이스 구현 ]
-    public void ReceiveAttack(IProjectile _projectile)
+    public void ReceiveAttack(DamageInfo damageInfo)
     {
         int prev = CurrentHealth;
-        CurrentHealth -= _projectile.Damage;
+        CurrentHealth -= damageInfo.damage;
 
         if (CurrentHealth <= 0)
         {
@@ -231,11 +229,13 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     }
 
     // [ 패턴 2: 돌진 충돌 처리 ]
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (isDashing && other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<IDamageable>().ReceiveAttack(this);
+            DamageInfo info = new DamageInfo(this, AttackType.Melee, damage);
+
+            other.gameObject.GetComponent<IDamageable>().ReceiveAttack(info);
         }
     }
 
@@ -324,16 +324,5 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IProjectile
     {
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
-    }
-
-
-    void IProjectile.Fire(Vector3 _position, Vector3 _direction, string _ownerTag)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    void IProjectile.Reflect(Vector3 _position, Vector3 _direction, string _ownerTag)
-    {
-        throw new System.NotImplementedException();
     }
 }

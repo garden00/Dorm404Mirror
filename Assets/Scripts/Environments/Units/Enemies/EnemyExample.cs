@@ -51,10 +51,9 @@ public class EnemyExample : MonoBehaviour, IDamageable
 
     }
 
-    public void ReceiveAttack(IProjectile projectile)
+    public void ReceiveAttack(DamageInfo info)
     {
-        CurrentHealth = CurrentHealth - projectile.Damage;
-        return;
+        CurrentHealth -= info.damage;
     }
 
     private void ThrowCycle()

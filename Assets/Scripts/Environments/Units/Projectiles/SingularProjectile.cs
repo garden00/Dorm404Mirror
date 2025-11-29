@@ -41,7 +41,9 @@ public class SingularProjectile : MonoBehaviour, IProjectile
             var damageable = _object.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                damageable.ReceiveAttack(this);
+                DamageInfo info = new DamageInfo(this, AttackType.Projectile, damage, moveDirection);
+                other.gameObject.GetComponent<IDamageable>().ReceiveAttack(info);
+
                 Die();
             }
         }

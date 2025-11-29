@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Ghost : MonoBehaviour, IDamageable
+public class Ghost : MonoBehaviour, IDamageable, IAttacker
 {
     [Header("Attack")]
     [SerializeField] private GameObject projectilePrefab;
@@ -25,6 +25,10 @@ public class Ghost : MonoBehaviour, IDamageable
         }
     }
     public bool IsDead { get; private set; } = false;
+
+    [SerializeField]
+    private int damage;
+    int IAttacker.Damage => damage;
 
     [Header("Animation")]
     private GhostAnimatorController anim;
@@ -119,6 +123,16 @@ public class Ghost : MonoBehaviour, IDamageable
     }
 
     #region 공격 로직
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            DamageInfo info = new DamageInfo(this, AttackType.Melee, damage);
+
+            other.gameObject.GetComponent<IDamageable>().ReceiveAttack(info);
+        }
+    }
 
     private void AttackCycle()
     {
@@ -306,11 +320,11 @@ public class Ghost : MonoBehaviour, IDamageable
 
     #region IDamageable 구현 및 기존 함수
 
-    public void ReceiveAttack(IProjectile projectile)
+    public void ReceiveAttack(DamageInfo damageInfo)
     {
         if (IsDead) return;
 
-        CurrentHealth -= projectile.Damage;
+        CurrentHealth -= damageInfo.damage;
 
         if (CurrentHealth <= 0)
         {

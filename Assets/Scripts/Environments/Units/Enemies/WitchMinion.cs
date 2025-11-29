@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WitchMinion : MonoBehaviour, IDamageable
+public class WitchMinion : MonoBehaviour, IDamageable, IAttacker
 {
     [Header("Attack")]
     [SerializeField] private GameObject projectilePrefab;
@@ -18,6 +18,10 @@ public class WitchMinion : MonoBehaviour, IDamageable
     [SerializeField] private int maxHealth = 1;
     private int currentHealth;
     public bool IsDead { get; private set; } = false;
+
+    [SerializeField]
+    int damage;
+    int IAttacker.Damage => damage;
 
     [Header("Animation")]
     private GhostAnimatorController anim;
@@ -79,6 +83,15 @@ public class WitchMinion : MonoBehaviour, IDamageable
 
     #region 공격 로직
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            DamageInfo info = new DamageInfo(this, AttackType.Melee, damage);
+
+            other.gameObject.GetComponent<IDamageable>().ReceiveAttack(info);
+        }
+    }
     private void AttackCycle()
     {
         attackTimer += Time.deltaTime;
@@ -207,11 +220,11 @@ public class WitchMinion : MonoBehaviour, IDamageable
         }
     }
 
-    public void ReceiveAttack(IProjectile projectile)
+    public void ReceiveAttack(DamageInfo damageInfo)
     {
         if (IsDead) return;
 
-        currentHealth -= projectile.Damage;
+        currentHealth -= damageInfo.damage;
 
         if (currentHealth <= 0)
         {

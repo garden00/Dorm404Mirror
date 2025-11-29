@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SingularBeam : MonoBehaviour, IProjectile
 {
@@ -66,7 +67,8 @@ public class SingularBeam : MonoBehaviour, IProjectile
 
             if (hitInfo.collider.TryGetComponent<IDamageable>(out IDamageable target))
             {
-                target.ReceiveAttack(this);
+                DamageInfo info = new DamageInfo(this, AttackType.Projectile, damage, laserDirection);
+                target.ReceiveAttack(info);
             }
         }
         else

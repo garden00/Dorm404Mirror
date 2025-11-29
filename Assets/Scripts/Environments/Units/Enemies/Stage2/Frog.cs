@@ -1,6 +1,7 @@
+using System.Collections;
 using UnityEngine;
 
-public class Frog : MonoBehaviour, IDamageable
+public class Frog : MonoBehaviour, IDamageable, IAttacker
 {
     [Header("Movement")]
     [SerializeField] private float tileSize = 1f;     // 1칸 크기
@@ -20,6 +21,8 @@ public class Frog : MonoBehaviour, IDamageable
     [SerializeField] private float detectRangeX = 2f; // 좌우 2칸
     [SerializeField] private float yAttackThreshold = 0.3f;   // ★★★ 추가
 
+    [SerializeField] private int damage;
+    int IAttacker.Damage => damage;
 
     private bool isAttacking = false;
 
@@ -27,6 +30,7 @@ public class Frog : MonoBehaviour, IDamageable
     [SerializeField] private int maxHealth = 1;
     private int currentHealth;
     public bool IsDead { get; private set; } = false;
+
 
 
     private Animator anim;
@@ -69,7 +73,7 @@ public class Frog : MonoBehaviour, IDamageable
     }
 
 
-    // 이동 ★★★
+    // 이동 
     private void TryMove()
     {
         Vector3 start = transform.position;
@@ -97,7 +101,7 @@ public class Frog : MonoBehaviour, IDamageable
     }
 
 
-    private System.Collections.IEnumerator MoveRoutine(Vector3 target)
+    private IEnumerator MoveRoutine(Vector3 target)
     {
         Vector3 start = transform.position;
         float t = 0f;
@@ -114,6 +118,17 @@ public class Frog : MonoBehaviour, IDamageable
 
 
     // 공격: 개구리 x축 +- 2칸
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            DamageInfo info = new DamageInfo(this, AttackType.Melee, damage);
+
+            other.gameObject.GetComponent<IDamageable>().ReceiveAttack(info);
+        }
+    }
+
     private bool CanAttackPlayer()
     {
         float dx = Mathf.Abs(player.position.x - transform.position.x);
@@ -154,7 +169,7 @@ public class Frog : MonoBehaviour, IDamageable
         }
     }
 
-    // ★★★ 플레이어 기준으로 방향을 갱신하는 함수
+    // 플레이어 기준으로 방향을 갱신하는 함수
     private void UpdateLookDirection()
     {
         if (player == null) return;
@@ -177,11 +192,11 @@ public class Frog : MonoBehaviour, IDamageable
 
     
     // 데미지: 유령 투사체 맞았을 때만
-    public void ReceiveAttack(IProjectile projectile)
+    public void ReceiveAttack(DamageInfo damageInfo)
     {
         if (IsDead) return;
 
-        currentHealth -= projectile.Damage;
+        currentHealth -= damageInfo.damage;
         if (currentHealth <= 0)
         {
             Die();

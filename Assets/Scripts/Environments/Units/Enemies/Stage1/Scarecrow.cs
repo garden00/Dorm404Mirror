@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scarecrow : MonoBehaviour, IDamageable
+public class Scarecrow : MonoBehaviour, IDamageable, IAttacker
 {
     [Header("투사체 발사 관련")]
     [SerializeField] private GameObject projectlie;
@@ -20,6 +20,7 @@ public class Scarecrow : MonoBehaviour, IDamageable
 
     private ScarecrowAnimatorController animatorController;
 
+
     public int CurrentHealth
     {
         get => currentHealth;
@@ -33,6 +34,10 @@ public class Scarecrow : MonoBehaviour, IDamageable
             }
         }
     }
+
+    [SerializeField]
+    int damage;
+    int IAttacker.Damage => damage;
 
     void Start()
     {
@@ -51,6 +56,17 @@ public class Scarecrow : MonoBehaviour, IDamageable
             ThrowCycle();
         }
     }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            DamageInfo info = new DamageInfo(this, AttackType.Melee, damage);
+
+            other.gameObject.GetComponent<IDamageable>().ReceiveAttack(info);
+        }
+    }
+
     void UpdateDirectionToPlayer()
     {
         if (PlayerManager.Instance == null) return;
@@ -78,11 +94,11 @@ public class Scarecrow : MonoBehaviour, IDamageable
             return dir.y > 0 ? 2 : 0;
     }
 
-    public void ReceiveAttack(IProjectile projectile)
+    public void ReceiveAttack(DamageInfo damageInfo)
     {
         if (isDead) return;
 
-        CurrentHealth -= projectile.Damage;
+        CurrentHealth -= damageInfo.damage;
         animatorController?.PlayHit();
     }
 

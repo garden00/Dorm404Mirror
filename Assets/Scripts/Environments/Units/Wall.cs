@@ -7,7 +7,7 @@ public class Wall : MonoBehaviour, IDamageable
     [SerializeField]
     private bool breakable;
 
-    public void ReceiveAttack(IProjectile _projectile)
+    public void ReceiveAttack(DamageInfo damageInfo)
     {
         if(breakable)
         {
