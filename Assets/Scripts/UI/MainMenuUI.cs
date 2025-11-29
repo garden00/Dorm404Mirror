@@ -100,6 +100,18 @@ public class MainMenuUI : MonoBehaviour
         }
     }
 
+    public void OnClick_DataDeleteButton(int number)
+    {
+        if (GameManager.Instance != null)
+        {
+            if (SaveSystem.Exists("Save" + number))
+            {
+                Debug.Log("Deleted " + number);
+                SaveSystem.Delete("Save" + number);
+            }
+        }
+    }
+
     public void OnClick_SelectFrameBackButton()
     {
         Hide_SelecFrame();
