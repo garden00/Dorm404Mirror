@@ -105,6 +105,8 @@ public class CameraManager : MonoBehaviour
             dir = Vector3.right;
         }
 
+        Debug.Log("camera : " + magnitude);
+
         while (timer < time)
         {
             offset = new Vector3(dir.x * magnitude * Mathf.Cos(30 * timer), dir.y * magnitude * Mathf.Cos(30 * timer), 0);

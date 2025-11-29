@@ -14,6 +14,7 @@ public class PlayerCombat : MonoBehaviour, IDamageable
     [Header("Settings")]
     [SerializeField] private float invincibleTime = 1.0f;
     [SerializeField] private GameObject chargingAttackProjectilePrefab;
+    [SerializeField] private float WobbleEffectPower = 0.05f;
 
     private float invincibleTimer;
     private bool isCharging;
@@ -58,13 +59,14 @@ public class PlayerCombat : MonoBehaviour, IDamageable
 
     public void ReceiveAttack(DamageInfo info)
     {
-        // 카메라 흔들림
-        // CameraManager.Instance?.WobbleEffect(info.direction, 0.1f * info.damage);
 
         // info.type이 Projectile이고, source가 IProjectile로 변환 가능하다면 'proj'에 담음
         if (info.type == AttackType.Projectile && info.source is IProjectile proj)
         {
-            // 투사체 반사 가능 여부 체크 (기존 함수 재활용)
+            // 카메라 흔들림
+            StartCoroutine(CameraManager.Instance.WobbleEffect(info.direction, WobbleEffectPower * info.damage * 0.5f));
+
+            // 투사체 반사 가능 여부 체크
             if (IsReflectable(proj))
             {
                 if (isCharging)
@@ -111,6 +113,9 @@ public class PlayerCombat : MonoBehaviour, IDamageable
     {
         if (invincibleTimer > 0) return;
 
+        // 카메라 흔들림
+        StartCoroutine(CameraManager.Instance.WobbleEffect(damageInfo.direction, WobbleEffectPower * damageInfo.damage));
+
         status.CurrentHealth -= damageInfo.damage;
         invincibleTimer = invincibleTime;
 
@@ -127,7 +132,7 @@ public class PlayerCombat : MonoBehaviour, IDamageable
         status.CurrentHealth -= damage;
         invincibleTimer = invincibleTime;
 
-        // ★★★ 넉백 방향 정수
+        // 넉백 방향 정수
         Vector3 kbDir = attackDir;
 
         if (kbDir.sqrMagnitude < 0.001f)
