@@ -135,6 +135,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             // 제자리에 서있다가 맞았을 때 뒤로 밀림
+            if (Physics2D.Raycast(transform.position, hitSourcePos, 1.0f, wallLayer)) return;
             moveCoroutine = StartCoroutine(KnockbackRoutine(transform.position + hitSourcePos));
         }
     }
