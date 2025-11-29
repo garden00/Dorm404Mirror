@@ -34,7 +34,8 @@ Transform:
   m_LocalPosition: {x: 0.9, y: -3.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 176904842329102315}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9191708652291307522
@@ -178,6 +179,7 @@ MonoBehaviour:
     _index: 6
   throwCycleTime: 1.83
   maxHealth: 100
+  healthBar: {fileID: 1936543989657634874}
 --- !u!95 &5335232087439676104
 Animator:
   serializedVersion: 5
@@ -212,3 +214,128 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionIndex: 0
+--- !u!1001 &3271922810248601274
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 753340134819761795}
+    m_Modifications:
+    - target: {fileID: 141386967283480449, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 141386967283480449, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691111507442437835, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560363198186205043, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+      propertyPath: m_Name
+      value: UnitUI
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+--- !u!224 &176904842329102315 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3394670071196354897, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+  m_PrefabInstance: {fileID: 3271922810248601274}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1936543989657634874 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4014897540081882752, guid: 2f8f307a81810c544aa2611ebc6dca35, type: 3}
+  m_PrefabInstance: {fileID: 3271922810248601274}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa87bd362f8b150468ce1e92b5067bae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

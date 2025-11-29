@@ -14,6 +14,7 @@ public class Scarecrow : MonoBehaviour, IDamageable
 
     [Header("체력 관련")]
     [SerializeField] private int maxHealth = 100;
+    [SerializeField] private UnitHealthBar healthBar;
     private int currentHealth;
     private bool isDead = false;
 
@@ -25,6 +26,7 @@ public class Scarecrow : MonoBehaviour, IDamageable
         set
         {
             currentHealth = Mathf.Clamp(value, 0, maxHealth);
+            healthBar.UpdateHealth(currentHealth, maxHealth);
             if (currentHealth <= 0 && !isDead)
             {
                 Die();

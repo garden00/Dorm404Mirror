@@ -12,7 +12,18 @@ public class Ghost : MonoBehaviour, IDamageable
 
     [Header("Health")]
     [SerializeField] private int maxHealth = 1;
+    [SerializeField] private UnitHealthBar healthBar;
+
     private int currentHealth;
+    private int CurrentHealth
+    {
+        get => currentHealth;
+        set
+        {
+            currentHealth = value;
+            healthBar.UpdateHealth(currentHealth, maxHealth);
+        }
+    }
     public bool IsDead { get; private set; } = false;
 
     [Header("Animation")]
@@ -56,7 +67,7 @@ public class Ghost : MonoBehaviour, IDamageable
     {
         transform.position = SnapToGrid(transform.position);
         anim = GetComponent<GhostAnimatorController>();
-        currentHealth = maxHealth;
+        CurrentHealth = maxHealth;
 
         ApplyDirection(initialDirection);   // 초기 바라보는 방향 설정
 
@@ -299,11 +310,11 @@ public class Ghost : MonoBehaviour, IDamageable
     {
         if (IsDead) return;
 
-        currentHealth -= projectile.Damage;
+        CurrentHealth -= projectile.Damage;
 
-        if (currentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
-            currentHealth = 0;
+            CurrentHealth = 0;
             Die();
         }
         else
