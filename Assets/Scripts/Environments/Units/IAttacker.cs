@@ -17,6 +17,8 @@ public struct DamageInfo
     public Vector3 direction;     // 공격 방향 (Wobble 효과용)
     public IAttacker source;      // 공격한 놈 원본 (반사를 위해 필요)
 
+    public ProjectileEffect projectileEffect; 
+
     /// <summary>
     /// 공격 정보를 생성합니다.
     /// </summary>
@@ -30,6 +32,7 @@ public struct DamageInfo
         damage = _damage; 
         direction = _direction;
         source = _source;
+        projectileEffect = ProjectileEffect.Normal;
     }
 }
 

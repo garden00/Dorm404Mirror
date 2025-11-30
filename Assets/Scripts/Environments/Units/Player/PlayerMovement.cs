@@ -1,9 +1,6 @@
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 // 할것 조작감 개선
 
@@ -100,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         // 정확한 그리드 이동을 위해 sqrMagnitude 사용
         while ((targetPosition - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * status.speedMultiplier * Time.deltaTime);
 
             yield return null;
         }
@@ -135,6 +132,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             // 제자리에 서있다가 맞았을 때 뒤로 밀림
+            hitSourcePos = EightDirection.FromVector3(hitSourcePos);
             if (Physics2D.Raycast(transform.position, hitSourcePos, 1.0f, wallLayer)) return;
             moveCoroutine = StartCoroutine(KnockbackRoutine(transform.position + hitSourcePos));
         }

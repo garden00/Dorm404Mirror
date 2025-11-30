@@ -48,6 +48,8 @@ public class PlayerStatusData : ScriptableObject
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int maxChargingPower = 30;
 
+    public float speedMultiplier = 1f;
+
     // 런타임 변수 (Inspector에서 보려면 [SerializeField] 추가 가능)
     private int currentHealth;
     private int currentChargingPower;
@@ -101,9 +103,12 @@ public class PlayerStatusData : ScriptableObject
         CurrentState = PlayerState.Idle;
     }
 
-    public void Healing()
+    public void Healing(int amount = -1)
     {
-        currentHealth = maxHealth;
+        if (amount < 0)
+            currentHealth = maxHealth;
+        else
+            currentHealth += amount;
     }
 
     public void SetState(PlayerState newState)

@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEngine.GraphicsBuffer;
 
 // 할꺼 : 카메라 관련
 
-public class PlayerCombat : MonoBehaviour, IDamageable
+public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
 {
     private PlayerStatusData status;
     private ShieldController shield;
@@ -119,6 +120,22 @@ public class PlayerCombat : MonoBehaviour, IDamageable
         status.CurrentHealth -= damageInfo.damage;
         invincibleTimer = invincibleTime;
 
+        switch (damageInfo.projectileEffect)
+        {
+            case ProjectileEffect.Slow:
+                ApplySpeedChange(0.5f, 3f); // 3초간 속도 50%
+                break;
+            case ProjectileEffect.SpeedUp:
+                ApplySpeedChange(1.5f, 3f); // 3초간 속도 150%
+                break;
+            case ProjectileEffect.Poison:
+                ApplyPoison(5, 5f); // 5초간 틱당 5데미지
+                break;
+            case ProjectileEffect.Heal:
+                ApplyHeal(30); // 30 회복
+                break;
+        }
+
         // 피격 위치 전달 (넉백 계산용)
         status.RaiseOnHitEvent(damageInfo.direction == EightDirection.None ? -status.ViewDirection : damageInfo.direction);
     }
@@ -161,5 +178,56 @@ public class PlayerCombat : MonoBehaviour, IDamageable
                 proj?.Reflect(transform.position, shield.Direction, gameObject.tag);
             }
         }
+    }
+
+    // === IEffectable ===
+
+    public void ApplySpeedChange(float multiplier, float duration)
+    {
+        StartCoroutine(SpeedChangeRoutine(multiplier, duration));
+    }
+
+    private IEnumerator SpeedChangeRoutine(float multiplier, float duration)
+    {
+        status.speedMultiplier = multiplier;
+        var renderer = GetComponent<SpriteRenderer>();
+        if(multiplier > 1f)
+            renderer.color = Color.blue;
+        else
+            renderer.color = Color.green;
+
+            yield return new WaitForSeconds(duration);
+
+        status.speedMultiplier = 1f; // 원상 복구
+        renderer.color = Color.white;
+    }
+
+    public void ApplyPoison(int damagePerTick, float duration)
+    {
+        StartCoroutine(PoisonRoutine(damagePerTick, duration));
+    }
+
+    private IEnumerator PoisonRoutine(int damage, float duration)
+    {
+        var renderer = GetComponent<SpriteRenderer>();
+        renderer.color = Color.magenta; // 독 효과
+
+        float timer = 0f;
+        while (timer < duration)
+        {
+            // 독 데미지는 무적시간 무시
+            status.CurrentHealth -= damage;
+            // 독 데미지 연출 (깜빡임 등)
+
+            yield return new WaitForSeconds(1f);
+            timer += 1f;
+        }
+
+        renderer.color = Color.white; // 독 효과
+    }
+
+    public void ApplyHeal(int amount)
+    {
+        status.Healing(amount);
     }
 }
