@@ -878,6 +878,19 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 2465c507490da234ebd450ce1a4c0ecb, type: 3}
     - {fileID: 21300000, guid: 0c81188bd19d6814a839606adc1a1785, type: 3}
     - {fileID: 21300000, guid: f266147f432c993488f3822488e73b75, type: 3}
+  - speakerName: "\uAF2C\uB9C8 \uC720\uB839"
+    expressions:
+    - {fileID: 21300000, guid: 124889fa2b849ef4d928eedcd287b7ca, type: 3}
+    - {fileID: 21300000, guid: 81c1400636f358245a8000ebb7dcf4c5, type: 3}
+    - {fileID: 21300000, guid: d9e9539cdb8e6414888b5565460d213f, type: 3}
+  - speakerName: Guide
+    expressions:
+    - {fileID: 21300000, guid: dbe49e3777dfcc14cb088be93fa68359, type: 3}
+    - {fileID: 21300000, guid: 472eab31e3ad3fe4aa9362ed3f1ecfd0, type: 3}
+    - {fileID: 21300000, guid: 8283737e86a488d47998e847dda2b571, type: 3}
+    - {fileID: 21300000, guid: 81c1400636f358245a8000ebb7dcf4c5, type: 3}
+    - {fileID: 1684100089, guid: f6cbdcbb04f684e4ab5f52c16b984bcd, type: 3}
+    - {fileID: 0}
 --- !u!114 &2618894918709990285
 MonoBehaviour:
   m_ObjectHideFlags: 0

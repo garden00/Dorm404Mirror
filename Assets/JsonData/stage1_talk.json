@@ -277,19 +277,19 @@
     "lines": [
       {
         "speaker": "Guide",
-        "portrait": 0,
+        "portrait": 4,
         "effect": 0,
         "text": "왼쪽에 보이는 포탈은 세이브 포인트입니다."
       },
       {
         "speaker": "Guide",
-        "portrait": 0,
+        "portrait": 4,
         "effect": 0,
-        "text": "세이브 포인트에 도달하면 플레이 정보를 저장할 수 있습니다."
+        "text": "세이브 포인트에 도달한 후 I를 누르면 플레이 정보를 저장할 수 있습니다."
       },
       {
         "speaker": "Guide",
-        "portrait": 0,
+        "portrait": 4,
         "effect": 0,
         "text": "또한 체력 회복이 가능하니, 플레이에 참고해 주세요."
       }
@@ -366,19 +366,19 @@
       },
       {
         "speaker": "Guide",
-        "portrait": 0,
+        "portrait": 5,
         "effect": 0,
         "text": "매 스테이지에는 최종 보스가 존재합니다."
       },
       {
         "speaker": "Guide",
-        "portrait": 0,
+        "portrait": 5,
         "effect": 0,
         "text": "보스는 일반적인 공격 외에도 다양한 보스 패턴을 통해 플레이어를 공격합니다."
       },
       {
         "speaker": "Guide",
-        "portrait": 0,
+        "portrait": 5,
         "effect": 0,
         "text": "전략적인 방어를 통해 보스를 처치하세요."
       }

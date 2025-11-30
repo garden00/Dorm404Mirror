@@ -14250,7 +14250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2158975447456571323, guid: b63a66b69327bbd4794b1bdde5ec08a5, type: 3}
       propertyPath: portraitDatabase.Array.data[2].expressions.Array.size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2158975447456571323, guid: b63a66b69327bbd4794b1bdde5ec08a5, type: 3}
       propertyPath: portraitDatabase.Array.data[0].expressions.Array.data[0]
@@ -14300,6 +14300,14 @@ PrefabInstance:
       propertyPath: portraitDatabase.Array.data[2].expressions.Array.data[3]
       value: 
       objectReference: {fileID: 21300000, guid: 81c1400636f358245a8000ebb7dcf4c5, type: 3}
+    - target: {fileID: 2158975447456571323, guid: b63a66b69327bbd4794b1bdde5ec08a5, type: 3}
+      propertyPath: portraitDatabase.Array.data[2].expressions.Array.data[4]
+      value: 
+      objectReference: {fileID: 1684100089, guid: f6cbdcbb04f684e4ab5f52c16b984bcd, type: 3}
+    - target: {fileID: 2158975447456571323, guid: b63a66b69327bbd4794b1bdde5ec08a5, type: 3}
+      propertyPath: portraitDatabase.Array.data[2].expressions.Array.data[5]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2618894918709990285, guid: b63a66b69327bbd4794b1bdde5ec08a5, type: 3}
       propertyPath: talkJsonFile
       value: 
