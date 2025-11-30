@@ -178,8 +178,9 @@ MonoBehaviour:
   throwDirection:
     _index: 6
   throwCycleTime: 1.83
-  maxHealth: 100
+  maxHealth: 50
   healthBar: {fileID: 8461523247779092500}
+  damage: 10
 --- !u!95 &5335232087439676104
 Animator:
   serializedVersion: 5

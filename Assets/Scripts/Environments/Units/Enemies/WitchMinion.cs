@@ -35,10 +35,16 @@ public class WitchMinion : MonoBehaviour, IDamageable, IAttacker
 
     private void Start()
     {
-        anim = GetComponent<GhostAnimatorController>();
         currentHealth = maxHealth;
 
-        ApplyDirection(initialDirection);   // 초기 바라보는 방향 설정
+        anim = GetComponent<GhostAnimatorController>();
+        if (anim == null)
+        {
+            anim = gameObject.AddComponent<GhostAnimatorController>();
+        }
+        ApplyDirection(initialDirection);
+
+        anim.PlayIdle();
 
         if (anim != null)
             anim.PlayIdle();
@@ -197,7 +203,11 @@ public class WitchMinion : MonoBehaviour, IDamageable, IAttacker
 
     public void ApplyDirection(GhostDirection dir)
     {
-        if (anim == null) anim = GetComponent<GhostAnimatorController>();
+        if (anim == null)
+            anim = GetComponent<GhostAnimatorController>();
+        if (anim == null)
+            return;
+
 
         switch (dir)
         {
