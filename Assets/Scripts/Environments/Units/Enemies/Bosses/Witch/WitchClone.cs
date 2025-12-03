@@ -20,6 +20,8 @@ public class WitchClone : MonoBehaviour, IDamageable, IAttacker, IEffectable
     private bool hit;
     Transform target;
 
+    private WitchCloneAnimatorController animCtrl;
+
 
     public int Damage => attackDamage;
 
@@ -29,6 +31,8 @@ public class WitchClone : MonoBehaviour, IDamageable, IAttacker, IEffectable
     {
         currentHealth = maxHealth;
         hit = false;
+
+        animCtrl = GetComponent<WitchCloneAnimatorController>();
     }
 
     void Update()
@@ -43,6 +47,8 @@ public class WitchClone : MonoBehaviour, IDamageable, IAttacker, IEffectable
                     hit = true;
 
                 chargeDir = (target.position - transform.position).normalized;
+                animCtrl.SetDirection(chargeDir);
+
             }
             // 배율이 적용된 속도로 이동
             float finalSpeed = baseMoveSpeed * currentSpeedMultiplier;
@@ -55,6 +61,9 @@ public class WitchClone : MonoBehaviour, IDamageable, IAttacker, IEffectable
         isCharging = true;
         target = targetPos;
         // 일반 돌진보다 좀 더 빠르게 설정하고 싶다면 baseMoveSpeed를 높게 잡거나 여기서 조정
+
+        animCtrl.PlayAttack();
+
         Destroy(gameObject, 5f);
     }
 
@@ -89,8 +98,10 @@ public class WitchClone : MonoBehaviour, IDamageable, IAttacker, IEffectable
 
     private void Die()
     {
+        animCtrl.PlayDeath();
         OnDeath?.Invoke(this);
-        Destroy(gameObject);
+        
+        Destroy(gameObject, 0.7f);
     }
 
     // --- IEffectable 구현 ---

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7534119330337113745}
   - component: {fileID: 617851788860021345}
   - component: {fileID: 2235497366054705219}
+  - component: {fileID: 2947961434733418631}
+  - component: {fileID: 7469692316306455039}
   m_Layer: 0
   m_Name: BossWitch
   m_TagString: Untagged
@@ -181,6 +183,39 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2947961434733418631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2267159834209436640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31d398b4199e451488d06598d748fa6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &7469692316306455039
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2267159834209436640}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f639b5413885f034485cc89266bcc922, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5647273212158833839
 GameObject:
   m_ObjectHideFlags: 0
