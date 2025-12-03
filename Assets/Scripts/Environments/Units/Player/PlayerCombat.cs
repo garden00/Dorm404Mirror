@@ -112,32 +112,46 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
 
     private void TakeDamage(DamageInfo damageInfo)
     {
-        if (invincibleTimer > 0) return;
-
-        // 카메라 흔들림
-        StartCoroutine(CameraManager.Instance.WobbleEffect(damageInfo.direction, WobbleEffectPower * damageInfo.damage));
-
         switch (damageInfo.projectileEffect)
         {
+            case ProjectileEffect.Normal:
+                if (invincibleTimer > 0) return;
+
+                // 카메라 흔들림
+                StartCoroutine(CameraManager.Instance.WobbleEffect(damageInfo.direction, WobbleEffectPower * damageInfo.damage));
+
+                invincibleTimer = invincibleTime;
+                status.CurrentHealth -= damageInfo.damage;
+                // 피격 위치 전달 (넉백 계산용)
+                status.RaiseOnHitEvent(damageInfo.direction == EightDirection.None ? -status.ViewDirection : damageInfo.direction);
+                break;
+
+
+            case ProjectileEffect.Poison:
+                if (invincibleTimer > 0) return;
+
+                // 카메라 흔들림
+                StartCoroutine(CameraManager.Instance.WobbleEffect(damageInfo.direction, WobbleEffectPower * damageInfo.damage));
+
+                invincibleTimer = invincibleTime;
+                ApplyPoison(5, 5f); // 5초간 틱당 5데미지
+                status.CurrentHealth -= damageInfo.damage;
+                break;
+
             case ProjectileEffect.Slow:
                 ApplySpeedChange(0.5f, 3f); // 3초간 속도 50%
+                status.CurrentHealth -= damageInfo.damage;
                 break;
+
             case ProjectileEffect.SpeedUp:
                 ApplySpeedChange(1.5f, 3f); // 3초간 속도 150%
-                break;
-            case ProjectileEffect.Poison:
-                ApplyPoison(5, 5f); // 5초간 틱당 5데미지
+                status.CurrentHealth -= damageInfo.damage;
                 break;
             case ProjectileEffect.Heal:
                 ApplyHeal(30); // 30 회복
+                status.CurrentHealth -= damageInfo.damage;
                 break;
         }
-
-        status.CurrentHealth -= damageInfo.damage;
-        invincibleTimer = invincibleTime;
-
-        // 피격 위치 전달 (넉백 계산용)
-        status.RaiseOnHitEvent(damageInfo.direction == EightDirection.None ? -status.ViewDirection : damageInfo.direction);
     }
 
 
