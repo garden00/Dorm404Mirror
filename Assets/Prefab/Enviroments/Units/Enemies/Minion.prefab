@@ -154,14 +154,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37d9e73a632a99b48a640738b3ea98b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 2232517015468564534, guid: c9e34bd4af8e5584f96218f52cd7f546, type: 3}
-  firePoint: {fileID: 2650536995406979315}
-  attackInterval: 2
-  projectileSpeed: 6
-  projectileDamage: 2
-  attackRange: 7
-  maxHealth: 3
-  animatorController: {fileID: 0}
+  projectilePrefab: {fileID: 6356717255941525640, guid: 4e5c62f0a43fb3c44b0a3713507fc88f, type: 3}
+  lookDirection:
+    _index: 0
+  attackCycleTime: 2
+  maxHealth: 1
+  damage: 0
+  initialDirection: 0
   player: {fileID: 0}
   damage: 0
 --- !u!114 &8454971827538299212
