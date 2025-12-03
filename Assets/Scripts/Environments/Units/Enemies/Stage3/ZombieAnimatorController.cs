@@ -2,11 +2,37 @@ using UnityEngine;
 
 public class ZombieAnimatorController : MonoBehaviour
 {
-    public void PlayIdle() { }
-    public void PlayMove() { }
-    public void PlayAttack() { }
-    public void PlayHit() { }
-    public void PlayDeath() { }
+    [SerializeField] private Animator anim;
+    [SerializeField] private SpriteRenderer sr;
 
-    // 나중에 애니메이션 붙일 때 여기 구현하면 됨
+    private void Awake()
+    {
+        if (anim == null) anim = GetComponentInChildren<Animator>();
+        if (sr == null) sr = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    public void SetFlipX(bool flip)
+    {
+        sr.flipX = flip;
+    }
+
+    public void PlayIdle()
+    {
+        anim.SetBool("IsMoving", false);
+    }
+
+    public void PlayMove()
+    {
+        anim.SetBool("IsMoving", true);
+    }
+
+    public void PlayAttack()
+    {
+        anim.SetTrigger("IsAttacking");
+    }
+
+    public void PlayDeath()
+    {
+        anim.SetTrigger("Die");
+    }
 }

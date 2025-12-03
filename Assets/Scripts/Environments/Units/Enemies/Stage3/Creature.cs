@@ -17,6 +17,7 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
 
     private float moveTimer = 0f;
     private float currentMoveWait = 0.5f;
+    private Vector2 lastMoveDir = Vector2.zero;
 
     [Header("Attack (Laser)")]
     [SerializeField] private GameObject laserPrefab;   // SingularBeam
@@ -25,6 +26,12 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
 
     [SerializeField] private int projectileDamage = 2;  // IAttacker 데미지
     int IAttacker.Damage => projectileDamage;
+
+    [Header("Direct Attack (Melee)")]
+    [SerializeField] private float directAttackRange = 1f; // gridSize와 동일하게 사용
+    [SerializeField] private float attackInterval = 1f;
+    [SerializeField] private int contactDamage = 2;
+    private float lastAttackTime = -999f;
 
     [Header("Detection")]
     [SerializeField] private float detectRange = 8f;  // 플레이어 파악 범위
@@ -36,10 +43,19 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
     private int currentHealth;
     public bool IsDead { get; private set; } = false;
 
+    [Header("References")]
+    [SerializeField] private CreatureAnimatorController creatureAnim;
+    [SerializeField] private SpriteRenderer spriteRenderer; // flipX용
+
     private Rigidbody2D rb;
     private Collider2D col;
 
-    //private CreatureAnimatorController creatureAnim; // 애니 쓰고 싶으면 나중에 활성화
+    private Coroutine hitFlashRoutine;
+    private Color originalColor;
+
+
+    // 마지막 공격 방향 (스프라이트 변경 용입니다)
+    private Vector2 lastAttackDir = Vector2.right;
 
     // --- 유틸: 그리드 스냅 ---
     private Vector3 SnapToGrid(Vector3 pos)
@@ -49,18 +65,27 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
         return new Vector3(x, y, pos.z);
     }
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
+
+        if (creatureAnim == null)
+            creatureAnim = GetComponent<CreatureAnimatorController>();
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
+
     private void Start()
     {
         transform.position = SnapToGrid(transform.position);
 
+        originalColor = spriteRenderer.color;
+
         currentHealth = maxHealth;
 
-        rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<Collider2D>();
-
-        //rb.isKinematic = true;
-
-        //creatureAnim = GetComponent<CreatureAnimatorController>();
+        // 근접 공격 범위는 기본적으로 gridSize 1칸
+        directAttackRange = gridSize;
 
         // 플레이어 자동 탐색
         if (PlayerManager.Instance != null)
@@ -76,9 +101,9 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
         if (IsDead) return;
         if (player == null) return;
 
-        HandleMovement();    // 그리드 1칸 이동
-        RotateTowardPlayer();
-        HandleLaser();
+        HandleMovement();       // 그리드 1칸 이동
+        HandleDirectAttack();   // 1칸 범위 근접 공격
+        HandleLaser();          // 레이저 공격
     }
 
     // -------------------------------
@@ -98,7 +123,9 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
             {
                 isMoving = false;
                 transform.position = moveTargetPos;
-                //creatureAnim?.PlayIdle();
+
+                lastMoveDir = Vector2.zero;
+                creatureAnim?.SetMove(Vector2.zero);
             }
 
             return;
@@ -144,14 +171,72 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
         moveStartPos = origin;
         moveTargetPos = target;
 
-        //creatureAnim?.PlayMove();
+        lastMoveDir = dir;
+        creatureAnim?.SetMove(dir);
     }
+
+    // -------------------------------
+    //       근접 공격 (1칸 범위)
+    // -------------------------------
+    private void HandleDirectAttack()
+    {
+        if (player == null) return;
+
+        // 탐지 범위 밖이면 스킵
+        float distToPlayer = Vector2.Distance(transform.position, player.position);
+        if (distToPlayer > detectRange) return;
+
+        // 1칸(=gridSize) 거리 이내일 때만 근접 공격
+        if (distToPlayer > directAttackRange) return;
+
+        if (Time.time - lastAttackTime < attackInterval) return;
+        lastAttackTime = Time.time;
+
+        creatureAnim?.PlayAttack();
+        StartCoroutine(DelayedAttack(0.2f));
+    }
+
+    private IEnumerator DelayedAttack(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (player == null || IsDead) yield break;
+
+        float distToPlayer = Vector2.Distance(transform.position, player.position);
+        if (distToPlayer > directAttackRange + 0.1f) yield break;
+
+        Vector3 dir = (player.position - transform.position).normalized;
+        if (dir.sqrMagnitude < 0.0001f)
+            dir = lastAttackDir == Vector2.zero ? Vector2.right : (Vector3)lastAttackDir;
+
+        lastAttackDir = dir;
+        UpdateSpriteFlipByDir(lastAttackDir);
+
+        DamageInfo info = new DamageInfo(this, AttackType.Melee, contactDamage, dir);
+
+        IDamageable target = player.GetComponent<IDamageable>();
+        if (target != null) target.ReceiveAttack(info);
+    }
+
+    private IEnumerator HitFlash(float duration)
+    {
+        spriteRenderer.color = Color.red;
+
+        yield return new WaitForSeconds(duration);
+
+        spriteRenderer.color = originalColor;
+        hitFlashRoutine = null;
+    }
+
 
     // -------------------------------
     //       레이저 패턴 
     // -------------------------------
     private void HandleLaser()
     {
+        // 탐지 범위 밖이면 쿨타임만 증가시키고 실제 발사는 안 함
+        if (player == null) return;
+
         fireTimer += Time.deltaTime;
         if (fireTimer >= fireInterval)
         {
@@ -168,6 +253,20 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
             return;
         }
 
+        if (player == null) return;
+
+        Vector3 toPlayer = (player.position - transform.position);
+        float sqrDist = toPlayer.sqrMagnitude;
+        if (sqrDist > detectRange * detectRange)
+            return;
+
+        Vector3 dir = toPlayer.normalized;
+        if (dir.sqrMagnitude < 0.0001f)
+            dir = Vector3.right;
+
+        lastAttackDir = dir;
+        UpdateSpriteFlipByDir(lastAttackDir);
+
         var obj = ObjectPoolingManager.Instance.GetPrefab(laserPrefab);
         if (obj == null) return;
 
@@ -178,27 +277,24 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
             return;
         }
 
-        // 레이저 방향은 creature의 오른쪽 방향
-        Vector3 dir = transform.right;
-
+        // transform 회전은 건드리지 않고, 레이저 방향만 벡터로 넘김
         proj.Fire(transform.position, dir, gameObject.tag);
 
-        //creatureAnim?.PlayAttack();
+        creatureAnim?.PlayShoot();
     }
 
     // -------------------------------
-    //       플레이어 바라보기
+    //    스프라이트 방향 (flipX)
     // -------------------------------
-    private void RotateTowardPlayer()
+    private void UpdateSpriteFlipByDir(Vector2 dir)
     {
-        if (player == null) return;
+        if (spriteRenderer == null) return;
 
-        Vector3 dir = (player.position - transform.position).normalized;
-
-        if (dir.x != 0 || dir.y != 0)
-            transform.right = dir;   // 오른쪽 방향을 플레이어 쪽으로
-
-        // 애니메이션 방향이 필요하면 여기서 creatureAnim 사용
+        if (dir.x > 0.01f)
+            spriteRenderer.flipX = false;   // 오른쪽 바라봄
+        else if (dir.x < -0.01f)
+            spriteRenderer.flipX = true;    // 왼쪽 바라봄
+        // x가 거의 0이면 기존 방향 유지
     }
 
     // -------------------------------
@@ -216,7 +312,12 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
         }
         else
         {
-            //creatureAnim?.PlayHit();
+            creatureAnim?.PlayHit();
+
+            // 스프라이트 색 변경 
+            if (hitFlashRoutine != null)
+                StopCoroutine(hitFlashRoutine);
+            hitFlashRoutine = StartCoroutine(HitFlash(0.2f));
         }
     }
 
@@ -227,7 +328,7 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
         if (rb) rb.velocity = Vector2.zero;
         if (col) col.enabled = false;
 
-        //creatureAnim?.PlayDeath();
+        creatureAnim?.PlayDeath();
 
         Destroy(gameObject, 0.7f);
     }
