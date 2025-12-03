@@ -117,9 +117,6 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
         // 카메라 흔들림
         StartCoroutine(CameraManager.Instance.WobbleEffect(damageInfo.direction, WobbleEffectPower * damageInfo.damage));
 
-        status.CurrentHealth -= damageInfo.damage;
-        invincibleTimer = invincibleTime;
-
         switch (damageInfo.projectileEffect)
         {
             case ProjectileEffect.Slow:
@@ -135,6 +132,9 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
                 ApplyHeal(30); // 30 회복
                 break;
         }
+
+        status.CurrentHealth -= damageInfo.damage;
+        invincibleTimer = invincibleTime;
 
         // 피격 위치 전달 (넉백 계산용)
         status.RaiseOnHitEvent(damageInfo.direction == EightDirection.None ? -status.ViewDirection : damageInfo.direction);

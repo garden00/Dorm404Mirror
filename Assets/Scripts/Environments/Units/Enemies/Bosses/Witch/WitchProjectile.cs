@@ -111,6 +111,7 @@ public class WitchProjectile : MonoBehaviour, IProjectile
         if (damageable != null)
         {
             DamageInfo info = new DamageInfo(this, AttackType.Projectile, damage, moveDirection);
+            info.projectileEffect = effectType;
 
             if (isBuff)
                 info.damage = 0;
