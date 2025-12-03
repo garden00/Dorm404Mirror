@@ -16,6 +16,8 @@ public class BossWitch : MonoBehaviour, IDamageable, IAttacker, IEffectable
     [Header("Clone Settings")]
     [SerializeField] private Transform[] cloneSpawnPoints;
 
+    private WitchBossAnimatorController animCtrl;
+
     // 상태 변수
     private int currentHealth;
     public int CurrentHealth
@@ -43,12 +45,26 @@ public class BossWitch : MonoBehaviour, IDamageable, IAttacker, IEffectable
         if (player != null) playerTransform = player.transform;
 
         StartCoroutine(PatternCycle());
+
+        animCtrl = GetComponent<WitchBossAnimatorController>();
     }
+
+    private void Update()
+    {
+        if (playerTransform == null) return;
+        Vector2 dir = playerTransform.position - transform.position;
+
+        // 애니메이션 방향 반전
+        animCtrl.SetDirection(dir);
+    }
+
 
     // IDamageable 구현
     public void ReceiveAttack(DamageInfo damageInfo)
     {
         if (isDead) return;
+
+        animCtrl.PlayHit();
 
         currentHealth -= damageInfo.damage;
         Debug.Log($"마녀 체력: {currentHealth}");
@@ -79,6 +95,8 @@ public class BossWitch : MonoBehaviour, IDamageable, IAttacker, IEffectable
     private void Die()
     {
         isDead = true;
+        animCtrl.PlayDeath();
+
         StopAllCoroutines();
 
         // 살아있는 분신들 모두 제거
@@ -116,6 +134,7 @@ public class BossWitch : MonoBehaviour, IDamageable, IAttacker, IEffectable
     private IEnumerator Pattern_SummonClones()
     {
         Debug.Log("패턴 2: 분신 소환");
+        animCtrl.PlaySummon();
 
         // 기존 리스트 정리 (혹시 남아있을 null 제거)
         activeClones.RemoveAll(c => c == null);
@@ -140,6 +159,8 @@ public class BossWitch : MonoBehaviour, IDamageable, IAttacker, IEffectable
 
     private IEnumerator Pattern_ThrowPotion()
     {
+        animCtrl.PlayAttack();
+
         ProjectileEffect[] potion = { ProjectileEffect.Slow, ProjectileEffect.Poison, ProjectileEffect.Normal, ProjectileEffect.SpeedUp, ProjectileEffect.Heal };
         ProjectileEffect selectedPotion;
         for (int i = 0; i < 5; i++)
