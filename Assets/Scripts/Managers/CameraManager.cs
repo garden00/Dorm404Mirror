@@ -48,6 +48,8 @@ public class CameraManager : MonoBehaviour
 
         offset = Vector3.zero;
 
+        cam.orthographicSize = 7;
+
         //  [수정] cam 초기화 코드를 Awake()로 이동했습니다.
         // cam = GetComponent<Camera>(); 
     }
