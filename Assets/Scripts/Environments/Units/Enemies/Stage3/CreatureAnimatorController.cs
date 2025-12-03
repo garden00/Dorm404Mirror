@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class CreatureAnimatorController : MonoBehaviour
 {
-    private Animator anim;
-    private void Awake() => anim = GetComponent<Animator>();
+    public void PlayIdle() { }
+    public void PlayMove() { }
+    public void PlayAttack() { }
+    public void PlayHit() { }
+    public void PlayDeath() { }
 
-    public void PlayAttack() => anim.SetTrigger("Attack");
-    public void PlayHit() => anim.SetTrigger("Hit");
-    public void PlayDeath() => anim.SetTrigger("Death");
+    // 나중에 애니메이션 붙일 때 여기 구현하면 됨
 }

@@ -8,12 +8,10 @@ public class Minion : MonoBehaviour, IDamageable, IAttacker
     [SerializeField] private float attackInterval = 2f;
     [SerializeField] private float projectileSpeed = 6f;
     [SerializeField] private int projectileDamage = 2;
-    [SerializeField] private bool isReflectable = true;
 
     [Header("Detection")]
     [SerializeField] private float attackRange = 7f;
     private float attackTimer = 0f;
-    private bool isAttacking = false;
 
     [Header("Health")]
     [SerializeField] private int maxHealth = 3;
@@ -30,6 +28,7 @@ public class Minion : MonoBehaviour, IDamageable, IAttacker
     private void Start()
     {
         currentHealth = maxHealth;
+
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
@@ -59,13 +58,6 @@ public class Minion : MonoBehaviour, IDamageable, IAttacker
         GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
         rb.velocity = direction * projectileSpeed;
-
-        var magic = proj.GetComponent<MagicProjectile>();
-        if (magic != null)
-        {
-            magic.SetDamage(new DamageInfo(this, AttackType.Magic, projectileDamage));
-            magic.SetReflectable(isReflectable);
-        }
     }
 
     public void ReceiveAttack(DamageInfo info)
