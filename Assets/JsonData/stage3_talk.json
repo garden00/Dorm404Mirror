@@ -1,0 +1,119 @@
+[
+  {
+    "sceneId": 190,
+    "lines": [
+      {
+        "speaker": "주인공",
+        "portrait": 1,
+        "effect": 0,
+        "text": "지하철 역이 다 무너졌잖아?"
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 0,
+        "effect": 0,
+        "text": "이러면 운행하는 지하철도 없을 텐데…"
+      },
+      {
+        "speaker": "???",
+        "portrait": 0,
+        "effect": 0,
+        "text": "우워어어어어…."
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 2,
+        "effect": 0,
+        "text": "무슨 소리지?"
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 3,
+        "effect": 0,
+        "text": "눈앞에는 영화에서나 볼 법한 좀비가 있었다."
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 3,
+        "effect": 0,
+        "text": "이번엔 좀비야? 근데... 이 녀석들은 반사할 수 있는 공격이 없는데?"
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 1,
+        "effect": 0,
+        "text": "그래! 영화에서 좀비는 햇빛을 싫어하니까 가로등도 어느 정도 되지 않을까? 한번 시험해보자."
+      },
+      {
+        "speaker": "Guide",
+        "portrait": 0,
+        "effect": 0,
+        "text": "거울은 가로등의 빛을 반사하여 적을 공격할 수 있습니다. 빛을 반사하여 적을 맞추면 지속적인 데미지를 넣을 수 있습니다."
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 1,
+        "effect": 0,
+        "text": "설마 가로등의 불빛이 실제로 먹히다니. 일단 계속 가보자."
+      }
+    ]
+  },
+  {
+    "sceneId": 200,
+    "lines": [
+      {
+        "speaker": "???",
+        "portrait": 0,
+        "effect": 0,
+        "text": "너도…그분께 가려는 거냐….?"
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 3,
+        "effect": 0,
+        "text": "이번엔 뭐야, 프랑켄슈타인?"
+      },
+      {
+        "speaker": "프랑켄슈타인",
+        "portrait": 0,
+        "effect": 0,
+        "text": "그분께는 그 누구도 도달할 수 없다…. 여기서 먼지가 되도록…"
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 3,
+        "effect": 0,
+        "text": "난 그냥 밖으로 나가고 싶을 뿐이라고!!"
+      },
+      {
+        "speaker": "Guide",
+        "portrait": 5,
+        "effect": 0,
+        "text": "프랑켄슈타인은 지속적으로 번개 공격을 합니다. 번개 공격을 일정횟수 맞으면 감전에 걸리지만 반사한다면 이를 유용하게 이용할지도 모릅니다. 이것을 잘 이용하여 쓰러뜨리십시오."
+      }
+    ]
+  },
+  {
+    "sceneId": 210,
+    "lines": [
+      {
+        "speaker": "주인공",
+        "portrait": 1,
+        "effect": 0,
+        "text": "헉…헉…이번에는 진짜 위험했어…"
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 0,
+        "effect": 0,
+        "text": "근데 이 녀석들이 말하는 그분은 도대체…"
+      },
+      {
+        "speaker": "주인공",
+        "portrait": 2,
+        "effect": 0,
+        "text": "일단 지하철을 이용이 안될 것 같으니 공원으로 가보자."
+      }
+    ]
+  }
+]
