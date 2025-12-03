@@ -5,43 +5,41 @@ using UnityEngine;
 public class Zombie : MonoBehaviour, IDamageable, IAttacker
 {
     [Header("Movement - Grid")]
-    [SerializeField] private float gridSize = 1f;                // 한 칸 크기
-    [SerializeField] private float moveDuration = 0.2f;          // 한 칸 이동 시간
-    [SerializeField] private Vector2 moveIntervalRange = new Vector2(0.4f, 0.8f); // 다음 이동까지 대기시간
-    [SerializeField] private float detectRange = 6f;             // 플레이어 추적 시작 범위
-    [SerializeField] private float stopDistance = 0.5f;          // 너무 가까우면 더 안 다가감
-    [SerializeField] private LayerMask obstacleMask;             // 벽/문 레이어
+    [SerializeField] private float gridSize = 1f;
+    [SerializeField] private float moveDuration = 0.2f;
+    [SerializeField] private Vector2 moveIntervalRange = new Vector2(0.4f, 0.8f);
+    [SerializeField] private float detectRange = 6f;
+    [SerializeField] private float attackRange = 1f;        // 플레이어가 1칸 이내면 공격
+    [SerializeField] private LayerMask obstacleMask;
 
     private bool isMoving = false;
     private Vector3 moveStartPos;
     private Vector3 moveTargetPos;
     private float moveProgress = 0f;
-
     private float moveTimer = 0f;
     private float currentMoveWait = 0.5f;
 
     [Header("Attack")]
-    [SerializeField] private int contactDamage = 1;       // 접촉 데미지
-    [SerializeField] private float attackInterval = 0.6f; // 접촉 중 데미지 간격(초)
+    [SerializeField] private int contactDamage = 1;
+    [SerializeField] private float attackInterval = 0.8f;
 
-    [SerializeField] private int damage;                  // IAttacker용 데미지
+    [SerializeField] private int damage;
     int IAttacker.Damage => damage;
 
     private float lastAttackTime = -999f;
 
     [Header("Health")]
-    [SerializeField] private int maxHealth = 3;
+    [SerializeField] private int maxHealth = 1;
     private int currentHealth;
     public bool IsDead { get; private set; } = false;
 
     private Transform player;
     private Rigidbody2D rb;
     private Collider2D col;
-
-    // 애니메이션 컨트롤러(있으면 사용, 없으면 null이어서 무시)
     private ZombieAnimatorController zombieAnim;
 
-    // --- 유틸: 그리드 스냅 ---
+    private float lastMoveX = 1f; // 방향 보존
+
     private Vector3 SnapToGrid(Vector3 pos)
     {
         float x = Mathf.Round(pos.x / gridSize) * gridSize;
@@ -51,30 +49,21 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
 
     private void Start()
     {
-        // 시작 위치를 격자에 스냅
         transform.position = SnapToGrid(transform.position);
 
         currentHealth = maxHealth;
 
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
-
         zombieAnim = GetComponent<ZombieAnimatorController>();
 
-        // 플레이어 찾기 (PlayerManager가 있으면 그걸 쓰고, 없으면 태그로 찾기)
         if (PlayerManager.Instance != null)
-        {
             player = PlayerManager.Instance.transform;
-        }
         else
-        {
-            GameObject p = GameObject.FindGameObjectWithTag("Player");
-            if (p != null) player = p.transform;
-        }
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         currentMoveWait = Random.Range(moveIntervalRange.x, moveIntervalRange.y);
 
-        // Rigidbody를 쓰더라도 이동은 transform으로 처리하므로
         if (rb != null)
         {
             rb.velocity = Vector2.zero;
@@ -87,7 +76,16 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
         if (IsDead) return;
         if (player == null) return;
 
-        // 1) 현재 이동 중이면 Lerp로 한 칸 이동
+        float dist = Vector2.Distance(transform.position, player.position);
+
+        // 1) 플레이어가 1칸 이내면 공격
+        if (dist <= attackRange)
+        {
+            TryDirectAttack();
+            return;
+        }
+
+        // 2) 이동 중이면 Lerp 이동
         if (isMoving)
         {
             moveProgress += Time.deltaTime / moveDuration;
@@ -105,7 +103,7 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
             return;
         }
 
-        // 2) 이동 중이 아니라면, 일정 시간 대기 후 한 칸 이동 결정
+        // 3) 이동 대기 후 1칸 이동
         moveTimer += Time.deltaTime;
         if (moveTimer < currentMoveWait)
             return;
@@ -113,32 +111,40 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
         moveTimer = 0f;
         currentMoveWait = Random.Range(moveIntervalRange.x, moveIntervalRange.y);
 
-        // 현재 위치를 먼저 스냅
         Vector3 origin = SnapToGrid(transform.position);
         transform.position = origin;
 
-        float dist = Vector2.Distance(origin, player.position);
-
         if (dist <= detectRange)
-        {
-            TryStepTowardPlayer(origin, dist);
-        }
+            TryStepTowardPlayer(origin);
         else
-        {
             Wander(origin);
-        }
     }
 
-    // 플레이어 쪽으로 1칸 이동 시도
-    private void TryStepTowardPlayer(Vector3 origin, float distToPlayer)
+    private void TryDirectAttack()
     {
-        // 너무 가까우면 더 안 다가감
-        if (distToPlayer <= stopDistance)
-        {
-            zombieAnim?.PlayIdle();
-            return;
-        }
+        if (Time.time - lastAttackTime < attackInterval) return;
+        lastAttackTime = Time.time;
 
+        zombieAnim?.PlayAttack();
+        StartCoroutine(DelayedAttack(0.2f));
+    }
+
+    private IEnumerator DelayedAttack(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (player == null || IsDead) yield break;
+
+        Vector3 dir = (player.position - transform.position).normalized;
+        DamageInfo info = new DamageInfo(this, AttackType.Melee, contactDamage, dir);
+
+        IDamageable target = player.GetComponent<IDamageable>();
+        if (target != null) target.ReceiveAttack(info);
+    }
+
+
+    private void TryStepTowardPlayer(Vector3 origin)
+    {
         Vector2 toPlayer = (player.position - origin);
         if (toPlayer.sqrMagnitude < 0.0001f)
         {
@@ -146,107 +152,66 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
             return;
         }
 
-        // 4방향(상하좌우) 중 하나로 스냅
         Vector2 dir;
         if (Mathf.Abs(toPlayer.x) > Mathf.Abs(toPlayer.y))
             dir = new Vector2(Mathf.Sign(toPlayer.x), 0f);
         else
             dir = new Vector2(0f, Mathf.Sign(toPlayer.y));
 
+        if (dir.x != 0) lastMoveX = dir.x;
+
         Vector3 target = origin + (Vector3)(dir * gridSize);
 
-        // 벽 체크
-        if (obstacleMask.value != 0)
+        RaycastHit2D hit = Physics2D.Linecast(origin, target, obstacleMask);
+        if (hit.collider != null)
         {
-            RaycastHit2D hit = Physics2D.Linecast(origin, target, obstacleMask);
-            if (hit.collider != null)
-            {
-                // 앞에 벽 있으면 그냥 이 턴은 제자리
-                zombieAnim?.PlayIdle();
-                return;
-            }
+            zombieAnim?.PlayIdle();
+            return;
         }
 
-        // 실제 이동 시작
-        isMoving = true;
-        moveProgress = 0f;
-        moveStartPos = origin;
-        moveTargetPos = target;
-
-        zombieAnim?.PlayMove();
+        StartMove(origin, target);
     }
 
-    // 플레이어가 범위 밖이면 랜덤 4방향 중 한 칸 이동
     private void Wander(Vector3 origin)
     {
         int idx = Random.Range(0, 4);
-        Vector2 dir;
-        switch (idx)
+        Vector2 dir = idx switch
         {
-            case 0: dir = Vector2.down; break;
-            case 1: dir = Vector2.left; break;
-            case 2: dir = Vector2.up; break;
-            default: dir = Vector2.right; break;
-        }
+            0 => Vector2.down,
+            1 => Vector2.left,
+            2 => Vector2.up,
+            _ => Vector2.right
+        };
+
+        if (dir.x != 0) lastMoveX = dir.x;
 
         Vector3 target = origin + (Vector3)(dir * gridSize);
 
-        if (obstacleMask.value != 0)
+        RaycastHit2D hit = Physics2D.Linecast(origin, target, obstacleMask);
+        if (hit.collider != null)
         {
-            RaycastHit2D hit = Physics2D.Linecast(origin, target, obstacleMask);
-            if (hit.collider != null)
-            {
-                // 벽이면 이동 취소
-                zombieAnim?.PlayIdle();
-                return;
-            }
+            zombieAnim?.PlayIdle();
+            return;
         }
 
+        StartMove(origin, target);
+    }
+
+    private void StartMove(Vector3 origin, Vector3 target)
+    {
         isMoving = true;
         moveProgress = 0f;
         moveStartPos = origin;
         moveTargetPos = target;
 
+        zombieAnim?.SetFlipX(lastMoveX < 0);
         zombieAnim?.PlayMove();
     }
 
-    // --- 플레이어와 겹쳐 있을 때 데미지 주기(Frog 방식과 동일 구조) ---
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (!other.gameObject.CompareTag("Player")) return;
-        if (Time.time - lastAttackTime < attackInterval) return;
-
-        lastAttackTime = Time.time;
-
-        // 공격 방향 (좀비 → 플레이어)
-        Vector3 dir = (other.transform.position - transform.position).normalized;
-
-        DamageInfo info = new DamageInfo(this, AttackType.Melee, contactDamage, dir);
-
-        IDamageable target = other.gameObject.GetComponent<IDamageable>();
-        if (target != null)
-        {
-            target.ReceiveAttack(info);
-        }
-
-        zombieAnim?.PlayAttack();
-    }
-
-    // --- IDamageable 구현 (Frog와 동일 패턴) ---
     public void ReceiveAttack(DamageInfo damageInfo)
     {
         if (IsDead) return;
-
-        currentHealth -= damageInfo.damage;
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-        else
-        {
-            zombieAnim?.PlayHit();
-        }
+        Die();
     }
 
     private void Die()
