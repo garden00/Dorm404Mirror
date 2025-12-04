@@ -29,6 +29,7 @@ public class SavePointManager : MonoBehaviour
     #endregion
 
     SavePoint curSavePoint;
+    private SavePointEffect curEffect;
 
     private void Update()
     {
@@ -52,6 +53,8 @@ public class SavePointManager : MonoBehaviour
             // player heal
             PlayerManager.Instance.Status.Healing();
 
+            curEffect?.PlaySaveEffect();
+
             // save
             Debug.Log("Saved");
             GameManager.Instance.Save(curSavePoint);
@@ -63,6 +66,8 @@ public class SavePointManager : MonoBehaviour
     {
         // show UI
         curSavePoint = savePoint;
+
+        curEffect = savePoint.GetComponent<SavePointEffect>();
     }
 
     //public void OnStaySavePoint(SavePoint savePoint)

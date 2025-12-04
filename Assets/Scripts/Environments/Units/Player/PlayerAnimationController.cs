@@ -10,6 +10,9 @@ public class PlayerAnimationController : MonoBehaviour
 
     [SerializeField] private float reflectAnimDuration = 0.15f;
 
+    private Coroutine hitRoutine;
+    private Coroutine reflectRoutine;
+
     public void Initialize(PlayerStatusData playerStatus)
     {
         status = playerStatus;
@@ -45,6 +48,9 @@ public class PlayerAnimationController : MonoBehaviour
         float x = dir.x;
         float y = dir.y;
 
+        if (float.IsNaN(x)) x = 0;
+        if (float.IsNaN(y)) y = -1;
+
         anim.SetFloat("lastX", x);
         anim.SetFloat("lastY", y);
 
@@ -63,8 +69,10 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void PlayReflectAnimation()
     {
-        StopAllCoroutines();
-        StartCoroutine(ReflectRoutine());
+        if (reflectRoutine != null)
+            StopCoroutine(reflectRoutine);
+
+        reflectRoutine = StartCoroutine(ReflectRoutine());
     }
 
     private IEnumerator ReflectRoutine()
@@ -72,17 +80,24 @@ public class PlayerAnimationController : MonoBehaviour
         anim.SetBool("Reflect", true);
         yield return new WaitForSeconds(reflectAnimDuration);
         anim.SetBool("Reflect", false);
+
+        reflectRoutine = null;
     }
 
     public void PlayHitAnimation(Vector3 v)
     {
+        if (hitRoutine != null)
+            StopCoroutine(hitRoutine);
+
         anim.SetBool("Hit", true);
-        StartCoroutine(EndHitRoutine());
+        hitRoutine = StartCoroutine(EndHitRoutine());
     }
 
     private IEnumerator EndHitRoutine()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.35f);
+
         anim.SetBool("Hit", false);
+        hitRoutine = null;
     }
 }

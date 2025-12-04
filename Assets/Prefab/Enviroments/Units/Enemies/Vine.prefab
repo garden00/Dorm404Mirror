@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 52
-  m_Sprite: {fileID: 21300000, guid: f0d3668b8ab3b204eb12bb2802fcf66a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 16e3dc0f3d1f09c4f8d68ccfd4aad255, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -157,7 +157,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 52
-  m_Sprite: {fileID: 21300000, guid: f0d3668b8ab3b204eb12bb2802fcf66a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 16e3dc0f3d1f09c4f8d68ccfd4aad255, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -246,7 +246,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 52
-  m_Sprite: {fileID: 21300000, guid: f0d3668b8ab3b204eb12bb2802fcf66a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 16e3dc0f3d1f09c4f8d68ccfd4aad255, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -316,6 +316,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   maxHealth: 3
+  previewTime: 1
+  previewAlpha: 0.35
 --- !u!50 &868037004273228486
 Rigidbody2D:
   serializedVersion: 4
