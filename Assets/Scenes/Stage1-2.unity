@@ -519,6 +519,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (24)
@@ -732,6 +740,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (11)
@@ -872,6 +888,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (32)
@@ -139243,6 +139267,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (15)
@@ -139305,6 +139337,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (21)
@@ -139482,6 +139522,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (14)
@@ -139700,6 +139748,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (22)
@@ -139762,6 +139818,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (4)
@@ -143432,6 +143496,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (12)
@@ -143635,6 +143707,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (16)
@@ -144012,6 +144092,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (9)
@@ -144153,6 +144241,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (1)
@@ -144478,6 +144574,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 38403365}
     m_Modifications:
+    - target: {fileID: 4936340486753065153, guid: 3f725e1404859a54cbd38326cc9f61d0, type: 3}
+      propertyPath: sr
+      value: 
+      objectReference: {fileID: 1712572688}
+    - target: {fileID: 4936340486753065153, guid: 3f725e1404859a54cbd38326cc9f61d0, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1712572687}
     - target: {fileID: 7005567972248700433, guid: 3f725e1404859a54cbd38326cc9f61d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 34
@@ -144526,7 +144630,36 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7901722986136565282, guid: 3f725e1404859a54cbd38326cc9f61d0, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901722986136565282, guid: 3f725e1404859a54cbd38326cc9f61d0, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901722986136565282, guid: 3f725e1404859a54cbd38326cc9f61d0, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901722986136565282, guid: 3f725e1404859a54cbd38326cc9f61d0, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901722986136565282, guid: 3f725e1404859a54cbd38326cc9f61d0, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901722986136565282, guid: 3f725e1404859a54cbd38326cc9f61d0, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901722986136565282, guid: 3f725e1404859a54cbd38326cc9f61d0, type: 3}
+      propertyPath: m_SpriteTilingProperty.adaptiveTilingThreshold
+      value: 0.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2141666506217589323, guid: 3f725e1404859a54cbd38326cc9f61d0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -144600,6 +144733,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (19)
@@ -144732,6 +144873,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (40)
@@ -144961,6 +145110,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (20)
@@ -177739,6 +177896,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (28)
@@ -177880,6 +178045,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: damage
       value: 10
@@ -178110,6 +178283,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (38)
@@ -178281,6 +178462,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (31)
@@ -178378,6 +178567,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (33)
@@ -178655,6 +178852,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test
@@ -178712,6 +178917,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (35)
@@ -178774,6 +178987,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (10)
@@ -178836,6 +179057,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (6)
@@ -179016,7 +179245,13 @@ PrefabInstance:
       propertyPath: portraitProvider
       value: 
       objectReference: {fileID: 1463449014}
-    m_RemovedComponents: []
+    - target: {fileID: 9143342833206077778, guid: b63a66b69327bbd4794b1bdde5ec08a5, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8606516214194490223, guid: b63a66b69327bbd4794b1bdde5ec08a5, type: 3}
+    - {fileID: 9143342833206077778, guid: b63a66b69327bbd4794b1bdde5ec08a5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 274757144188799030, guid: b63a66b69327bbd4794b1bdde5ec08a5, type: 3}
@@ -179141,6 +179376,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (34)
@@ -179246,6 +179489,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (27)
@@ -179587,6 +179838,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (26)
@@ -179866,6 +180125,16 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8535529050824715564, guid: a7b1c587aed6773488e7f03573ed6880, type: 3}
   m_PrefabInstance: {fileID: 1697734386}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1712572687 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 609264839273836378, guid: 3f725e1404859a54cbd38326cc9f61d0, type: 3}
+  m_PrefabInstance: {fileID: 712261994}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1712572688 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3162402621015539996, guid: 3f725e1404859a54cbd38326cc9f61d0, type: 3}
+  m_PrefabInstance: {fileID: 712261994}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1720412884
 GameObject:
@@ -196633,6 +196902,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (25)
@@ -334397,6 +334674,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (36)
@@ -334537,6 +334822,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (30)
@@ -334599,6 +334892,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (5)
@@ -334812,6 +335113,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (37)
@@ -334926,6 +335235,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1059716576}
     m_Modifications:
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (29)

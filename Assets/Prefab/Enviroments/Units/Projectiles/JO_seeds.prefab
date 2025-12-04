@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6630222852157611247}
   - component: {fileID: 701170503105271930}
   m_Layer: 0
-  m_Name: ProjectileExample
+  m_Name: JO_seeds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 57
-  m_Sprite: {fileID: 21300000, guid: 2698468243d023c48a8c80c5de7f3339, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0223608645d37ef4586d430263f11c25, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

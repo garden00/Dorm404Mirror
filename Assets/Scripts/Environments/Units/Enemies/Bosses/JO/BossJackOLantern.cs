@@ -33,8 +33,11 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IAttacker
 
     private Rigidbody2D rigid; // Rigidbody 참조
 
-    [SerializeField]
-    private int maxHealth = 100;
+
+    [Header("Health")]
+    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private UnitHealthBar healthBar;
+
     private int currentHealth;
     public int CurrentHealth
     {
@@ -43,15 +46,19 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IAttacker
         {
             currentHealth = value;
 
+            if (healthBar == null)
+                healthBar = GetComponentInChildren<UnitHealthBar>();
+
+            if (healthBar != null)
+                healthBar.UpdateHealth(currentHealth, maxHealth);
+
             if (currentHealth <= 0)
             {
                 currentHealth = 0;
                 Die();
             }
-            else if (currentHealth > maxHealth) currentHealth = maxHealth;
-
-
-            //Debug.Log("enemy health : " + currentHealth);
+            else if (currentHealth > maxHealth)
+                currentHealth = maxHealth;
         }
     }
 
@@ -69,8 +76,10 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IAttacker
         isDetected = false;
 
         rigid = GetComponent<Rigidbody2D>();
+        if (healthBar == null)
+            healthBar = GetComponentInChildren<UnitHealthBar>();
         CurrentHealth = maxHealth;
-
+        
         // 전체 패턴 개수 계산 (예: 4)
         patternCount = 4;//System.Enum.GetNames(typeof(BossPattern)).Length;
 
