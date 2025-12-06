@@ -1,0 +1,293 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
+{
+    [Header("Health")]
+    [SerializeField] private int maxHealth = 1000;
+    [SerializeField] private UnitHealthBar healthBar;
+    private int currentHealth;
+
+    [Header("Rage Settings")]
+    [SerializeField] private float maxRage = 100f;
+    [SerializeField] private float ragePerLightning = 20f; // 번개 반사 피격 시 차는 게이지
+    private float currentRage = 0f;
+    private bool isBerserk = false;
+
+    [Header("Attack Settings")]
+    [SerializeField] private int damage = 20;
+    public int Damage => damage;
+
+    [Header("Prefabs & References")]
+    [SerializeField] private GameObject creaturePrefab; 
+    [SerializeField] private GameObject clonePrefab;
+    [SerializeField] private GameObject reflectableProjectile; 
+    [SerializeField] private GameObject wideProjectile;  
+    [SerializeField] private Transform firePoint;
+
+    private Transform playerTransform;
+    private Animator animator; // 애니메이션 제어용
+
+    // 상태 관리
+    private bool isDead = false;
+    private bool isPatternRunning = false;
+
+    [SerializeField] private List<GameObject> activeMinions = new List<GameObject>();
+
+    private void Start()
+    {
+        currentHealth = maxHealth;
+        if (healthBar) healthBar.UpdateHealth(currentHealth, maxHealth);
+
+        playerTransform = PlayerManager.Instance.transform; // 싱글톤 가정
+        animator = GetComponent<Animator>();
+
+        StartCoroutine(PatternRoutine());
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            DamageInfo info = new DamageInfo(this, AttackType.Melee, Damage);
+            collision.GetComponent<IDamageable>()?.ReceiveAttack(info);
+        }
+    }
+
+    // --- IDamageable 구현 ---
+    public void ReceiveAttack(DamageInfo damageInfo)
+    {
+        if (isDead) return;
+
+        currentHealth -= damageInfo.damage;
+        if (healthBar) healthBar.UpdateHealth(currentHealth, maxHealth);
+
+        AddRage(ragePerLightning);
+
+        if (currentHealth <= 0) Die();
+    }
+
+    private void AddRage(float amount)
+    {
+        if (isBerserk) return; // 이미 폭주 중이면 무시
+
+        currentRage += amount;
+        if (currentRage >= maxRage)
+        {
+            StartCoroutine(EnterBerserkMode());
+        }
+    }
+
+    // --- 패턴 루틴 ---
+    private IEnumerator PatternRoutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        while (!isDead)
+        {
+            if (isBerserk)
+            {
+                yield return StartCoroutine(BerserkSequence());
+                // 시퀀스 종료 후 폭주 해제
+                isBerserk = false;
+                currentRage = 0f;
+                Debug.Log("폭주 종료: 기본 상태 복귀");
+            }
+            else
+            {
+                yield return StartCoroutine(ExecuteNormalPattern());
+            }
+
+            yield return new WaitForSeconds(1.5f); // 패턴 간 대기 시간
+        }
+    }
+
+    private IEnumerator EnterBerserkMode()
+    {
+        isBerserk = true;
+        Debug.Log("!!! 드라큘라 폭주 !!!");
+        // 폭주 진입 연출(포효 등) 시간 대기
+        yield return new WaitForSeconds(1.0f);
+    }
+
+    private IEnumerator BerserkSequence()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            yield return StartCoroutine(Pattern3_ReflectableProjectile());
+            yield return new WaitForSeconds(0.1f);
+            yield return StartCoroutine(Pattern3_ReflectableProjectile());
+            yield return new WaitForSeconds(0.1f);
+            yield return StartCoroutine(Pattern3_ReflectableProjectile());
+            yield return new WaitForSeconds(0.1f);
+            yield return StartCoroutine(Pattern3_ReflectableProjectile());
+
+            yield return new WaitForSeconds(0.5f);
+            yield return StartCoroutine(Pattern5_TeleportBackAttack());
+            yield return new WaitForSeconds(0.5f);
+            yield return StartCoroutine(Pattern6_TeleportRandom());
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    private IEnumerator ExecuteNormalPattern()
+    {
+        yield return StartCoroutine(Pattern1_SummonCreature());
+
+        int rand = Random.Range(1, 4);
+        switch (rand)
+        {
+            //case 0: yield return StartCoroutine(Pattern1_SummonCreature()); break;
+
+            case 1: yield return StartCoroutine(Pattern2_SplitAndCharge()); break;
+            case 2: yield return StartCoroutine(Pattern4_WideProjectile()); break;
+            case 3: yield return StartCoroutine(Pattern6_TeleportRandom()); break;
+        }
+    }
+
+    // --- 개별 패턴 구현 ---
+
+    // 1. 크리처 소환
+    private IEnumerator Pattern1_SummonCreature()
+    {
+        Debug.Log("패턴1: 크리처 소환");
+        // 애니메이션 재생
+        // animator.SetTrigger("Summon");
+
+        // 리스트에서 죽거나 없어진 하수인 제거
+        activeMinions.RemoveAll(x => x == null || !x.activeSelf);
+
+        Vector3 spawnPos = Vector3Int.CeilToInt(transform.position + (Vector3)Random.insideUnitCircle * 3f);
+
+        if (activeMinions.Count < 1)
+        {
+            GameObject minion = Instantiate(creaturePrefab, spawnPos, Quaternion.identity);
+            activeMinions.Add(minion);
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        
+    }
+
+    // 2. 분신으로 분열 후 돌진
+    private IEnumerator Pattern2_SplitAndCharge()
+    {
+        yield break;
+
+        Debug.Log("패턴2: 분신 돌진");
+        // 1. 분신 생성 (시각적 효과)
+        Vector3[] offsets = { Vector3.left * 2, Vector3.right * 2 };
+        List<GameObject> clones = new List<GameObject>();
+
+        foreach (var offset in offsets)
+        {
+            var clone = Instantiate(clonePrefab, transform.position + offset, Quaternion.identity);
+            clones.Add(clone);
+        }
+
+        yield return new WaitForSeconds(1.0f); // 플레이어가 구분할 시간 줌
+
+        // 2. 본체와 분신 모두 플레이어 방향으로 돌진
+        Vector3 targetPos = playerTransform.position;
+        Vector3 startPos = transform.position;
+        float duration = 0.3f;
+        float time = 0;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+            transform.position = Vector3.Lerp(startPos, targetPos, t);
+            // 분신들도 평행하게 돌진한다고 가정
+            foreach (var clone in clones)
+            {
+                if (clone) clone.transform.position = Vector3.Lerp(clone.transform.position, targetPos + (clone.transform.position - startPos), t);
+            }
+            yield return null;
+        }
+
+        // 3. 분신 제거
+        foreach (var clone in clones) Destroy(clone);
+    }
+
+    // 3. 반사 가능 투사체
+    private IEnumerator Pattern3_ReflectableProjectile()
+    {
+        Debug.Log("패턴3: 반사 가능 투사체 발사");
+        FireProjectile(reflectableProjectile);
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    // 4. 반사 불가능(광범위) 투사체
+    private IEnumerator Pattern4_WideProjectile()
+    {
+        Debug.Log("패턴4: 광범위 투사체 발사");
+        FireProjectile(wideProjectile);
+        yield return new WaitForSeconds(1.0f);
+    }
+
+    // 5. 플레이어 뒤로 순간이동 후 공격
+    private IEnumerator Pattern5_TeleportBackAttack()
+    {
+        Debug.Log("패턴5: 배후 습격");
+
+        Vector3 backDir = -PlayerManager.Instance.Status.ViewDirection;
+        Vector3 destPos = playerTransform.position + backDir * 2.0f;
+
+        yield return StartCoroutine(TeleportEffect(destPos));
+
+        // 근접 공격 (히트박스 활성화 등)
+        // animator.SetTrigger("MeleeAttack");
+        // 공격 범위 내 플레이어에게 데미지 (Physics2D.OverlapCircle 등 사용)
+        CheckMeleeAttack();
+
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    // 6. 근처 랜덤 순간이동
+    private IEnumerator Pattern6_TeleportRandom()
+    {
+        Debug.Log("패턴6: 랜덤 이동");
+        Vector3 randomPos = playerTransform.position + (Vector3)Random.insideUnitCircle.normalized * 5f;
+        yield return StartCoroutine(TeleportEffect(randomPos));
+    }
+
+    // 유틸리티: 투사체 발사
+    private void FireProjectile(GameObject prefab)
+    {
+        Vector3 dir = (playerTransform.position - transform.position).normalized;
+        var obj = ObjectPoolingManager.Instance.GetPrefab(prefab);
+        obj.GetComponent<IProjectile>().Fire(transform.position, dir, gameObject.tag);
+    }
+
+    // 유틸리티: 순간이동 연출
+    private IEnumerator TeleportEffect(Vector3 destination)
+    {
+        Vector3Int aa = Vector3Int.CeilToInt(destination);
+
+        // 사라지는 연출
+        yield return new WaitForSeconds(0.2f);
+        transform.position = aa;
+        // 나타나는 연출
+        yield return new WaitForSeconds(0.2f);
+    }
+
+    private void CheckMeleeAttack()
+    {
+        if (Vector3.Distance(transform.position, playerTransform.position) < 2.0f)
+        {
+            playerTransform.GetComponent<IDamageable>()?.ReceiveAttack(new DamageInfo(this, AttackType.Melee, damage));
+        }
+    }
+
+    private void Die()
+    {
+        isDead = true;
+        Debug.Log("드라큘라 1페이즈 종료");
+        // 2페이즈 오브젝트 활성화 로직 추가 필요
+        gameObject.SetActive(false);
+    }
+}

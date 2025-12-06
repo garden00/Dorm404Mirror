@@ -82,4 +82,8 @@ public class PlayerManager : MonoBehaviour
     {
         statusData.SetState(PlayerState.Locked);
     }
+
+    public void Charge(float time)
+    {
+    }
 }
