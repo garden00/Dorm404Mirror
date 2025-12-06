@@ -91,7 +91,7 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IAttacker
 
     void Update()
     {
-        if (isDetected is false)
+        if (!isDetected)
         {
             float dir = Vector3.Distance(playerTransform.position, transform.position);
 
