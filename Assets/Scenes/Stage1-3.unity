@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6979247196543602710, guid: 59b4fab1927c1de46af29c3bc4a6e66d, type: 3}
       propertyPath: targetSceneName
-      value: stage2-1
+      value: Stage2-1
       objectReference: {fileID: 0}
     - target: {fileID: 8184928923525547693, guid: 59b4fab1927c1de46af29c3bc4a6e66d, type: 3}
       propertyPath: m_LocalScale.x
@@ -148,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8184928923525547693, guid: 59b4fab1927c1de46af29c3bc4a6e66d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -19
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 8184928923525547693, guid: 59b4fab1927c1de46af29c3bc4a6e66d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -33098,7 +33098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1462766005090040092, guid: e26bd949c9cf689439461803598dbdba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -19
+      value: -18
       objectReference: {fileID: 0}
     - target: {fileID: 1462766005090040092, guid: e26bd949c9cf689439461803598dbdba, type: 3}
       propertyPath: m_LocalPosition.z
