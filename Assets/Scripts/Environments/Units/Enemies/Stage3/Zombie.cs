@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Zombie : MonoBehaviour, IDamageable, IAttacker
@@ -9,7 +8,7 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
     [SerializeField] private float moveDuration = 0.2f;
     [SerializeField] private Vector2 moveIntervalRange = new Vector2(0.4f, 0.8f);
     [SerializeField] private float detectRange = 6f;
-    [SerializeField] private float attackRange = 1f;        // 플레이어가 1칸 이내면 공격
+    [SerializeField] private float attackRange = 1f;
     [SerializeField] private LayerMask obstacleMask;
 
     private bool isMoving = false;
@@ -29,10 +28,12 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
     private float lastAttackTime = -999f;
 
     [Header("Health")]
-    [SerializeField] private int maxHealth = 1;
+    [SerializeField] private int maxHealth = 3;
+    [SerializeField] private UnitHealthBar healthBar;
     private int currentHealth;
     public bool IsDead { get; private set; } = false;
 
+    [Header("References")]
     private Transform player;
     private Rigidbody2D rb;
     private Collider2D col;
@@ -69,6 +70,9 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
             rb.velocity = Vector2.zero;
             rb.isKinematic = true;
         }
+
+        if (healthBar != null)
+            healthBar.UpdateHealth(currentHealth, maxHealth);
     }
 
     private void Update()
@@ -78,14 +82,12 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
 
         float dist = Vector2.Distance(transform.position, player.position);
 
-        // 1) 플레이어가 1칸 이내면 공격
         if (dist <= attackRange)
         {
             TryDirectAttack();
             return;
         }
 
-        // 2) 이동 중이면 Lerp 이동
         if (isMoving)
         {
             moveProgress += Time.deltaTime / moveDuration;
@@ -103,7 +105,6 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
             return;
         }
 
-        // 3) 이동 대기 후 1칸 이동
         moveTimer += Time.deltaTime;
         if (moveTimer < currentMoveWait)
             return;
@@ -141,7 +142,6 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
         IDamageable target = player.GetComponent<IDamageable>();
         if (target != null) target.ReceiveAttack(info);
     }
-
 
     private void TryStepTowardPlayer(Vector3 origin)
     {
@@ -208,10 +208,24 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
         zombieAnim?.PlayMove();
     }
 
-    public void ReceiveAttack(DamageInfo damageInfo)
+    // -------------------------------
+    //           IDamageable
+    // -------------------------------
+    public void ReceiveAttack(DamageInfo info)
     {
         if (IsDead) return;
-        Die();
+
+        currentHealth -= info.damage;
+
+        if (healthBar != null)
+            healthBar.UpdateHealth(currentHealth, maxHealth);
+
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Die();
+        }
+        
     }
 
     private void Die()
@@ -222,6 +236,9 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
         if (col != null) col.enabled = false;
 
         zombieAnim?.PlayDeath();
+
+        if (healthBar != null)
+            healthBar.gameObject.SetActive(false);
 
         Destroy(gameObject, 0.7f);
     }
