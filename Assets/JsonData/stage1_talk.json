@@ -412,5 +412,93 @@
         "text": "마음 단단히 먹고 밖으로 향한다."
       }
     ]
+  },
+  {
+    "sceneId": 200,
+    "lines": [
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "일단 밖으로 나오기는 했는데…. 역시 밖에도 괴물들이 사방에 있네." },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "일단 학교를 통해서 지하철역으로 가보자. 거기로 가면 어떻게든 되겠지." },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "그런데 학교 분위기가 뭔가 달라진 것 같은데? 일단 가보자." }
+    ]
+  },
+  {
+    "sceneId": 210,
+    "lines": [
+      { "speaker": "???", "portrait": 0, "effect": 0, "text": "거기 너! 멈춰!" },
+      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "갑자기 이상한 복장의 사람이 나에게 말을 걸었다." },
+      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "뭐야? 사람? 근데 복장이 이상한데?" },
+      { "speaker": "마녀의 하수인", "portrait": 0, "effect": 0, "text": "감히 마녀님을 쓰러뜨리러 오다니, 그 전에 내 손으로 쓰러뜨려주마!" },
+      { "speaker": "주인공", "portrait": 3, "effect": 0, "text": "뭐야? 갑자기 마법을 쓰잖아!? 일단 말이 통할 것 같진 않으니 처치하자." },
+      { "speaker": "Guide", "portrait": 0, "effect": 0, "text": "일정 공격은 반사를 할 시에 공격이 여러 갈래로 나뉘어 다수의 적을 공격할 수 있습니다." }
+    ]
+  },
+  {
+    "sceneId": 220,
+    "lines": [
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "자신을 막으려고 오는 괴물들을 물리치며 주인공은 학교 실험실에 도착한다." },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "길은 여기밖에 없는데… 여기만 지나가면 지하철 역이다." },
+      { "speaker": "???", "portrait": 0, "effect": 0, "text": "후후... 결국 여기까지 왔군…" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "누구지?" },
+      { "speaker": "마녀", "portrait": 0, "effect": 0, "text": "설마 여기까지 올 줄은 몰랐는데, 결국 너도 그분께 가려는 건가?" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "그분? 그분이 누군데? 난 그런건 모르겠고 나가는 길을 찾으려는 것뿐이야." },
+      { "speaker": "마녀", "portrait": 0, "effect": 0, "text": "의미없는 거짓말은 그만두고 여기서 사라지거라!" },
+      { "speaker": "주인공", "portrait": 3, "effect": 0, "text": "뭐야? 바로 이렇게 공격한다고!?" },
+      { "speaker": "Guide", "portrait": 1, "effect": 0, "text": "마녀는 특이한 마법을 가진 공격을 합니다. 마법은 종류에 따라 좋은 효과를 주기도 나쁜 효과를 주기도 합니다. 신중하게 반사하여 마녀를 쓰러뜨리세요!" }
+    ]
+  },
+  {
+    "sceneId": 230,
+    "lines": [
+      { "speaker": "주인공", "portrait": 1, "effect": 0, "text": "겨우 쓰러뜨렸다…." },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "근데… 마녀가 말한 그분은 누구지?" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "지금 생각해도 의미가 없어. 근데 여기에도 사람들이 없네." },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "일단 지하철 역으로 가서 사람을 찾아보자." }
+    ]
+  },
+  {
+    "sceneId": 300,
+    "lines": [
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "지하철 역이 다 무너졌잖아?" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "이러면 운행하는 지하철도 없을 텐데…" },
+      { "speaker": "???", "portrait": 0, "effect": 0, "text": "우워어어어어…." },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "무슨소리지?" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "눈앞에는 영화에서나 볼 법한 좀비가 있었다." },
+      { "speaker": "주인공", "portrait": 3, "effect": 0, "text": "이번엔 좀비야? 근데... 이 녀석들은 반사할 수 있는 공격이 없는데?" },
+      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "그래! 영화에서 좀비는 햇빛을 싫어하니까 가로등도 어느정도 되지 않을까? 한번 시험해보자." },
+      { "speaker": "Guide", "portrait": 2, "effect": 0, "text": "거울은 가로등의 빛을 반사하여 적을 공격할 수 있습니다. 빛을 반사하여 적을 맞추면 지속적인 데미지를 넣을 수 있습니다." }
+    ]
+  },
+  {
+    "sceneId": 310,
+    "lines": [
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "설마 가로등의 불빛이 실제로 먹히다니. 일단 계속 가보자." },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "근데 지하철역에 왜 아무도 안보이는 거지?" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "이런 상황에서는 지하철역으로 사람들이 몰리는 게 정상인데…" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "일단 어린이대공원으로 나가보자." }
+    ]
+  },
+  {
+    "sceneId": 400,
+    "lines": [
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "여기가 내가 알던 공원이 맞나? 공원보다는…" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "마치 공동묘지 같아." },
+      { "speaker": "???", "portrait": 0, "effect": 0, "text": "결국… 여기까지 온 건가…" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "누구야!" },
+      { "speaker": "주인공", "portrait": 3, "effect": 0, "text": "저건… 드라큘라?" },
+      { "speaker": "주인공", "portrait": 3, "effect": 0, "text": "설마… 전의 녀석들이 말한 그분이란게… 네놈이냐?" },
+      { "speaker": "드라큘라", "portrait": 0, "effect": 0, "text": "그래, 결국 여기까지 왔구나." },
+      { "speaker": "드라큘라", "portrait": 0, "effect": 0, "text": "인간들을 구하러 온건가?" },
+      { "speaker": "드라큘라", "portrait": 0, "effect": 0, "text": "원한다면 풀어주지." },
+      { "speaker": "드라큘라", "portrait": 0, "effect": 0, "text": "날 쓰러뜨린다면 말이야!" },
+      { "speaker": "Guide", "portrait": 5, "effect": 0, "text": "드라큘라는 어느 적보다 강력합니다. 주변 지형을 잘 이용하여 전투하세요!" }
+    ]
+  },
+  {
+    "sceneId": 410,
+    "lines": [
+      { "speaker": "주인공", "portrait": 1, "effect": 0, "text": "역시 최종보스라 그런지 정말 강력했어." },
+      { "speaker": "사람들", "portrait": 0, "effect": 0, "text": "저 괴물을 쓰러뜨리다니! 넌 우리들의 영웅이야!" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "결국 모든 적을 쓰러뜨린 나는 사람들을 구하고 영웅으로 칭송받고 유명인사와 같은 대학 생활을 즐겼다고 한다." }
+    ]
   }
 ]
