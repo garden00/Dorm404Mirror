@@ -416,34 +416,53 @@
   {
     "sceneId": 200,
     "lines": [
-      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "일단 밖으로 나오기는 했는데…. 역시 밖에도 괴물들이 사방에 있네." },
-      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "일단 학교를 통해서 지하철역으로 가보자. 거기로 가면 어떻게든 되겠지." },
-      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "그런데 학교 분위기가 뭔가 달라진 것 같은데? 일단 가보자." }
+      { "speaker": "주인공", "portrait": 1, "effect": 0, "text": "\"일단 밖으로 나오기는 했는데…. 역시 밖에도 괴물들이 사방에 있네.\"" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "주위를 둘러봐도 사람은 없었다." },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "\"일단 학교를 통해서 지하철역으로 가보자. 거기로 가면 어떻게든 되겠지.\"" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "학교 분위기가 뭔가 달라진 것 같은 건 기분 탓일까?" }
+    ]
+  },
+  {
+    "sceneId": 205,
+    "lines": [
+      { "speaker": "???", "portrait": 1, "effect": 0, "text": "\"꺄아아아아악!!!\"" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "누군가의 비명 소리가 건물 안에서 들리는 것 같다." },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "\"설마 사람인가?!\"" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "건물 안으로 들어가보자." }
     ]
   },
   {
     "sceneId": 210,
     "lines": [
-      { "speaker": "???", "portrait": 0, "effect": 0, "text": "거기 너! 멈춰!" },
+      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "건물 안으로 들어와 두리번거리지만 사람은 안 보인다." },
+      { "speaker": "???", "portrait": 0, "effect": 0, "text": "\"거기 너! 멈춰!\"" },
       { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "갑자기 이상한 복장의 사람이 나에게 말을 걸었다." },
-      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "뭐야? 사람? 근데 복장이 이상한데?" },
-      { "speaker": "마녀의 하수인", "portrait": 0, "effect": 0, "text": "감히 마녀님을 쓰러뜨리러 오다니, 그 전에 내 손으로 쓰러뜨려주마!" },
-      { "speaker": "주인공", "portrait": 3, "effect": 0, "text": "뭐야? 갑자기 마법을 쓰잖아!? 일단 말이 통할 것 같진 않으니 처치하자." },
-      { "speaker": "Guide", "portrait": 0, "effect": 0, "text": "일정 공격은 반사를 할 시에 공격이 여러 갈래로 나뉘어 다수의 적을 공격할 수 있습니다." }
+      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "뭐야? 사람이신가요? …근데 복장이 이상한데?" },
+      { "speaker": "마녀의 하수인", "portrait": 0, "effect": 0, "text": "\"감히 마녀님을 쓰러뜨리러 오다니, 그 전에 내 손으로 쓰러뜨려주마!\"" },
+      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "\"으아악! 뭐야? 사람이 아니었어?\"" },
+      { "speaker": "주인공", "portrait": 3, "effect": 0, "text": " 도망치려 다시 문을 열어보지만 열리지 않았다." },
+      { "speaker": "주인공", "portrait": 3, "effect": 0, "text": "\"갑자기 마법을 쓰잖아!? 일단 말이 통할 것 같진 않으니 처치하자.\"" },
+      { "speaker": "Guide", "portrait": 5, "effect": 0, "text": "일정 공격은 반사를 할 시에 공격이 여러 갈래로 나뉘어 다수의 적을 공격할 수 있습니다." }
+    ]
+  },
+  {
+    "sceneId": 215,
+    "lines": [
+      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "분명 이 건물에 후문이 있었던 것 같은데… 어디더라?" }
     ]
   },
   {
     "sceneId": 220,
     "lines": [
-      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "자신을 막으려고 오는 괴물들을 물리치며 주인공은 학교 실험실에 도착한다." },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "학교 실험실에 도착했다." },
       { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "길은 여기밖에 없는데… 여기만 지나가면 지하철 역이다." },
-      { "speaker": "???", "portrait": 0, "effect": 0, "text": "후후... 결국 여기까지 왔군…" },
-      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "누구지?" },
-      { "speaker": "마녀", "portrait": 0, "effect": 0, "text": "설마 여기까지 올 줄은 몰랐는데, 결국 너도 그분께 가려는 건가?" },
-      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "그분? 그분이 누군데? 난 그런건 모르겠고 나가는 길을 찾으려는 것뿐이야." },
-      { "speaker": "마녀", "portrait": 0, "effect": 0, "text": "의미없는 거짓말은 그만두고 여기서 사라지거라!" },
-      { "speaker": "주인공", "portrait": 3, "effect": 0, "text": "뭐야? 바로 이렇게 공격한다고!?" },
-      { "speaker": "Guide", "portrait": 1, "effect": 0, "text": "마녀는 특이한 마법을 가진 공격을 합니다. 마법은 종류에 따라 좋은 효과를 주기도 나쁜 효과를 주기도 합니다. 신중하게 반사하여 마녀를 쓰러뜨리세요!" }
+      { "speaker": "???", "portrait": 0, "effect": 0, "text": "\"후후... 결국 여기까지 왔군….\"" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "\"누구지?\"" },
+      { "speaker": "마녀", "portrait": 0, "effect": 0, "text": "\"설마 여기까지 올 줄은 몰랐는데, 결국 너도 그분께 가려는 건가?\"" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "\"그분? 그분이 누군데? 난 그런건 모르겠고 나가는 길을 찾으려는 것뿐이야.\"" },
+      { "speaker": "마녀", "portrait": 0, "effect": 0, "text": "\"의미없는 거짓말은 그만두고 여기서 사라지거라!\"" },
+      { "speaker": "주인공", "portrait": 3, "effect": 0, "text": "\"뭐야? 바로 이렇게 공격한다고!?\"" },
+      { "speaker": "Guide", "portrait": 5, "effect": 0, "text": "마녀는 특별한 마법이 걸린 포션으로 공격합니다. 마법은 종류에 따라 좋은 효과를 주기도 나쁜 효과를 주기도 합니다. 신중하게 반사하여 마녀를 쓰러뜨리세요!" }
     ]
   },
   {

@@ -106,6 +106,9 @@ public class BossWitch : MonoBehaviour, IDamageable, IAttacker, IEffectable
         }
         activeClones.Clear();
 
+        EnemyManager.Instance.NotifyBossDead();
+
+
         Debug.Log("마녀 처치됨");
         Destroy(gameObject); // 혹은 사망 애니메이션 재생
     }
