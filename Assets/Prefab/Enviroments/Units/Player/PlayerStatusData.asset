@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562ad6ad53a85f04db5dda3d310c8e07, type: 3}
   m_Name: PlayerStatusData
   m_EditorClassIdentifier: 
-  <CurrentState>k__BackingField: 4
+  <CurrentState>k__BackingField: 0
   maxHealth: 100
   maxChargingPower: 30
+  speedMultiplier: 1

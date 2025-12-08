@@ -106,9 +106,9 @@ public class PlayerStatusData : ScriptableObject
     public void Healing(int amount = -1)
     {
         if (amount < 0)
-            currentHealth = maxHealth;
+            CurrentHealth = maxHealth;
         else
-            currentHealth += amount;
+            CurrentHealth += amount;
     }
 
     public void SetState(PlayerState newState)

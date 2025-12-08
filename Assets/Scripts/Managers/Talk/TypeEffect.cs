@@ -40,7 +40,7 @@ public class TypeEffect : MonoBehaviour, ITypeEffect
         foreach (char c in _fullText)
         {
             _currentLabel.text += c;
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSecondsRealtime(delay);
         }
 
         CompleteTyping();

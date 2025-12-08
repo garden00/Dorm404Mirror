@@ -131,6 +131,7 @@ public class TalkManager : MonoBehaviour
         ShowNextLine();
 
         OnTalkStarted?.Invoke();
+        Time.timeScale = 0f;
     }
 
     /// <summary>
@@ -193,5 +194,6 @@ public class TalkManager : MonoBehaviour
         Debug.Log("Dialogue ended.");
 
         OnTalkEnded?.Invoke();
+        Time.timeScale = 1f;
     }
 }

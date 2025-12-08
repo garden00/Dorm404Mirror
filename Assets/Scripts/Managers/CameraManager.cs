@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 using static UnityEngine.GraphicsBuffer;
 
 // 2D 카메라이므로 Camera 컴포넌트가 반드시 필요하다고 명시
@@ -85,6 +86,13 @@ public class CameraManager : MonoBehaviour
 
         Vector3 desiredPos = new Vector3(target.position.x, target.position.y, transform.position.z);
 
+        if (!
+    (camMinX < target.position.x && target.position.x < camMaxX &&
+    camMinY < target.position.y && target.position.y < camMaxY))
+        {
+            hasBounds = false;
+        }
+
         //  [수정] 경계가 설정된 경우에만 Clamp를 적용합니다.
         if (hasBounds)
         {
@@ -93,7 +101,7 @@ public class CameraManager : MonoBehaviour
             desiredPos = new Vector3(clampedX, clampedY, desiredPos.z);
         }
 
-        transform.position = Vector3.Lerp(transform.position, desiredPos + offset, smoothSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, desiredPos + offset, smoothSpeed * Time.unscaledDeltaTime);
     }
 
     // ---  수정된 WobbleEffect ---
@@ -113,7 +121,7 @@ public class CameraManager : MonoBehaviour
         {
             offset = new Vector3(dir.x * magnitude * Mathf.Cos(30 * timer), dir.y * magnitude * Mathf.Cos(30 * timer), 0);
 
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             yield return null;
         }
 

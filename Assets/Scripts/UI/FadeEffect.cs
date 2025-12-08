@@ -80,7 +80,7 @@ public class FadeEffect : MonoBehaviour
         // 3. 시간이 다 될 때까지 알파 값을 서서히 변경
         while (elapsedTime < duration)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
 
             // 현재 시간 비율에 맞춰 시작 알파와 목표 알파 사이의 값을 계산 (선형 보간)
             float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / duration);

@@ -81,9 +81,13 @@ public class GameManager : MonoBehaviour
         // load 까지 기다리기
         yield return SceneController.Instance.LoadSceneAsync(saveData.GameSaveData.SceneIndex);
 
-        // load 완료 후 player 위치
+        PlayerManager.Instance.Status.ResetData();
+
         if (saveData.PlayerSaveData.pos != Vector3.zero)
             yield return PlayerManager.Instance.transform.position = saveData.PlayerSaveData.pos;
+
+
+        CameraManager.Instance.Teleport(saveData.PlayerSaveData.pos);
 
         yield return null;
 

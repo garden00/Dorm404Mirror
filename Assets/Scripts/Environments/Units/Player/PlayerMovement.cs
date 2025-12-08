@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     public void Initialize(PlayerStatusData playerStatus)
     {
         status = playerStatus;
+        moveCoroutine = null;
+        StopAllCoroutines();
 
         status.OnHit += HandleKnockback;
     }
@@ -91,23 +93,37 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator MoveRoutine(Vector3 targetPosition)
     {
-        status.SetState(PlayerState.Moving);
+        if (!status.IsMoveable) yield break;
+
+        status.SetState(PlayerState.Moving); Debug.Log("move : routine");
         preMovePosition = transform.position; // 롤백용 위치 저장
 
-        // 정확한 그리드 이동을 위해 sqrMagnitude 사용
+        Debug.Log("start : " + transform.position + " -> " + targetPosition + " | spd=" + moveSpeed * status.speedMultiplier * Time.deltaTime);
+
         while ((targetPosition - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * status.speedMultiplier * Time.deltaTime);
+            if (Time.timeScale == 0f)
+            {
+                transform.position = preMovePosition;
+                moveCoroutine = null;
+                yield break;
+            }
+
+            transform.position = Vector3.MoveTowards(
+                transform.position, targetPosition,
+                moveSpeed * status.speedMultiplier * Time.deltaTime);
 
             yield return null;
         }
+
+        Debug.Log("end : ");
 
         transform.position = targetPosition;
 
 
         if (status.IsMoving)
         {
-            status.SetState(PlayerState.Idle);
+            status.SetState(PlayerState.Idle); Debug.Log("idle : routine");
         }
         else
         {
@@ -140,19 +156,30 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator KnockbackRoutine(Vector3 rollbackPos)
     {
-        status.SetState(PlayerState.Moving);
+        if (status.CurrentState == PlayerState.Locked) yield break;
+
+        status.SetState(PlayerState.Moving); Debug.Log("move : knockback");
         // 빠르게 원래 위치로 복귀
         float knockbackSpeed = moveSpeed * 2f;
         while ((rollbackPos - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
-            transform.position = Vector3.MoveTowards(transform.position, rollbackPos, knockbackSpeed * Time.deltaTime);
+            if (Time.timeScale == 0f)
+            {
+                break;
+            }
+
+
+            transform.position = Vector3.MoveTowards(
+                transform.position, rollbackPos,
+                knockbackSpeed * Time.deltaTime);
+
             yield return null;
         }
         transform.position = rollbackPos;
 
         if (status.IsMoving)
         {
-            status.SetState(PlayerState.Idle);
+            status.SetState(PlayerState.Idle); Debug.Log("idle : knockback");
         }
         else
         {
@@ -165,16 +192,24 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator TeleportSequence(Vector3 newPos)
     {
+        // 이동/넉백 모두 초기화
+        if (moveCoroutine != null)
+        {
+            StopCoroutine(moveCoroutine);
+            moveCoroutine = null;
+        }
+
+        StopAllCoroutines(); // 필요하다면 추가
         status.SetState(PlayerState.Locked);
 
         UIManager.Instance?.FadeOut(0.3f);
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSecondsRealtime(0.8f);
 
         transform.position = newPos;
         CameraManager.Instance?.Teleport(newPos);
 
         UIManager.Instance?.FadeIn(0.5f);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSecondsRealtime(0.5f);
 
         status.SetState(PlayerState.Idle);
     }
