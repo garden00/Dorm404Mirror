@@ -3,26 +3,26 @@ using UnityEngine;
 
 public class Frog : MonoBehaviour, IDamageable, IAttacker
 {
-    [Header("Movement - Grid Based")]
+    [Header("Movement")]
     [SerializeField] private float gridSize = 1f;
     [SerializeField] private float moveDuration = 0.35f;
-    [SerializeField] private float detectRange = 8f;
+    [SerializeField] private float moveInterval = 2f; // 2초 간격
+    [SerializeField] private int moveTiles = 3;      // 3칸 이동
     [SerializeField] private LayerMask obstacleMask;
 
     private bool isMoving = false;
-    private Vector3 moveStartPos;
-    private Vector3 moveTargetPos;
+    private float moveTimer = 0f;
+    private int moveDir = 1;   // 1 = 오른쪽, -1 = 왼쪽
     private float moveProgress = 0f;
 
     [Header("Attack")]
-    [SerializeField] private Transform player;
     [SerializeField] private int tongueDamage = 1;
-    [SerializeField] private float attackRange = 1.2f;
+    [SerializeField] private Transform player;
+    [SerializeField] private float attackRange = 1f;
     [SerializeField] private float attackCooldown = 1f;
-
     [SerializeField] private int damage;
-    int IAttacker.Damage => damage;
 
+    int IAttacker.Damage => damage;
     private bool isAttacking = false;
     private float lastAttackTime = -999f;
 
@@ -42,13 +42,10 @@ public class Frog : MonoBehaviour, IDamageable, IAttacker
         }
     }
 
-    public bool IsDead { get; private set; } = false;
-
-    private int lookDir = 1;
+    private bool IsDead = false;
     private Collider2D col;
     private FrogAnimatorController frogAnim;
 
-    // --- Grid Snap ---
     private Vector3 SnapToGrid(Vector3 pos)
     {
         float x = Mathf.Round(pos.x / gridSize) * gridSize;
@@ -65,60 +62,50 @@ public class Frog : MonoBehaviour, IDamageable, IAttacker
         frogAnim = GetComponent<FrogAnimatorController>();
 
         if (player == null)
-        {
-            GameObject p = GameObject.FindGameObjectWithTag("Player");
-            if (p != null) player = p.transform;
-        }
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
-        
         if (healthBar != null)
             healthBar.gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        if (IsDead) return;
-        if (player == null) return;
-        if (isMoving) return;
+        if (IsDead || isMoving) return;
 
-        HandleGridMovement();
+        moveTimer += Time.deltaTime;
+        if (moveTimer >= moveInterval)
+        {
+            moveTimer = 0f;
+            TryMoveFixed();
+        }
 
         if (CanAttackPlayer())
             DoTongueAttack();
     }
 
-    private void HandleGridMovement()
+    private void TryMoveFixed()
     {
-        float dist = Vector2.Distance(transform.position, player.position);
-        if (dist > detectRange) return;
-
         Vector3 origin = SnapToGrid(transform.position);
         transform.position = origin;
 
-        Vector3 toPlayer = player.position - origin;
+        Vector3 target = origin + new Vector3(moveDir * moveTiles * gridSize, 0, 0);
 
-        if (toPlayer.sqrMagnitude < 0.001f)
-            return;
-
-        Vector2 dir;
-        if (Mathf.Abs(toPlayer.x) > Mathf.Abs(toPlayer.y))
-            dir = new Vector2(Mathf.Sign(toPlayer.x), 0f);
-        else
-            dir = new Vector2(0f, Mathf.Sign(toPlayer.y));
-
-        lookDir = dir.x < 0 ? -1 : 1;
-        frogAnim.FaceDirection(lookDir);
-        frogAnim.PlayMove();
-
-        Vector3 target = origin + (Vector3)(dir * gridSize);
-
-        if (obstacleMask.value != 0)
+        // 벽체크
+        for (int i = 1; i <= moveTiles; i++)
         {
-            RaycastHit2D hit = Physics2D.Linecast(origin, target, obstacleMask);
-            if (hit.collider != null)
+            Vector3 checkPos = origin + new Vector3(moveDir * gridSize * i, 0);
+            if (Physics2D.OverlapCircle(checkPos, 0.1f, obstacleMask))
+            {
+                moveDir *= -1; // 방향 전환만 하고 이동 취소
+                frogAnim.FaceDirection(moveDir);
                 return;
+            }
         }
 
+        frogAnim.FaceDirection(moveDir);
+        frogAnim.PlayMove();
+
+        StopAllCoroutines();
         StartCoroutine(GridMoveRoutine(origin, target));
     }
 
@@ -136,12 +123,14 @@ public class Frog : MonoBehaviour, IDamageable, IAttacker
 
         transform.position = target;
         isMoving = false;
+        moveDir *= -1; // 반대방향으로 전환
     }
 
     private bool CanAttackPlayer()
     {
-        return Vector2.Distance(transform.position, player.position) < attackRange
-               && Time.time - lastAttackTime >= attackCooldown;
+        return player != null &&
+               Vector2.Distance(transform.position, player.position) < attackRange &&
+               Time.time - lastAttackTime >= attackCooldown;
     }
 
     private void DoTongueAttack()
@@ -151,7 +140,7 @@ public class Frog : MonoBehaviour, IDamageable, IAttacker
         isAttacking = true;
         lastAttackTime = Time.time;
 
-        frogAnim.FaceDirection(lookDir);
+        frogAnim.FaceDirection(moveDir);
         frogAnim.PlayAttack();
 
         Invoke(nameof(ApplyTongueDamage), 0.15f);
@@ -180,7 +169,6 @@ public class Frog : MonoBehaviour, IDamageable, IAttacker
     {
         if (IsDead) return;
 
-        
         if (healthBar != null && !healthBar.gameObject.activeSelf)
             healthBar.gameObject.SetActive(true);
 
