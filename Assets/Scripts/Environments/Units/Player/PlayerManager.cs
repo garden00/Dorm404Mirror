@@ -85,5 +85,6 @@ public class PlayerManager : MonoBehaviour
 
     public void Charge(float time)
     {
+        Combat.chage(time);
     }
 }

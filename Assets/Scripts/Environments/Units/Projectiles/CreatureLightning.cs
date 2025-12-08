@@ -1,109 +1,145 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CreatureLightning : MonoBehaviour, IProjectile
 {
-    [Header("Projectile Stats")]
-    [SerializeField] private float speed = 7f;
-    [SerializeField] private int damage = 10;
-    [SerializeField] private float maxLifetime = 5f;
+    // --- IProjectile 인터페이스 구현 ---
 
-    [Header("Visuals")]
-    [SerializeField] private TrailRenderer trail; // 꼬리 효과 (있다면)
-
-    private Vector3 moveDirection;
-    private string ownerTag;
-    private float lifeTimer;
-
-    // --- IProjectile 구현 ---
+    [SerializeField]
+    private int damage = 10;
     public int Damage => damage;
-    public Vector3 MoveDirection => moveDirection;
+
+    private Vector3 laserDirection;
+    public Vector3 MoveDirection => laserDirection;
+
+    private string ownerTag;
+
+    // --- Lazer 고유 속성 ---
+
+    // LineRenderer 대신, 빔의 시각 효과를 담당할 자식 오브젝트의 Transform
+    [SerializeField]
+    private Transform laserBeamVisual;
+    private SpriteRenderer beamRenderer;
+
+    [SerializeField]
+    private float maxDistance = 100f; // 레이저 최대 사거리
+
+    [SerializeField]
+    private float laserDuration = 0.2f; // 레이저가 보였다 사라지는 시간
+
+    [SerializeField]
+    private LayerMask hitMask; // 레이저가 충돌할 2D 레이어 마스크
+
+    private void Awake()
+    {
+        if (laserBeamVisual != null)
+        {
+            beamRenderer = laserBeamVisual.GetComponent<SpriteRenderer>();
+            laserBeamVisual.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("Lazer: 'Laser Beam Visual'이 할당되지 않았습니다!");
+        }
+    }
 
     public void Fire(Vector3 _position, Vector3 _direction, string _ownerTag)
     {
         transform.position = _position;
-        moveDirection = _direction.normalized;
+        laserDirection = _direction;
         ownerTag = _ownerTag;
-        lifeTimer = 0f;
 
-        // 진행 방향으로 회전 (전기 화살 같은 느낌)
-        float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        Vector2 rayOrigin = _position;
+        Vector2 rayDirection = laserDirection;
+        Vector3 endPoint = _position + laserDirection * maxDistance;
 
-        // 트레일 초기화
-        if (trail != null) trail.Clear();
+        int ownerLayerIndex = LayerMask.NameToLayer(_ownerTag);
+        int layerMaskToExcludeOwner = ~(1 << ownerLayerIndex);
+        int finalMask = hitMask & layerMaskToExcludeOwner;
 
-        gameObject.SetActive(true);
+        RaycastHit2D hitInfo = Physics2D.Raycast(rayOrigin, rayDirection, maxDistance, finalMask);
+
+        if (hitInfo.collider != null)
+        {
+            endPoint = new Vector3(hitInfo.point.x, hitInfo.point.y, _position.z);
+
+            if (hitInfo.collider.TryGetComponent<IDamageable>(out IDamageable target))
+            {
+                DamageInfo info = new DamageInfo(this, AttackType.Projectile, damage, laserDirection);
+                info.elect = true;
+                target.ReceiveAttack(info);
+            }
+        }
+        else
+        {
+            endPoint = _position + _direction * maxDistance;
+        }
+
+        StartCoroutine(ShowLaserEffect(_position, endPoint));
     }
 
     public void Reflect(Vector3 _position, Vector3 _direction, string _ownerTag)
     {
-        // 1페이즈 핵심 기믹: 반사
-        moveDirection = _direction.normalized;
-        ownerTag = _ownerTag; // 주인이 Player로 변경됨 -> 보스가 맞으면 아군 공격으로 인식
+        GameObject myOriginalPrefab = ObjectPoolingManager.Instance.GetOriginalPrefab(gameObject);
 
-        // 반사되면 속도를 좀 더 빠르게 하여 타격감 상승
-        speed *= 1.5f;
-
-        // 방향 전환에 따른 회전 갱신
-        float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-    }
-    // ------------------------
-
-    private void Update()
-    {
-        // 이동 로직
-        transform.position += moveDirection * speed * Time.deltaTime;
-
-        // 수명 체크
-        lifeTimer += Time.deltaTime;
-        if (lifeTimer >= maxLifetime)
+        if (myOriginalPrefab == null)
         {
-            Despawn();
+            Debug.LogError($"[Reflect] {gameObject.name}의 원본 프리팹을 ObjectPoolingManager에서 찾을 수 없습니다.", gameObject);
+            return;
         }
+
+        ObjectPoolingManager.Instance.GetPrefab(myOriginalPrefab)
+            .GetComponent<IProjectile>().
+            Fire(_position, _direction, _ownerTag);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /// <summary>
+    /// 레이저(스프라이트)를 잠시 켰다가 끄는 코루틴 (수정)
+    /// </summary>
+    /// <summary>
+    /// 레이저(스프라이트)를 페이드 인/아웃하며 켜고 끄는 코루틴
+    /// </summary>
+    private IEnumerator ShowLaserEffect(Vector3 startPoint, Vector3 endPoint)
     {
-        // 1. 발사한 주인(보통 Enemy)과는 충돌 무시
-        //    단, 반사되어서 ownerTag가 "Player"가 되었다면 Enemy(보스)와 충돌 가능
-        if (collision.CompareTag(ownerTag)) return;
-
-        // 2. 다른 투사체와 충돌 무시
-        if (collision.GetComponent<IProjectile>() != null) return;
-
-        // 3. IDamageable 인터페이스를 가진 대상 타격
-        //    (Player, Dracula, StreetLight 모두 IDamageable을 가지고 있음)
-        if (collision.TryGetComponent<IDamageable>(out IDamageable target))
+        if (beamRenderer == null)
         {
-            // 공격 정보 생성
-            DamageInfo info = new DamageInfo(this, AttackType.Projectile, damage, moveDirection);
-
-            // 데미지 전달
-            // - Player가 맞으면: 데미지 입음
-            // - StreetLight가 맞으면: ReceiveAttack에서 불이 켜짐 (2페이즈 기믹)
-            // - Dracula가 맞으면: 
-            //    -> 그냥 쏜 거면 데미지 입음 (혹은 무시)
-            //    -> 반사된 거면(ownerTag == Player) 폭주 게이지 상승 (1페이즈 기믹)
-            target.ReceiveAttack(info);
-
-            Despawn();
+            yield break;
         }
-        // 4. 벽에 닿으면 소멸
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
+
+        Transform beam = laserBeamVisual;
+        Vector3 direction = (endPoint - startPoint);
+        float distance = direction.magnitude;
+
+        beam.localScale = new Vector3(distance, beam.localScale.y, 1f);
+        beam.right = direction.normalized;
+        beam.position = startPoint + (direction.normalized * (distance / 2));
+
+        beam.gameObject.SetActive(true);
+
+        Color beamColor = beamRenderer.color;
+        float elapsedTime = 0;
+
+        while (elapsedTime < laserDuration)
         {
-            Despawn();
+            elapsedTime += Time.deltaTime;
+            float alpha = elapsedTime / laserDuration;
+            beamColor.a = Mathf.Clamp01(alpha);
+            beamRenderer.color = beamColor;
+            yield return null;
         }
-    }
 
-    private void Despawn()
-    {
-        // 속도 등 변수 초기화가 필요하다면 여기서 수행
-        speed = 7f;
+        while (elapsedTime > 0)
+        {
+            elapsedTime -= Time.deltaTime;
+            float alpha = elapsedTime / laserDuration;
+            beamColor.a = Mathf.Clamp01(alpha);
+            beamRenderer.color = beamColor;
+            yield return null;
+        }
 
-        // 풀링 반환
         ObjectPoolingManager.Instance.Return(gameObject);
+        beam.gameObject.SetActive(false);
     }
 }

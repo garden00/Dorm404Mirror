@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3537639422473182442}
   - component: {fileID: 2990771770015490962}
-  - component: {fileID: 5485593373737902782}
+  - component: {fileID: 3709973223263828205}
   - component: {fileID: 531642589932769674}
   - component: {fileID: -8220460498087938143}
   m_Layer: 7
-  m_Name: Dracula1
+  m_Name: Dracula2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5485593373737902782
+--- !u!114 &3709973223263828205
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,19 +97,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1526853495909796693}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46a790428b9285148b5f83575abcfc87, type: 3}
+  m_Script: {fileID: 11500000, guid: 046b724e9be53ca49a264bf8b1559691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 1500
   healthBar: {fileID: 4695688116257837455}
-  maxRage: 100
-  ragePerLightning: 20
-  damage: 20
   creaturePrefab: {fileID: 2030198305332183852, guid: 2ef6c8a28912acf4a9e2e212373e66f4, type: 3}
-  clonePrefab: {fileID: 166142253822373794, guid: 61f1fa66dd77f994db94a88a05324f09, type: 3}
-  reflectableProjectile: {fileID: 548199148115407314, guid: d25ccc1894f20f04b8c1f2cd8f2a24e6, type: 3}
-  wideProjectile: {fileID: 2627319501095591754, guid: f1b64895df740294398d6db7f8c7e91c, type: 3}
-  firePoint: {fileID: 0}
+  activeMinions: []
+  wideProjectile: {fileID: 2627319501095591754, guid: c2567ed7c11b78e48b93575bf0b4bcef, type: 3}
+  damage: 30
   mapBoundary: {fileID: 0}
   wallLayer:
     serializedVersion: 2

@@ -95,10 +95,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!status.IsMoveable) yield break;
 
-        status.SetState(PlayerState.Moving); Debug.Log("move : routine");
+        status.SetState(PlayerState.Moving);
         preMovePosition = transform.position; // 롤백용 위치 저장
-
-        Debug.Log("start : " + transform.position + " -> " + targetPosition + " | spd=" + moveSpeed * status.speedMultiplier * Time.deltaTime);
 
         while ((targetPosition - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
@@ -116,14 +114,12 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("end : ");
-
         transform.position = targetPosition;
 
 
         if (status.IsMoving)
         {
-            status.SetState(PlayerState.Idle); Debug.Log("idle : routine");
+            status.SetState(PlayerState.Idle);
         }
         else
         {
@@ -158,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (status.CurrentState == PlayerState.Locked) yield break;
 
-        status.SetState(PlayerState.Moving); Debug.Log("move : knockback");
+        status.SetState(PlayerState.Moving);
         // 빠르게 원래 위치로 복귀
         float knockbackSpeed = moveSpeed * 2f;
         while ((rollbackPos - transform.position).sqrMagnitude > Mathf.Epsilon)
@@ -179,7 +175,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (status.IsMoving)
         {
-            status.SetState(PlayerState.Idle); Debug.Log("idle : knockback");
+            status.SetState(PlayerState.Idle);
         }
         else
         {

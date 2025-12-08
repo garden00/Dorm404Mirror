@@ -18,7 +18,12 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
     [SerializeField] private float WobbleEffectPower = 0.05f;
 
     private float invincibleTimer;
-    private bool isCharging;
+
+
+    [SerializeField] private bool isCharged;
+
+    float cur_ch;
+    [SerializeField] float max_ch;
 
     public event Action OnReflectEvent; // 애니메이션 연동용
 
@@ -41,20 +46,25 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
 
     private void HandleInput()
     {
-        if (!status.IsActionable && !isCharging) return;
+        //if (!status.IsActionable && !isCharging) return;
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            isCharging = true;
-            status.SetState(PlayerState.Attacking); // 상태 변경 (선택 사항)
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    isCharging = true;
+        //    status.SetState(PlayerState.Attacking); // 상태 변경 (선택 사항)
+        //}
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        //if (Input.GetKeyUp(KeyCode.Space))
+        //{
+        //    isCharging = false;
+        //    TryReleaseChargedAttack();
+        //    if (status.CurrentState == PlayerState.Attacking)
+        //        status.SetState(PlayerState.Idle);
+        //}
+
+        if (isCharged && Input.GetKeyDown(KeyCode.Space))
         {
-            isCharging = false;
             TryReleaseChargedAttack();
-            if (status.CurrentState == PlayerState.Attacking)
-                status.SetState(PlayerState.Idle);
         }
     }
 
@@ -70,14 +80,7 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
             // 투사체 반사 가능 여부 체크
             if (IsReflectable(proj))
             {
-                if (isCharging)
-                {
-                    AbsorbProjectile(proj); // 흡수
-                }
-                else
-                {
-                    ReflectProjectile(proj); // 반사
-                }
+                ReflectProjectile(proj); // 반사
                 return; // 반사/흡수했으면 데미지 안 입고 종료
             }
         }
@@ -100,14 +103,6 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
         projectile.Reflect(transform.position, reflectVec, gameObject.tag);
 
         OnReflectEvent?.Invoke();
-    }
-
-    private void AbsorbProjectile(IProjectile projectile)
-    {
-        status.CurrentChargingPower += projectile.Damage;
-        // 투사체 제거 로직은 보통 projectile.Reflect 혹은 별도 Destroy 호출 필요
-        // 여기서는 흡수했으므로 투사체가 사라지는 로직이 필요함 (가정)
-        //projectile.Deactivate();
     }
 
     private void TakeDamage(DamageInfo damageInfo)
@@ -178,19 +173,31 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
         status.RaiseOnHitEvent(kbDir);
     }
 
+    public void chage(float time)
+    {
+
+
+        if (cur_ch > max_ch)
+        {
+            isCharged = true;
+            Debug.Log("차징 완료");
+        }
+        else
+        {
+            cur_ch += time;
+        }
+    }
 
     private void TryReleaseChargedAttack()
     {
-        if (status.IsMaxCharged)
-        {
-            status.CurrentChargingPower = 0;
+        cur_ch = 0;
+        isCharged = false;
 
-            var projectileObj = ObjectPoolingManager.Instance?.GetPrefab(chargingAttackProjectilePrefab);
-            if (projectileObj != null)
-            {
-                var proj = projectileObj.GetComponent<IProjectile>();
-                proj?.Reflect(transform.position, shield.Direction, gameObject.tag);
-            }
+        var projectileObj = ObjectPoolingManager.Instance?.GetPrefab(chargingAttackProjectilePrefab);
+        if (projectileObj != null)
+        {
+            var proj = projectileObj.GetComponent<IProjectile>();
+            proj?.Reflect(transform.position, shield.Direction, gameObject.tag);
         }
     }
 

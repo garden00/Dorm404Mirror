@@ -69,6 +69,7 @@ public class SplitBeam : MonoBehaviour, IProjectile
             if (hitInfo.collider.TryGetComponent<IDamageable>(out IDamageable target))
             {
                 DamageInfo info = new DamageInfo(this, AttackType.Projectile, damage, laserDirection);
+                info.light = true;
                 target.ReceiveAttack(info);
             }
         }

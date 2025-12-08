@@ -2,29 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StreetLamp : MonoBehaviour
+public class StreetLamp : MonoBehaviour, IDamageable
 {
-    [Header("Settings")]
-    [SerializeField] private float lightDuration = 10f; // 켜진 후 유지 시간 (옵션)
+    [Header("설정")]
+    [SerializeField] private float lightDuration = 10f; // 켜짐 유지 시간
 
-    [Header("Visuals & Physics")]
-    [SerializeField] private GameObject lightObject;   // 실제 Light2D가 달린 자식 오브젝트
-    [SerializeField] private Collider2D lightAreaCollider; // 빛의 범위를 담당하는 Trigger Collider
-    [SerializeField] private SpriteRenderer lampRenderer;
-    [SerializeField] private Sprite offSprite;
-    [SerializeField] private Sprite onSprite;
+    [Header("연결할 오브젝트")]
+    // 중요: 자식 오브젝트인 'LightGroup'을 여기에 넣으세요.
+    [SerializeField] private GameObject lightGroupObject;
+
+    [Header("비주얼")]
+    [SerializeField] private SpriteRenderer lampRenderer; // 부모에 있는 렌더러
+    [SerializeField] private Sprite offSprite; // 꺼진 이미지
+    [SerializeField] private Sprite onSprite;  // 켜진 이미지
 
     private bool isCharged = false;
     private float timer = 0f;
 
     private void Start()
     {
+        // 게임 시작 시 꺼진 상태로 초기화
         TurnOff();
     }
 
     private void Update()
     {
-        // 켜진 상태에서 일정 시간이 지나면 자동으로 꺼지게 할 경우 (옵션)
+        // 켜져 있다면 시간 체크 후 끄기
         if (isCharged)
         {
             timer += Time.deltaTime;
@@ -35,27 +38,18 @@ public class StreetLamp : MonoBehaviour
         }
     }
 
-    // [IDamageable] : 크리처의 전기 공격을 감지하여 가로등을 켬
+    // [IDamageable 구현] 레이저(전기) 공격을 받으면 호출됨
     public void ReceiveAttack(DamageInfo damageInfo)
     {
+        Debug.Log("dd");
         // 이미 켜져있으면 무시
         if (isCharged) return;
 
-        // 투사체 공격만 허용 (혹은 특정 태그/속성 체크)
-        if (damageInfo.type == AttackType.Projectile)
+        // 전기 속성인지 확인
+        if (damageInfo.elect)
         {
-            // 필요하다면 여기서 damageInfo.source가 'Minion'인지 체크
+            Debug.Log("aa");
             TurnOn();
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (!isCharged) return;
-
-        if (other.CompareTag("Player"))
-        {
-            PlayerManager.Instance.Charge(Time.deltaTime);
         }
     }
 
@@ -64,23 +58,25 @@ public class StreetLamp : MonoBehaviour
         isCharged = true;
         timer = 0f;
 
-        if (lampRenderer && onSprite) lampRenderer.sprite = onSprite;
+        // 이미지 변경
+        if (lampRenderer != null && onSprite != null)
+            lampRenderer.sprite = onSprite;
 
-        // 빛 오브젝트와 충돌 범위 활성화
-        if (lightObject) lightObject.SetActive(true);
-        if (lightAreaCollider) lightAreaCollider.enabled = true;
-
-        Debug.Log("가로등 활성화! 플레이어 접근 대기 중...");
+        // 자식 오브젝트(빛+충전범위) 통째로 켜기
+        if (lightGroupObject != null)
+            lightGroupObject.SetActive(true);
     }
 
     private void TurnOff()
     {
         isCharged = false;
 
-        if (lampRenderer && offSprite) lampRenderer.sprite = offSprite;
+        // 이미지 변경
+        if (lampRenderer != null && offSprite != null)
+            lampRenderer.sprite = offSprite;
 
-        // 빛 오브젝트와 충돌 범위 비활성화
-        if (lightObject) lightObject.SetActive(false);
-        if (lightAreaCollider) lightAreaCollider.enabled = false;
+        // 자식 오브젝트(빛+충전범위) 통째로 끄기
+        if (lightGroupObject != null)
+            lightGroupObject.SetActive(false);
     }
 }

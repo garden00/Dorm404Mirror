@@ -137,8 +137,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   invincibleTime: 1
-  chargingAttackProjectilePrefab: {fileID: 981296870417409643, guid: bb5c42681fe556741a930cbc0a78dfa9, type: 3}
+  chargingAttackProjectilePrefab: {fileID: 981296870417409643, guid: 7f0fecc80c887c646860555d34f0957c, type: 3}
   WobbleEffectPower: 0.03
+  max_ch: 5
 --- !u!114 &5137674203912815501
 MonoBehaviour:
   m_ObjectHideFlags: 0

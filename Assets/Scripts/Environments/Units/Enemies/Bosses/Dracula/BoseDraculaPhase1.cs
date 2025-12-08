@@ -27,6 +27,12 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     [SerializeField] private GameObject wideProjectile;  
     [SerializeField] private Transform firePoint;
 
+    [Header("hmm")]
+    [SerializeField] private BoxCollider2D mapBoundary;// 텔포 범위, 맵에서 지정해줘야함
+    [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private float bodyRadius = 1.0f;
+
+
     private Transform playerTransform;
     private Animator animator; // 애니메이션 제어용
 
@@ -34,7 +40,7 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     private bool isDead = false;
     private bool isPatternRunning = false;
 
-    [SerializeField] private List<GameObject> activeMinions = new List<GameObject>();
+    private List<GameObject> activeMinions = new List<GameObject>();
 
     private void Start()
     {
@@ -64,16 +70,18 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
         currentHealth -= damageInfo.damage;
         if (healthBar) healthBar.UpdateHealth(currentHealth, maxHealth);
 
-        AddRage(ragePerLightning);
+        AddRage(damageInfo);
 
         if (currentHealth <= 0) Die();
     }
 
-    private void AddRage(float amount)
+    private void AddRage(DamageInfo damageInfo)
     {
         if (isBerserk) return; // 이미 폭주 중이면 무시
 
-        currentRage += amount;
+        if (!damageInfo.elect) return;
+
+        currentRage += damageInfo.damage;
         if (currentRage >= maxRage)
         {
             StartCoroutine(EnterBerserkMode());
@@ -107,7 +115,6 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     private IEnumerator EnterBerserkMode()
     {
         isBerserk = true;
-        Debug.Log("!!! 드라큘라 폭주 !!!");
         // 폭주 진입 연출(포효 등) 시간 대기
         yield return new WaitForSeconds(1.0f);
     }
@@ -152,7 +159,6 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     // 1. 크리처 소환
     private IEnumerator Pattern1_SummonCreature()
     {
-        Debug.Log("패턴1: 크리처 소환");
         // 애니메이션 재생
         // animator.SetTrigger("Summon");
 
@@ -174,10 +180,7 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
 
     // 2. 분신으로 분열 후 돌진
     private IEnumerator Pattern2_SplitAndCharge()
-    {
-        yield break;
-
-        Debug.Log("패턴2: 분신 돌진");
+    { 
         // 1. 분신 생성 (시각적 효과)
         Vector3[] offsets = { Vector3.left * 2, Vector3.right * 2 };
         List<GameObject> clones = new List<GameObject>();
@@ -216,28 +219,51 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     // 3. 반사 가능 투사체
     private IEnumerator Pattern3_ReflectableProjectile()
     {
-        Debug.Log("패턴3: 반사 가능 투사체 발사");
         FireProjectile(reflectableProjectile);
         yield return new WaitForSeconds(0.5f);
     }
 
-    // 4. 반사 불가능(광범위) 투사체
+    // 4. 일반 투사체
     private IEnumerator Pattern4_WideProjectile()
     {
-        Debug.Log("패턴4: 광범위 투사체 발사");
         FireProjectile(wideProjectile);
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.3f);
+        FireProjectile(wideProjectile);
+        yield return new WaitForSeconds(0.3f);
+        FireProjectile(wideProjectile);
+        yield return new WaitForSeconds(0.3f);
     }
 
     // 5. 플레이어 뒤로 순간이동 후 공격
     private IEnumerator Pattern5_TeleportBackAttack()
     {
-        Debug.Log("패턴5: 배후 습격");
+        Vector3 playerPos = playerTransform.position;
+        Vector3 backDir = -playerTransform.right; // 플레이어 뒤쪽
+        float teleportDist = 3.0f;
 
-        Vector3 backDir = -PlayerManager.Instance.Status.ViewDirection;
-        Vector3 destPos = playerTransform.position + backDir * 2.0f;
+        // 1. 일단 가고 싶은 위치 계산
+        Vector3 targetPos = playerPos + backDir * teleportDist;
 
-        yield return StartCoroutine(TeleportEffect(destPos));
+        // 2. [맵 범위 제한] 가려는 곳이 맵 밖인가?
+        // mapBoundary.bounds는 콜라이더의 월드 공간 경계 상자(AABB)를 가져옵니다.
+        if (!mapBoundary.bounds.Contains(targetPos))
+        {
+            // 맵 밖이라면, 맵 경계선 중 가장 가까운 안쪽 위치로 변경
+            targetPos = mapBoundary.bounds.ClosestPoint(targetPos);
+        }
+
+        // 3. [내부 벽 체크] 플레이어와 목표 지점 사이에 장애물(기둥 등)이 있는가?
+        float distToTarget = Vector3.Distance(playerPos, targetPos);
+        // 목표 지점까지 레이를 쏘되, bodyRadius 만큼의 여유를 두고 검사
+        RaycastHit2D hit = Physics2D.Raycast(playerPos, (targetPos - playerPos).normalized, distToTarget, wallLayer);
+
+        if (hit.collider != null)
+        {
+            // 장애물이 있으면 장애물 바로 앞으로 위치 수정
+            targetPos = hit.point - (Vector2)(targetPos - playerPos).normalized * bodyRadius;
+        }
+
+        yield return StartCoroutine(TeleportEffect(targetPos));
 
         // 근접 공격 (히트박스 활성화 등)
         // animator.SetTrigger("MeleeAttack");
@@ -250,9 +276,37 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     // 6. 근처 랜덤 순간이동
     private IEnumerator Pattern6_TeleportRandom()
     {
-        Debug.Log("패턴6: 랜덤 이동");
-        Vector3 randomPos = playerTransform.position + (Vector3)Random.insideUnitCircle.normalized * 5f;
-        yield return StartCoroutine(TeleportEffect(randomPos));
+        Vector3 destPos = transform.position;
+        bool foundSafePos = false;
+        int maxAttempts = 15;
+
+        // 맵 경계 정보 캐싱 (최적화)
+        Bounds bounds = mapBoundary.bounds;
+
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            // 1. [맵 범위 랜덤] BoxCollider2D의 min, max 좌표 사이에서 랜덤 추출
+            float randX = Random.Range(bounds.min.x, bounds.max.x);
+            float randY = Random.Range(bounds.min.y, bounds.max.y);
+
+            Vector3 randomPoint = new Vector3(randX, randY, transform.position.z);
+
+            // 2. [내부 벽 체크] 생성된 위치가 내부 장애물(Wall)과 겹치는지 확인
+            if (!Physics2D.OverlapCircle(randomPoint, bodyRadius, wallLayer))
+            {
+                destPos = randomPoint;
+                foundSafePos = true;
+                break;
+            }
+        }
+
+        if (!foundSafePos)
+        {
+            Debug.LogWarning("안전한 위치를 찾지 못함 -> 플레이어 근처로 이동");
+            destPos = playerTransform.position;
+        }
+
+        yield return StartCoroutine(TeleportEffect(destPos));
     }
 
     // 유틸리티: 투사체 발사

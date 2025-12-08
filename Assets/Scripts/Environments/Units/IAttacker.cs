@@ -6,7 +6,7 @@ using UnityEngine;
 public enum AttackType
 {
     Melee,      // 근접
-    Projectile  // 투사체
+    Projectile,  // 투사체
 }
 
 // 공격 정보를 담을 구조체 (택배 상자)
@@ -17,7 +17,10 @@ public struct DamageInfo
     public Vector3 direction;     // 공격 방향 (Wobble 효과용)
     public IAttacker source;      // 공격한 놈 원본 (반사를 위해 필요)
 
-    public ProjectileEffect projectileEffect; 
+    public ProjectileEffect projectileEffect;
+
+    public bool light;
+    public bool elect;
 
     /// <summary>
     /// 공격 정보를 생성합니다.
@@ -33,6 +36,9 @@ public struct DamageInfo
         direction = _direction;
         source = _source;
         projectileEffect = ProjectileEffect.Normal;
+
+        light = false;
+        elect = false;
     }
 }
 

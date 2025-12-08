@@ -115,6 +115,11 @@ public class BossWitch : MonoBehaviour, IDamageable, IAttacker, IEffectable
 
     private IEnumerator PatternCycle()
     {
+        while (Vector3.Distance(playerTransform.position, transform.position) > 5f)
+        {
+            yield return null;
+        }
+
         yield return new WaitForSeconds(1f);
 
         while (!isDead)

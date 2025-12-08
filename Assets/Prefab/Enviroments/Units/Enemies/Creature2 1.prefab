@@ -180,7 +180,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
-  laserPrefab: {fileID: 981296870417409643, guid: bb5c42681fe556741a930cbc0a78dfa9, type: 3}
+  laserPrefab: {fileID: 655136077438691514, guid: def8ef410eb8e954897daa531f245794, type: 3}
   fireInterval: 2
   projectileDamage: 5
   directAttackRange: 1
