@@ -74,18 +74,20 @@ public class SplitProjectile : MonoBehaviour, IProjectile
             return;
         }
 
+        // 기존 투사체 제거
+        ObjectPoolingManager.Instance.Return(gameObject);
+
+        // 3웨이 발사
         ObjectPoolingManager.Instance.GetPrefab(myOriginalPrefab)
-            .GetComponent<IProjectile>().
-            Fire(_position, _direction, _ownerTag);
+            .GetComponent<IProjectile>().Fire(_position, _direction, _ownerTag);
 
         ObjectPoolingManager.Instance.GetPrefab(myOriginalPrefab)
-            .GetComponent<IProjectile>().
-            Fire(_position, Quaternion.Euler(0, 0, -45) * _direction, _ownerTag);
+            .GetComponent<IProjectile>().Fire(_position, Quaternion.Euler(0, 0, -45) * _direction, _ownerTag);
 
         ObjectPoolingManager.Instance.GetPrefab(myOriginalPrefab)
-            .GetComponent<IProjectile>().
-            Fire(_position, Quaternion.Euler(0, 0, 45) * _direction, _ownerTag);
+            .GetComponent<IProjectile>().Fire(_position, Quaternion.Euler(0, 0, 45) * _direction, _ownerTag);
     }
+
 
     private void lifeCycle()
     {

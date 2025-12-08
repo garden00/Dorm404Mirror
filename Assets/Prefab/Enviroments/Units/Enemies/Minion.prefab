@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37d9e73a632a99b48a640738b3ea98b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 2232517015468564534, guid: c9e34bd4af8e5584f96218f52cd7f546, type: 3}
+  projectilePrefab: {fileID: 7555976198197880152, guid: 5a8626a81bf8ed448b1c9cab51c6a6b1, type: 3}
   attackInterval: 1
   attackRange: 7
   maxHealth: 100

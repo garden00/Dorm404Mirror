@@ -176,6 +176,8 @@ MonoBehaviour:
   - {fileID: 7749632927681728124, guid: 7ec8028c1b0e4eb479c772bf87229d64, type: 3}
   - {fileID: 2232517015468564534, guid: c9e34bd4af8e5584f96218f52cd7f546, type: 3}
   - {fileID: 2627319501095591754, guid: c7d008bbc092b8f41aadf2e9b6f8e898, type: 3}
+  - {fileID: 548199148115407314, guid: d25ccc1894f20f04b8c1f2cd8f2a24e6, type: 3}
+  - {fileID: 7179145209786624920, guid: b6d834bbbfd5a324b81082a806eb4216, type: 3}
   poolParent: {fileID: 1527423155}
   initialPoolSize: 100
 --- !u!1001 &45911302

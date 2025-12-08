@@ -174,10 +174,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcb2c5e6eae2e2e43b930ac45cabe5a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  gridSize: 1
+  moveDuration: 0.35
+  detectRange: 8
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   player: {fileID: 0}
   tongueDamage: 1
   attackRange: 1.5
