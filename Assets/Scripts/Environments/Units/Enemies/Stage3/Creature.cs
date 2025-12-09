@@ -85,19 +85,26 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
 
     private void Start()
     {
+        // 그리드에 스냅
         transform.position = SnapToGrid(transform.position);
 
         originalColor = spriteRenderer.color;
-        currentHealth = maxHealth;
 
+        // 체력/체력바 동기화
+        CurrentHealth = maxHealth;
+
+        // 근접 공격 사거리를 그리드 크기에 맞춤
         directAttackRange = gridSize;
 
+        // 플레이어 찾기
         if (PlayerManager.Instance != null)
             player = PlayerManager.Instance.transform;
         else
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         currentMoveWait = Random.Range(moveIntervalRange.x, moveIntervalRange.y);
+
+        // 처음에는 체력바 숨김
         if (healthBar != null)
         {
             healthBar.gameObject.SetActive(false);
@@ -275,11 +282,12 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
     public void ReceiveAttack(DamageInfo info)
     {
         if (IsDead) return;
+
         if (healthBar != null && !healthBar.gameObject.activeSelf)
         {
-
             healthBar.gameObject.SetActive(true);
         }
+
         CurrentHealth -= info.damage;
 
         if (CurrentHealth <= 0)
