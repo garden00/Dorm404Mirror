@@ -67,6 +67,8 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     {
         if (isDead) return;
 
+        GetComponent<D1_AnimatorController>().PlayHit();
+
         currentHealth -= damageInfo.damage;
         if (healthBar) healthBar.UpdateHealth(currentHealth, maxHealth);
 
@@ -342,6 +344,10 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
         isDead = true;
         Debug.Log("드라큘라 1페이즈 종료");
         // 2페이즈 오브젝트 활성화 로직 추가 필요
+
+        GetComponent<D1_AnimatorController>().PlayDeath();
+
+
         gameObject.SetActive(false);
     }
 }
