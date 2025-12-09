@@ -202,6 +202,9 @@ public class BoseDraculaPhase2 : MonoBehaviour, IDamageable, IAttacker
     {
         isDead = true;
         Debug.Log("드라큘라 사망");
+
+        GetComponent<D2_AnimatorController>().PlayDeath();
+
         Destroy(gameObject); // 또는 엔딩 연출
     }
 }
