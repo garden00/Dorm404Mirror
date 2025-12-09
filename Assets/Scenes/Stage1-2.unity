@@ -531,6 +531,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (24)
@@ -752,6 +760,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (11)
@@ -899,6 +915,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -139200,6 +139224,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (7)
@@ -139344,6 +139376,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (15)
@@ -139413,6 +139453,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -139598,6 +139646,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -139825,6 +139881,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (22)
@@ -139894,6 +139958,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -143573,6 +143645,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (12)
@@ -143783,6 +143863,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -144174,6 +144262,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (9)
@@ -144322,6 +144418,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -144815,6 +144919,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (19)
@@ -144954,6 +145066,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -145191,6 +145311,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -177978,6 +178106,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (28)
@@ -178130,6 +178266,14 @@ PrefabInstance:
     - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: damage
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -178367,6 +178511,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (38)
@@ -178546,6 +178698,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (31)
@@ -178650,6 +178810,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -178936,6 +179104,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test
@@ -179000,6 +179176,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -179071,6 +179255,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (10)
@@ -179140,6 +179332,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -179460,6 +179660,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (34)
@@ -179572,6 +179780,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -179926,6 +180142,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -197326,6 +197550,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -334803,6 +335035,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (8)
@@ -335164,6 +335404,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (36)
@@ -335312,6 +335560,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (30)
@@ -335381,6 +335637,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
@@ -335603,6 +335867,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
       value: Ghost_test (37)
@@ -335724,6 +335996,14 @@ PrefabInstance:
     - target: {fileID: 1097372610039130253, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853249907897209672, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
+      propertyPath: sightRange
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4632377237923292889, guid: 21b1315d99e32c84db941e8524f63d4f, type: 3}
       propertyPath: m_Name
