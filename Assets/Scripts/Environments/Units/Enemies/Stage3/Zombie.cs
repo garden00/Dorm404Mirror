@@ -19,11 +19,11 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
     private float currentMoveWait = 0.5f;
 
     [Header("Attack")]
-    [SerializeField] private int contactDamage = 1;
+    [SerializeField] private int contactDamage = 1;       // 실제 근접 공격 데미지
     [SerializeField] private float attackInterval = 0.8f;
 
-    [SerializeField] private int damage;
-    int IAttacker.Damage => damage;
+    // IAttacker.Damage는 contactDamage와 일치시키기
+    int IAttacker.Damage => contactDamage;
 
     private float lastAttackTime = -999f;
 
@@ -39,7 +39,7 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
     private Collider2D col;
     private ZombieAnimatorController zombieAnim;
 
-    private float lastMoveX = 1f; // 방향 보존
+    private float lastMoveX = 1f; // 마지막 이동 방향 (좌우 플립용)
 
     private Vector3 SnapToGrid(Vector3 pos)
     {
@@ -50,6 +50,7 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
 
     private void Start()
     {
+        // 그리드 위치에 정렬
         transform.position = SnapToGrid(transform.position);
 
         currentHealth = maxHealth;
@@ -58,11 +59,13 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
         col = GetComponent<Collider2D>();
         zombieAnim = GetComponent<ZombieAnimatorController>();
 
+        // 플레이어 찾기
         if (PlayerManager.Instance != null)
             player = PlayerManager.Instance.transform;
         else
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
+        // 이동 간격 랜덤 초기화
         currentMoveWait = Random.Range(moveIntervalRange.x, moveIntervalRange.y);
 
         if (rb != null)
@@ -71,6 +74,7 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
             rb.isKinematic = true;
         }
 
+        // 체력바 초기화 (원한다면 여기서 SetActive(false) 해도 됨)
         if (healthBar != null)
             healthBar.UpdateHealth(currentHealth, maxHealth);
     }
@@ -82,12 +86,14 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
 
         float dist = Vector2.Distance(transform.position, player.position);
 
+        // 공격 범위 안이면 이동하지 않고 공격만 시도
         if (dist <= attackRange)
         {
             TryDirectAttack();
             return;
         }
 
+        // 이동 중일 때는 보간 계속
         if (isMoving)
         {
             moveProgress += Time.deltaTime / moveDuration;
@@ -105,6 +111,7 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
             return;
         }
 
+        // 대기 타이머
         moveTimer += Time.deltaTime;
         if (moveTimer < currentMoveWait)
             return;
@@ -152,6 +159,7 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
             return;
         }
 
+        // x축 / y축 중 더 큰 방향으로 한 칸 이동 (맨해튼 추적)
         Vector2 dir;
         if (Mathf.Abs(toPlayer.x) > Mathf.Abs(toPlayer.y))
             dir = new Vector2(Mathf.Sign(toPlayer.x), 0f);
@@ -165,6 +173,7 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
         RaycastHit2D hit = Physics2D.Linecast(origin, target, obstacleMask);
         if (hit.collider != null)
         {
+            // 앞에 장애물이 있으면 제자리
             zombieAnim?.PlayIdle();
             return;
         }
@@ -225,7 +234,8 @@ public class Zombie : MonoBehaviour, IDamageable, IAttacker
             currentHealth = 0;
             Die();
         }
-        
+        // 여기서 피격 애니메이션/이펙트 넣고 싶으면
+        // else { zombieAnim?.PlayHit(); } 이런 식으로 추가 가능
     }
 
     private void Die()
