@@ -32,6 +32,15 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private float bodyRadius = 1.0f;
 
+    [Header("Effect")]
+    [SerializeField] private DraculaEffectPlayer effectPlayer;
+
+    [SerializeField] private SpriteRenderer bodySprite; // 패턴2에서 색 잠깐 어둡게 하기
+    [SerializeField] private Color dashColor = new Color(0.6f, 0.6f, 0.6f, 1f);
+    private Color originalColor;
+
+    private Coroutine berserkEffectRoutine;
+
 
     private Transform playerTransform;
     private Animator animator; // 애니메이션 제어용
@@ -49,6 +58,7 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
 
         playerTransform = PlayerManager.Instance.transform; // 싱글톤 가정
         animator = GetComponent<Animator>();
+        originalColor = bodySprite.color;
 
         StartCoroutine(PatternRoutine());
     }
@@ -103,6 +113,17 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
                 // 시퀀스 종료 후 폭주 해제
                 isBerserk = false;
                 currentRage = 0f;
+
+                // 폭주 이펙트 루프 종료
+                if (berserkEffectRoutine != null)
+                {
+                    StopCoroutine(berserkEffectRoutine);
+                    berserkEffectRoutine = null;
+                }
+
+                // 혹시 재생 중 이펙트가 남아있으면 강제 숨김
+                effectPlayer?.ForceHide();
+
                 Debug.Log("폭주 종료: 기본 상태 복귀");
             }
             else
@@ -114,10 +135,25 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
         }
     }
 
+    private IEnumerator BerserkEffectLoop()
+    {
+        while (isBerserk)
+        {
+            effectPlayer?.PlayBerserkFlash();
+            yield return new WaitForSeconds(Random.Range(0.6f, 1.2f));
+        }
+    }
+
     private IEnumerator EnterBerserkMode()
     {
         isBerserk = true;
         // 폭주 진입 연출(포효 등) 시간 대기
+
+        if (berserkEffectRoutine == null)
+            berserkEffectRoutine = StartCoroutine(BerserkEffectLoop());
+        effectPlayer?.PlayBerserkFlash();
+
+
         yield return new WaitForSeconds(1.0f);
     }
 
@@ -163,6 +199,8 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     {
         // 리스트에서 죽거나 없어진 하수인 제거
         activeMinions.RemoveAll(x => x == null || !x.activeSelf);
+
+        effectPlayer?.PlayCast();
 
         if (activeMinions.Count < 1)
         {
@@ -219,6 +257,10 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
 
         yield return new WaitForSeconds(1.0f); // 플레이어가 구분할 시간 줌
 
+        // 이펙트
+        effectPlayer?.PlayDash();
+        if (bodySprite != null) bodySprite.color = dashColor;
+
         // 2. 본체와 분신 모두 플레이어 방향으로 돌진
         Vector3 targetPos = playerTransform.position;
         Vector3 startPos = transform.position;
@@ -238,6 +280,8 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
             yield return null;
         }
 
+        if (bodySprite != null) bodySprite.color = originalColor;
+
         // 3. 분신 제거
         foreach (var clone in clones) Destroy(clone);
     }
@@ -245,6 +289,7 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     // 3. 반사 가능 투사체
     private IEnumerator Pattern3_ReflectableProjectile()
     {
+        effectPlayer?.PlayCast();
         FireProjectile(reflectableProjectile);
         yield return new WaitForSeconds(0.5f);
     }
@@ -252,6 +297,7 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     // 4. 일반 투사체
     private IEnumerator Pattern4_WideProjectile()
     {
+        effectPlayer?.PlayCast();
         FireProjectile(wideProjectile);
         yield return new WaitForSeconds(0.3f);
         FireProjectile(wideProjectile);
@@ -349,9 +395,12 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
         Vector3Int aa = Vector3Int.CeilToInt(destination);
 
         // 사라지는 연출
-        yield return new WaitForSeconds(0.2f);
+        effectPlayer?.PlayTeleport();
+        yield return new WaitForSeconds(0.5f);
         transform.position = aa;
+
         // 나타나는 연출
+        effectPlayer?.PlayTeleport();
         yield return new WaitForSeconds(0.2f);
     }
 

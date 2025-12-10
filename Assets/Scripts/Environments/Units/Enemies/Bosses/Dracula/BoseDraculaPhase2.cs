@@ -27,6 +27,9 @@ public class BoseDraculaPhase2 : MonoBehaviour, IDamageable, IAttacker
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private float bodyRadius = 1.0f;
 
+    [Header("Effect")]
+    [SerializeField] private DraculaEffectPlayer effectPlayer;
+
     private void Start()
     {
         currentHealth = maxHealth;
@@ -65,6 +68,8 @@ public class BoseDraculaPhase2 : MonoBehaviour, IDamageable, IAttacker
     {
         // 리스트에서 죽거나 없어진 하수인 제거
         activeMinions.RemoveAll(x => x == null || !x.activeSelf);
+
+        //effectPlayer?.PlayCast();
 
         if (activeMinions.Count < 1)
         {
@@ -133,6 +138,8 @@ public class BoseDraculaPhase2 : MonoBehaviour, IDamageable, IAttacker
 
     private void FireProjectile(GameObject prefab)
     {
+        effectPlayer?.PlayCast();
+
         Vector3 dir = (playerTransform.position - transform.position).normalized;
         var obj = ObjectPoolingManager.Instance.GetPrefab(prefab);
         obj.GetComponent<IProjectile>().Fire(transform.position, dir, gameObject.tag);
@@ -212,9 +219,12 @@ public class BoseDraculaPhase2 : MonoBehaviour, IDamageable, IAttacker
         Vector3Int aa = Vector3Int.CeilToInt(destination);
 
         // 사라지는 연출
+        effectPlayer?.PlayTeleport();
         yield return new WaitForSeconds(0.2f);
         transform.position = aa;
+
         // 나타나는 연출
+        effectPlayer?.PlayTeleport();
         yield return new WaitForSeconds(0.2f);
     }
 
@@ -223,6 +233,7 @@ public class BoseDraculaPhase2 : MonoBehaviour, IDamageable, IAttacker
         isDead = true;
         Debug.Log("드라큘라 사망");
 
+        effectPlayer?.ForceHide();
         GetComponent<D2_AnimatorController>().PlayDeath();
 
         Destroy(gameObject); // 또는 엔딩 연출
