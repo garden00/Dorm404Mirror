@@ -1348,6 +1348,12 @@ MonoBehaviour:
   viewProvider: {fileID: 4332346492751603745}
   typeEffectProvider: {fileID: 2301658734006946545}
   portraitProvider: {fileID: 2158975447456571323}
+  ending: {fileID: 0}
+  endingImgList:
+  - {fileID: 21300000, guid: 4ec56d291787f1c4eb6d7c0386a1c11f, type: 3}
+  - {fileID: 21300000, guid: e5527446cd68b074396bfb8cf12b9b61, type: 3}
+  - {fileID: 21300000, guid: 683654b687d3d634693d79cbbfdb01d9, type: 3}
+  - {fileID: 21300000, guid: 2a007c1abc65fae4e814a1eec816aa8c, type: 3}
 --- !u!1 &7490298432195546030
 GameObject:
   m_ObjectHideFlags: 0

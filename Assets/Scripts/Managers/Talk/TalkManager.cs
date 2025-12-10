@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -171,8 +172,7 @@ public class TalkManager : MonoBehaviour
         }
     }
 
-    int end_indx = 0;
-    [SerializeField] Sprite[] endingImgList;
+    [SerializeField] private List<Sprite> endingImgList;
 
     private void DisplayLine(TalkLine line)
     {
@@ -183,7 +183,7 @@ public class TalkManager : MonoBehaviour
         Sprite portrait = _portraits.GetPortrait(line.Speaker, line.PortraitId);
         _view.SetPortrait(portrait);
 
-        if (ending) ending.sprite = endingImgList[end_indx++];
+        if (ending) ending.sprite = endingImgList[line.EffectId];
 
         // 3. 텍스트 효과 적용 (ITypeEffect에 위임)
         _typer.Run(line.Text, _view.DialogueTextComponent, OnTypingComplete);
