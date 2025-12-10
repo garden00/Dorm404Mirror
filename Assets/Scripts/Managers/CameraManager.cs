@@ -1,7 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.GraphicsBuffer;
 
 // 2D 카메라이므로 Camera 컴포넌트가 반드시 필요하다고 명시
 [RequireComponent(typeof(Camera))]

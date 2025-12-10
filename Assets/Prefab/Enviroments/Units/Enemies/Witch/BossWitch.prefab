@@ -107,7 +107,7 @@ MonoBehaviour:
   maxHealth: 100
   healthBar: {fileID: 8880221739441148980}
   contactDamage: 10
-  patternInterval: 2
+  patternInterval: 0.5
   projectilePrefab: {fileID: 7749632927681728124, guid: 7ec8028c1b0e4eb479c772bf87229d64, type: 3}
   clonePrefab: {fileID: 1867299939025370450, guid: 29fe4379cc9baee45b79beba3a7e9628, type: 3}
   cloneSpawnPoints:

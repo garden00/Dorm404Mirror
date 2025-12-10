@@ -78,11 +78,18 @@ public class WitchProjectile : MonoBehaviour, IProjectile
             Debug.LogError($"[Reflect] {gameObject.name}의 원본 프리팹을 ObjectPoolingManager에서 찾을 수 없습니다.", gameObject);
             return;
         }
-        GameObject projObj = ObjectPoolingManager.Instance.GetPrefab(myOriginalPrefab);
 
-        WitchProjectile projScript = projObj.GetComponent<WitchProjectile>();
+        WitchProjectile projScript = ObjectPoolingManager.Instance.GetPrefab(myOriginalPrefab).GetComponent<WitchProjectile>();
         projScript.SetupEffect(effectType);
         projScript.Fire(_position, _direction, _ownerTag);
+
+        WitchProjectile projScript2 = ObjectPoolingManager.Instance.GetPrefab(myOriginalPrefab).GetComponent<WitchProjectile>();
+        projScript2.SetupEffect(effectType);
+        projScript2.Fire(_position, Quaternion.Euler(0, 0, -45) * _direction, _ownerTag);
+
+        WitchProjectile projScript3 = ObjectPoolingManager.Instance.GetPrefab(myOriginalPrefab).GetComponent<WitchProjectile>();
+        projScript3.SetupEffect(effectType);
+        projScript3.Fire(_position, Quaternion.Euler(0, 0, 45) * _direction, _ownerTag);
     }
 
     private void Die()
