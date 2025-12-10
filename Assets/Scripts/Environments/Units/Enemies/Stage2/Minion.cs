@@ -70,7 +70,8 @@ public class Minion : MonoBehaviour, IDamageable, IAttacker
         }
 
         // 바라보는 방향 설정
-        animatorController.SetDirection(dir.x < 0 ? -1 : 1);
+        if (dir.sqrMagnitude > 0.01f)
+            animatorController.SetDirection(dir);
 
         attackTimer += Time.deltaTime;
 

@@ -5,6 +5,10 @@ public class ShieldController : MonoBehaviour
 {
     [SerializeField] private GameObject shieldObject;
 
+    [Header("Arrow Indicator")]
+    [SerializeField] private GameObject arrowObject; // 빨간 화살표 오브젝트
+    [SerializeField] private float arrowDistance = 2f; // 두 칸 앞
+
     [Header("Shield Sprites (8-way)")]
     [SerializeField] private Sprite shieldUp;
     [SerializeField] private Sprite shieldDown;
@@ -33,6 +37,7 @@ public class ShieldController : MonoBehaviour
     {
         UpdateDirection();
         UpdateSprite();
+        UpdateArrow();
     }
 
     private void UpdateDirection()
@@ -81,5 +86,27 @@ public class ShieldController : MonoBehaviour
         shieldSR.sprite = s;
         shieldObject.transform.localRotation = Quaternion.identity;
         shieldObject.transform.localPosition = Vector3.zero;
+    }
+
+    private void UpdateArrow()
+    {
+        if (arrowObject == null) return;
+
+        Vector3 dir = Direction.normalized;
+
+        if (dir == Vector3.zero)
+        {
+            arrowObject.SetActive(false);
+            return;
+        }
+
+        arrowObject.SetActive(true);
+
+        // 위치: 방향 × 두 칸
+        arrowObject.transform.localPosition = dir * arrowDistance;
+
+        // 회전: 스프라이트 기본 방향이 "오른쪽"이므로 각도 그대로 적용
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        arrowObject.transform.localRotation = Quaternion.Euler(0, 0, angle);
     }
 }
