@@ -12681,6 +12681,10 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8736530608861461326, guid: b54645e2895f67f449f06b6ba3b950fa, type: 3}
+      propertyPath: sightAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 8736530608861461326, guid: b54645e2895f67f449f06b6ba3b950fa, type: 3}
       propertyPath: throwCycleTime
       value: 2.5
       objectReference: {fileID: 0}
@@ -12833,6 +12837,10 @@ PrefabInstance:
     - target: {fileID: 8736530608861461326, guid: b54645e2895f67f449f06b6ba3b950fa, type: 3}
       propertyPath: maxHealth
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8736530608861461326, guid: b54645e2895f67f449f06b6ba3b950fa, type: 3}
+      propertyPath: sightAngle
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 8736530608861461326, guid: b54645e2895f67f449f06b6ba3b950fa, type: 3}
       propertyPath: throwCycleTime
@@ -13773,6 +13781,10 @@ PrefabInstance:
     - target: {fileID: 8736530608861461326, guid: b54645e2895f67f449f06b6ba3b950fa, type: 3}
       propertyPath: maxHealth
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8736530608861461326, guid: b54645e2895f67f449f06b6ba3b950fa, type: 3}
+      propertyPath: sightAngle
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 8736530608861461326, guid: b54645e2895f67f449f06b6ba3b950fa, type: 3}
       propertyPath: throwCycleTime
