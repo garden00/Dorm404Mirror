@@ -86,7 +86,7 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
     private void Start()
     {
         // 그리드에 스냅
-        transform.position = SnapToGrid(transform.position);
+        transform.position = Vector3Int.CeilToInt(transform.position);
 
         originalColor = spriteRenderer.color;
 
@@ -147,7 +147,7 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
         moveTimer = 0f;
         currentMoveWait = Random.Range(moveIntervalRange.x, moveIntervalRange.y);
 
-        Vector3 origin = SnapToGrid(transform.position);
+        Vector3 origin = Vector3Int.CeilToInt(transform.position);
         transform.position = origin;
 
         int idx = Random.Range(0, 4);

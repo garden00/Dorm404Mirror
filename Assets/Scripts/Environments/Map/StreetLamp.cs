@@ -38,18 +38,16 @@ public class StreetLamp : MonoBehaviour, IDamageable
         }
     }
 
-    // [IDamageable 구현] 레이저(전기) 공격을 받으면 호출됨
     public void ReceiveAttack(DamageInfo damageInfo)
     {
-        Debug.Log("dd");
-        // 이미 켜져있으면 무시
-        if (isCharged) return;
-
         // 전기 속성인지 확인
         if (damageInfo.elect)
         {
-            Debug.Log("aa");
-            TurnOn();
+            // 이미 켜져있으면 시간만 초기화
+            if (isCharged)
+                timer = 0;
+            else
+                TurnOn();
         }
     }
 

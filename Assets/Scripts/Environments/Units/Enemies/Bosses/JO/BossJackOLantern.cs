@@ -26,7 +26,8 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IAttacker
 
     [Header("Pattern Settings")]
     public float patternInterval = 4f;
-    [SerializeField] private float dashDuration = 1.5f; // 돌진 최대 지속 시간
+    [SerializeField] private float dashDuration = 1.5f; // 돌진 최대 지속 시간 ( 돌진속도의 역수 )
+    [SerializeField] private float dashLen = 10f; // 돌진 길이
 
     private Transform playerTransform;
     private bool isDashing = false;
@@ -202,7 +203,7 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IAttacker
 
         Vector3 dirPosVec = targetPos - startPos;
         EightDirection dirPos = EightDirection.FromVector3(dirPosVec);
-        Vector3 endPos = startPos + dirPos.VectorGrid * 5f;
+        Vector3 endPos = startPos + dirPos.VectorGrid * dashLen;
 
 
         float dashTimer = 0f;
@@ -298,10 +299,10 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IAttacker
         EightDirection dir = EightDirection.FromVector3(dirVec);
         if (dir.x != 0 && dir.y != 0) dir++;
 
-        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dir.VectorNormalized * +2f, Quaternion.identity)
+        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dir.VectorNormalized, Quaternion.identity)
             .transform.right = dir.VectorNormalized;
-        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dir.VectorNormalized * -2f, Quaternion.identity)
-            .transform.right = dir.VectorNormalized;
+        Instantiate(vinePrefab, playerTransform.position + Quaternion.Euler(0, 0, 90) * dir.VectorNormalized, Quaternion.identity)
+            .transform.up = dir.VectorNormalized;
         yield return null;
     }
 

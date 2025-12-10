@@ -68,9 +68,35 @@ public class BoseDraculaPhase2 : MonoBehaviour, IDamageable, IAttacker
 
         if (activeMinions.Count < 1)
         {
-            Vector3 spawnPos = transform.position + (Vector3)Random.insideUnitCircle * 4f;
-            GameObject minion = Instantiate(creaturePrefab);
-            minion.transform.position = spawnPos;
+            // 범위 안에서만 소환
+            Vector3 destPos = transform.position;
+            bool foundSafePos = false;
+            int maxAttempts = 15;
+
+            Bounds bounds = mapBoundary.bounds;
+
+            for (int i = 0; i < maxAttempts; i++)
+            {
+                float randX = Random.Range(bounds.min.x, bounds.max.x);
+                float randY = Random.Range(bounds.min.y, bounds.max.y);
+
+                Vector3 randomPoint = new Vector3(randX, randY, transform.position.z);
+
+                if (!Physics2D.OverlapCircle(randomPoint, bodyRadius, wallLayer))
+                {
+                    destPos = randomPoint;
+                    foundSafePos = true;
+                    break;
+                }
+            }
+
+            if (!foundSafePos)
+            {
+                //안전한 위치를 찾지 못함
+                destPos = transform.position;
+            }
+
+            GameObject minion = Instantiate(creaturePrefab, Vector3Int.CeilToInt(destPos), Quaternion.identity);
             activeMinions.Add(minion);
         }
     }
@@ -115,28 +141,21 @@ public class BoseDraculaPhase2 : MonoBehaviour, IDamageable, IAttacker
     private IEnumerator TeleportBackAttack()
     {
         Vector3 playerPos = playerTransform.position;
-        Vector3 backDir = -playerTransform.right; // 플레이어 뒤쪽
-        float teleportDist = 3.0f;
+        Vector3 backDir = -PlayerManager.Instance.Status.ViewDirection;
+        float teleportDist = 2.0f;
 
-        // 1. 일단 가고 싶은 위치 계산
         Vector3 targetPos = playerPos + backDir * teleportDist;
 
-        // 2. [맵 범위 제한] 가려는 곳이 맵 밖인가?
-        // mapBoundary.bounds는 콜라이더의 월드 공간 경계 상자(AABB)를 가져옵니다.
         if (!mapBoundary.bounds.Contains(targetPos))
         {
-            // 맵 밖이라면, 맵 경계선 중 가장 가까운 안쪽 위치로 변경
             targetPos = mapBoundary.bounds.ClosestPoint(targetPos);
         }
 
-        // 3. [내부 벽 체크] 플레이어와 목표 지점 사이에 장애물(기둥 등)이 있는가?
         float distToTarget = Vector3.Distance(playerPos, targetPos);
-        // 목표 지점까지 레이를 쏘되, bodyRadius 만큼의 여유를 두고 검사
         RaycastHit2D hit = Physics2D.Raycast(playerPos, (targetPos - playerPos).normalized, distToTarget, wallLayer);
 
         if (hit.collider != null)
         {
-            // 장애물이 있으면 장애물 바로 앞으로 위치 수정
             targetPos = hit.point - (Vector2)(targetPos - playerPos).normalized * bodyRadius;
         }
 
@@ -168,6 +187,7 @@ public class BoseDraculaPhase2 : MonoBehaviour, IDamageable, IAttacker
             float randY = Random.Range(bounds.min.y, bounds.max.y);
 
             Vector3 randomPoint = new Vector3(randX, randY, transform.position.z);
+            randomPoint = Vector3Int.CeilToInt(randomPoint);
 
             // 2. [내부 벽 체크] 생성된 위치가 내부 장애물(Wall)과 겹치는지 확인
             if (!Physics2D.OverlapCircle(randomPoint, bodyRadius, wallLayer))

@@ -161,17 +161,41 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     // 1. 크리처 소환
     private IEnumerator Pattern1_SummonCreature()
     {
-        // 애니메이션 재생
-        // animator.SetTrigger("Summon");
-
         // 리스트에서 죽거나 없어진 하수인 제거
         activeMinions.RemoveAll(x => x == null || !x.activeSelf);
 
-        Vector3 spawnPos = Vector3Int.CeilToInt(transform.position + (Vector3)Random.insideUnitCircle * 3f);
-
         if (activeMinions.Count < 1)
         {
-            GameObject minion = Instantiate(creaturePrefab, spawnPos, Quaternion.identity);
+            // 범위 안에서만 소환
+            Vector3 destPos = transform.position;
+            bool foundSafePos = false;
+            int maxAttempts = 15;
+
+            Bounds bounds = mapBoundary.bounds;
+
+            for (int i = 0; i < maxAttempts; i++)
+            {
+                float randX = Random.Range(bounds.min.x, bounds.max.x);
+                float randY = Random.Range(bounds.min.y, bounds.max.y);
+
+                Vector3 randomPoint = new Vector3(randX, randY, transform.position.z);
+
+                if (!Physics2D.OverlapCircle(randomPoint, bodyRadius, wallLayer))
+                {
+                    destPos = randomPoint;
+                    foundSafePos = true;
+                    break;
+                }
+            }
+
+            if (!foundSafePos)
+            {
+                //안전한 위치를 찾지 못함
+                destPos = transform.position;
+            }
+
+            GameObject minion = Instantiate(creaturePrefab, Vector3Int.CeilToInt(destPos), Quaternion.identity);
+            Debug.Log(Vector3Int.CeilToInt(destPos));
             activeMinions.Add(minion);
         }
 
@@ -240,8 +264,8 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     private IEnumerator Pattern5_TeleportBackAttack()
     {
         Vector3 playerPos = playerTransform.position;
-        Vector3 backDir = -playerTransform.right; // 플레이어 뒤쪽
-        float teleportDist = 3.0f;
+        Vector3 backDir = -PlayerManager.Instance.Status.ViewDirection;
+        float teleportDist = 2.0f;
 
         // 1. 일단 가고 싶은 위치 계산
         Vector3 targetPos = playerPos + backDir * teleportDist;
