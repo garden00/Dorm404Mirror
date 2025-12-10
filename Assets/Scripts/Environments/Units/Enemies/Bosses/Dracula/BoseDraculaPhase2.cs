@@ -71,7 +71,7 @@ public class BoseDraculaPhase2 : MonoBehaviour, IDamageable, IAttacker
 
         //effectPlayer?.PlayCast();
 
-        if (activeMinions.Count < 1)
+        if (activeMinions.Count < 2)
         {
             // 범위 안에서만 소환
             Vector3 destPos = transform.position;
@@ -241,6 +241,6 @@ public class BoseDraculaPhase2 : MonoBehaviour, IDamageable, IAttacker
         effectPlayer?.ForceHide();
         GetComponent<D2_AnimatorController>().PlayDeath();
 
-        Destroy(gameObject); // 또는 엔딩 연출
+        Destroy(gameObject, 1f); // 또는 엔딩 연출
     }
 }
