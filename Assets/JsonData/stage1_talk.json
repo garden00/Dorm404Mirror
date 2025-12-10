@@ -525,19 +525,19 @@
       { "speaker": "주인공", "portrait": 2, "effect": 2, "text": "그 순간 손에 꼭 쥐여져있던 방패가 스르르 아래로 떨어졌다." },
       { "speaker": "거울", "portrait": 0, "effect": 2, "text": "…빠각!" },
       { "speaker": "주인공", "portrait": 3, "effect": 2, "text": "\"안돼! 내 거울!!!\"" },
-      { "speaker": "", "portrait": 0, "effect": 2, "text": "…" },
-      { "speaker": "", "portrait": 0, "effect": 2, "text": "……" },
-      { "speaker": "", "portrait": 0, "effect": 2, "text": "…………" },
-      { "speaker": "주인공", "portrait": 3, "effect": 3, "text": "\"……헉!\"" },
-      { "speaker": "주인공", "portrait": 3, "effect": 3, "text": "눈이 번뜩 떠졌다." },
-      { "speaker": "주인공", "portrait": 1, "effect": 3, "text": "이 익숙한 천장은……" },
-      { "speaker": "주인공", "portrait": 0, "effect": 3, "text": "세종대학교 기숙사임이 틀림 없었다." },
-      { "speaker": "주인공", "portrait": 0, "effect": 3, "text": "\"뭐지…?\"" },
-      { "speaker": "주인공", "portrait": 0, "effect": 3, "text": "혼란스러운 마음을 다잡고, 침대 맡의 거울에 무의식적으로 손을 올렸다." },
-      { "speaker": "주인공", "portrait": 3, "effect": 3, "text": "\"……아얏!\"" },
-      { "speaker": "주인공", "portrait": 0, "effect": 3, "text": "거울은 깨져있었다." },
-      { "speaker": "주인공", "portrait": 0, "effect": 3, "text": "…………" },
-      { "speaker": "주인공", "portrait": 0, "effect": 3, "text": "…영웅의 상처?" }
+      { "speaker": "", "portrait": 0, "effect": 3, "text": "…" },
+      { "speaker": "", "portrait": 0, "effect": 3, "text": "……" },
+      { "speaker": "", "portrait": 0, "effect": 3, "text": "…………" },
+      { "speaker": "주인공", "portrait": 3, "effect": 4, "text": "\"……헉!\"" },
+      { "speaker": "주인공", "portrait": 3, "effect": 4, "text": "눈이 번뜩 떠졌다." },
+      { "speaker": "주인공", "portrait": 1, "effect": 4, "text": "이 익숙한 천장은……" },
+      { "speaker": "주인공", "portrait": 0, "effect": 4, "text": "세종대학교 기숙사임이 틀림 없었다." },
+      { "speaker": "주인공", "portrait": 0, "effect": 4, "text": "\"뭐지…?\"" },
+      { "speaker": "주인공", "portrait": 0, "effect": 4, "text": "혼란스러운 마음을 다잡고, 침대 맡의 거울에 무의식적으로 손을 올렸다." },
+      { "speaker": "주인공", "portrait": 3, "effect": 4, "text": "\"……아얏!\"" },
+      { "speaker": "주인공", "portrait": 0, "effect": 4, "text": "거울은 깨져있었다." },
+      { "speaker": "주인공", "portrait": 0, "effect": 4, "text": "…………" },
+      { "speaker": "주인공", "portrait": 0, "effect": 4, "text": "그렇게 영웅의 상처만 남은 나의 영웅담은 끝났다." }
     ]
   }
 ]
