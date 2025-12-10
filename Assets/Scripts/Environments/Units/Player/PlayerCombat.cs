@@ -12,6 +12,9 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
     private PlayerStatusData status;
     private ShieldController shield;
 
+    private SpriteRenderer arrowRenderer;
+    private Color arrowOriginalColor;
+
     [Header("Settings")]
     [SerializeField] private float invincibleTime = 1.0f;
     [SerializeField] private GameObject chargingAttackProjectilePrefab;
@@ -31,6 +34,13 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
     {
         status = playerStatus;
         shield = GetComponent<ShieldController>();
+
+        var arrow = transform.Find("Arrow");
+        if (arrow != null)
+        {
+            arrowRenderer = arrow.GetComponent<SpriteRenderer>();
+            arrowOriginalColor = arrowRenderer.color;
+        }
     }
 
     private void Update()
@@ -179,8 +189,14 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
 
         if (cur_ch > max_ch)
         {
-            isCharged = true;
-            Debug.Log("Â÷Â¡ ¿Ï·á");
+            if (!isCharged)
+            {
+                isCharged = true;
+                Debug.Log("Â÷Â¡ ¿Ï·á");
+
+                if (arrowRenderer != null)
+                    arrowRenderer.color = Color.red;
+            }
         }
         else
         {
@@ -192,6 +208,10 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
     {
         cur_ch = 0;
         isCharged = false;
+
+        if (arrowRenderer != null)
+            arrowRenderer.color = arrowOriginalColor;
+
 
         var projectileObj = ObjectPoolingManager.Instance?.GetPrefab(chargingAttackProjectilePrefab);
         if (projectileObj != null)
