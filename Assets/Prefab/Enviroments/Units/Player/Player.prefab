@@ -141,7 +141,7 @@ MonoBehaviour:
   chargingAttackProjectilePrefab: {fileID: 981296870417409643, guid: 7f0fecc80c887c646860555d34f0957c, type: 3}
   WobbleEffectPower: 0.03
   isCharged: 0
-  max_ch: 5
+  max_ch: 2
 --- !u!114 &5137674203912815501
 MonoBehaviour:
   m_ObjectHideFlags: 0
