@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046b724e9be53ca49a264bf8b1559691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1500
+  maxHealth: 50
   healthBar: {fileID: 4695688116257837455}
   creaturePrefab: {fileID: 2030198305332183852, guid: 2ef6c8a28912acf4a9e2e212373e66f4, type: 3}
   activeMinions: []
