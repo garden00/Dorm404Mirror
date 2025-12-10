@@ -16,8 +16,12 @@ public class D1_AnimatorController : MonoBehaviour
     [Header("Death Settings")]
     [SerializeField] private float fadeDuration = 1f;
 
+    [Header("Effect")]
+    [SerializeField] private DraculaEffectPlayer effectPlayer;
+
     private Color defaultColor;
     private bool isDead = false;
+    private float lastDirection = 0f; // 직전 방향 저장
 
     void Awake()
     {
@@ -37,23 +41,40 @@ public class D1_AnimatorController : MonoBehaviour
 
     private void UpdateDirection()
     {
-        if (player == null) return;
-
-        Vector3 dir = (player.position - transform.position).normalized;
-
-        float directionValue = 0f;
-
-        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+        // 1) player null이면 한 번 더 시도, 그래도 없으면 그냥 리턴
+        if (player == null)
         {
-            directionValue = dir.x > 0 ? 3f : 1f;
+            if (PlayerManager.Instance != null)
+                player = PlayerManager.Instance.transform;
+
+            if (player == null) return;
+        }
+
+        // 2) 2D 기준으로만 계산
+        Vector2 diff = (Vector2)(player.position - transform.position);
+
+        // 3) 거의 같은 위치면 방향 바꾸지 말고 직전 값 유지
+        if (diff.sqrMagnitude < 0.0001f)
+        {
+            anim.SetFloat("Direction", lastDirection);
+            return;
+        }
+
+        float directionValue;
+
+        if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
+        {
+            directionValue = diff.x > 0 ? 3f : 1f; // right : left
         }
         else
         {
-            directionValue = dir.y > 0 ? 2f : 0f;
+            directionValue = diff.y > 0 ? 2f : 0f; // up : down
         }
 
+        lastDirection = directionValue;
         anim.SetFloat("Direction", directionValue);
     }
+
 
     public void PlayIdle()
     {
@@ -62,6 +83,10 @@ public class D1_AnimatorController : MonoBehaviour
 
     public void PlayHit()
     {
+        var effect = GetComponentInChildren<DraculaEffectPlayer>();
+        if (effect != null) effect.ForceHide();
+
+
         if (isDead) return;
         StopAllCoroutines();
         StartCoroutine(HitRoutine());
@@ -69,15 +94,14 @@ public class D1_AnimatorController : MonoBehaviour
 
     public void PlayDeath()
     {
+        var effect = GetComponentInChildren<DraculaEffectPlayer>();
+        if (effect != null) effect.ForceHide();
+
         if (isDead) return;
         isDead = true;
 
         StopAllCoroutines();
         StartCoroutine(DeathRoutine());
-    }
-
-    public void PlayEffect(string effectName) {
-        // 나중에 연결
     }
 
     private IEnumerator HitRoutine()
