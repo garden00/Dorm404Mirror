@@ -34,6 +34,9 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IAttacker
 
     private Rigidbody2D rigid; // Rigidbody 참조
 
+    [SerializeField] private LayerMask wallLayer; // 인스펙터에서 Wall 레이어를 설정해야 함
+    [SerializeField] private float bodySize = 1f; // 보스의 반지름 (벽에 파묻히지 않게 여유 공간)
+
 
     [Header("Health")]
     [SerializeField] private int maxHealth = 100;
@@ -196,46 +199,59 @@ public class BossJackOLantern : MonoBehaviour, IDamageable, IAttacker
         bossAnim.SetMoveSpeed(1f);
         bossAnim.FaceTarget(playerTransform);
 
-
         // 2. 목표 위치 및 시작 위치 설정
-        Vector3 targetPos = playerTransform.position; // 돌진 시작 시점의 플레이어 위치
+        Vector3 targetPos = playerTransform.position;
         Vector3 startPos = transform.position;
 
         Vector3 dirPosVec = targetPos - startPos;
         EightDirection dirPos = EightDirection.FromVector3(dirPosVec);
-        Vector3 endPos = startPos + dirPos.VectorGrid * dashLen;
 
+        // 원래 가려고 했던 목표 지점
+        Vector3 originalEndPos = startPos + dirPos.VectorGrid * dashLen;
+        Vector3 moveDir = dirPos.VectorGrid.normalized; // 이동 방향 단위 벡터
+
+        // --- [수정된 부분: 벽 감지 로직] ---
+        Vector3 finalEndPos = originalEndPos;
+
+        // 시작점에서 목표 방향으로 dashLen만큼 레이저를 쏩니다.
+        // 2D 게임이라면 Physics2D, 3D라면 Physics를 사용하세요. (아래는 2D 기준)
+        RaycastHit2D hit = Physics2D.Raycast(startPos, moveDir, dashLen, wallLayer);
+
+        if (hit.collider != null)
+        {
+            // 벽에 부딪혔다면, 목표 지점을 '벽 위치 - 몸 크기'로 수정
+            Debug.Log("벽 감지됨! 목표 위치 수정");
+            finalEndPos = (Vector3)hit.point - (moveDir * bodySize);
+        }
+        // ------------------------------------
 
         float dashTimer = 0f;
 
-        // 3. dashDuration 동안 startPos에서 targetPos로 이동 (Lerp)
+        // 3. dashDuration 동안 이동 (수정된 finalEndPos 사용)
         while (isDashing && dashTimer < dashDuration)
         {
-            // 경과 시간을 0~1 사이의 비율(t)로 변환
             float t = dashTimer / dashDuration;
 
-            // (선택적: 돌진을 더 부드럽게)
-            // t = Mathf.SmoothStep(0, 1, t); // 처음과 끝을 부드럽게
+            // (선택사항) 부드러운 움직임
+            // t = Mathf.SmoothStep(0, 1, t); 
 
-            // Lerp를 사용하여 현재 프레임의 위치 계산
-            transform.position = Vector3.Lerp(startPos, endPos, t);
+            transform.position = Vector3.Lerp(startPos, finalEndPos, t);
 
             dashTimer += Time.deltaTime;
-            yield return null; // 1프레임 대기
+            yield return null;
         }
 
-        // 4. (혹시 모를 오차 보정) 돌진이 끝나면 목표 위치로 정확히 이동
+        // 4. 오차 보정
         if (isDashing)
         {
-            transform.position = endPos;
+            transform.position = finalEndPos;
         }
 
-        // 5. 돌진 상태 종료 및 Kinematic 해제
+        // 5. 종료
         isDashing = false;
         bossAnim.SetMoveSpeed(0f);
 
         Debug.Log("보스: 돌진 종료");
-
     }
 
     // [ 패턴 2: 돌진 충돌 처리 ]

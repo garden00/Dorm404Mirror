@@ -134,7 +134,7 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
                 isMoving = false;
                 transform.position = moveTargetPos;
                 lastMoveDir = Vector2.zero;
-                creatureAnim?.SetMove(Vector2.zero);
+                //creatureAnim?.SetMove(Vector2.zero);
             }
 
             return;
@@ -174,7 +174,7 @@ public class Creature : MonoBehaviour, IDamageable, IAttacker
         moveTargetPos = target;
 
         lastMoveDir = dir;
-        creatureAnim?.SetMove(dir);
+        //creatureAnim?.SetMove(dir);
     }
 
     private void HandleDirectAttack()

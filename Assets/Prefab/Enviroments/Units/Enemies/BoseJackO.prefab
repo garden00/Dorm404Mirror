@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 878724284346137650}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.47, y: 2.82, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -178,6 +178,11 @@ MonoBehaviour:
   vinePrefab: {fileID: 9000149023572132206, guid: eb2f0167e6b99434f835ceef3a95366a, type: 3}
   patternInterval: 4
   dashDuration: 1.5
+  dashLen: 10
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  bodySize: 1
   maxHealth: 100
   healthBar: {fileID: 0}
   damage: 30

@@ -6,6 +6,7 @@ public class BossWitch : MonoBehaviour, IDamageable, IAttacker, IEffectable
 {
     [Header("Settings")]
     [SerializeField] private int maxHealth = 200;
+    [SerializeField] private UnitHealthBar healthBar;
     [SerializeField] private int contactDamage = 10;
     [SerializeField] private float patternInterval = 2f;
 
@@ -26,6 +27,12 @@ public class BossWitch : MonoBehaviour, IDamageable, IAttacker, IEffectable
         set
         {
             currentHealth = value;
+
+            if (healthBar == null)
+                healthBar = GetComponentInChildren<UnitHealthBar>();
+
+            if (healthBar != null)
+                healthBar.UpdateHealth(currentHealth, maxHealth);
         }
     }
     private Transform playerTransform;
@@ -108,9 +115,7 @@ public class BossWitch : MonoBehaviour, IDamageable, IAttacker, IEffectable
 
         EnemyManager.Instance.NotifyBossDead();
 
-
-        Debug.Log("마녀 처치됨");
-        Destroy(gameObject); // 혹은 사망 애니메이션 재생
+        Destroy(gameObject, 1.4f); // 혹은 사망 애니메이션 재생
     }
 
     private IEnumerator PatternCycle()
