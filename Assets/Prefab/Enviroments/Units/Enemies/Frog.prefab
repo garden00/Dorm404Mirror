@@ -176,16 +176,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSize: 1
   moveDuration: 0.35
-  detectRange: 8
+  moveInterval: 2
+  moveTiles: 3
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
+  tongueDamage: 15
   player: {fileID: 0}
-  tongueDamage: 1
   attackRange: 1.5
   attackCooldown: 1
   damage: 10
-  maxHealth: 30
+  maxHealth: 10
   healthBar: {fileID: 4840400863134020704}
 --- !u!95 &1358459454448847555
 Animator:

@@ -212,7 +212,7 @@ MonoBehaviour:
   throwDirection:
     _index: 0
   throwCycleTime: 1
-  maxHealth: 1
+  maxHealth: 30
   healthBar: {fileID: 8549757080569354947}
   damage: 0
   initialDirection: 0
