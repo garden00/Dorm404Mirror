@@ -158,7 +158,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 7555976198197880152, guid: 5a8626a81bf8ed448b1c9cab51c6a6b1, type: 3}
   attackInterval: 1
   attackRange: 7
-  maxHealth: 100
+  maxHealth: 30
   healthBar: {fileID: 8461666698397995558}
   animatorController: {fileID: 0}
   player: {fileID: 0}

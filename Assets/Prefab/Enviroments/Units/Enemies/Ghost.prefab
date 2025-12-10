@@ -178,15 +178,16 @@ MonoBehaviour:
   throwDirection:
     _index: 6
   throwCycleTime: 1
-  maxHealth: 100
+  maxHealth: 30
   healthBar: {fileID: 3472954803409200714}
+  damage: 10
   initialDirection: 0
   player: {fileID: 0}
   sightRange: 8
   sightAngle: 30
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   moveSpeed: 2
   moveDuration: 0.3
   moveIntervalRange: {x: 1, y: 3}

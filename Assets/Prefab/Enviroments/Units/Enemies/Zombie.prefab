@@ -182,10 +182,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
-  contactDamage: 1
+  contactDamage: 5
   attackInterval: 0.6
-  damage: 10
-  maxHealth: 20
+  maxHealth: 10
   healthBar: {fileID: 5450074997511910816}
 --- !u!114 &3651431047698513042
 MonoBehaviour:

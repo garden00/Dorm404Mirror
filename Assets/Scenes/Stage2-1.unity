@@ -178,6 +178,7 @@ MonoBehaviour:
   - {fileID: 2627319501095591754, guid: c7d008bbc092b8f41aadf2e9b6f8e898, type: 3}
   - {fileID: 548199148115407314, guid: d25ccc1894f20f04b8c1f2cd8f2a24e6, type: 3}
   - {fileID: 7179145209786624920, guid: b6d834bbbfd5a324b81082a806eb4216, type: 3}
+  - {fileID: 7555976198197880152, guid: 5a8626a81bf8ed448b1c9cab51c6a6b1, type: 3}
   poolParent: {fileID: 1527423155}
   initialPoolSize: 100
 --- !u!1001 &45911302
@@ -368,7 +369,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 0.05
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 000000002b64b89c

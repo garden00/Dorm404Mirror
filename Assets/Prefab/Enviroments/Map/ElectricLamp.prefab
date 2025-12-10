@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5497658886070836367}
   m_Layer: 0
   m_Name: ElectricLamp
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beamPrefab: {fileID: 981296870417409643, guid: bb5c42681fe556741a930cbc0a78dfa9, type: 3}
   fireInterval: 3
-  fireDirection: {x: 0, y: 1}
+  fireDirection: 0
+  useFirePointDirection: 0
   firePoint: {fileID: 6526613564039802445}
 --- !u!61 &614445042558852873
 BoxCollider2D:

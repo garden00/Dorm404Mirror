@@ -186,7 +186,8 @@ MonoBehaviour:
   attackInterval: 1
   contactDamage: 2
   detectRange: 4
-  maxHealth: 100
+  maxHealth: 40
+  healthBar: {fileID: 0}
   creatureAnim: {fileID: 0}
   spriteRenderer: {fileID: 0}
 --- !u!114 &3721283392696171398
