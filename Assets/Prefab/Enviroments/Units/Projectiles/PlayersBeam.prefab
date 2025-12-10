@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6017218eef10db42ac5fc7a9d7b1b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 20
   laserBeamVisual: {fileID: 1717374468940187692}
   maxDistance: 100
   laserDuration: 0.2
