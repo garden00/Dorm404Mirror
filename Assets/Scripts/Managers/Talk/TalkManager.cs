@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 // 데이터 접근 계층
@@ -104,6 +105,8 @@ public class TalkManager : MonoBehaviour
     public event Action OnTalkStarted;
     public event Action OnTalkEnded;
 
+    public Image ending = null;
+
     void Update()
     {
         if (_session.IsActive && Input.GetKeyDown(KeyCode.Space))
@@ -168,6 +171,9 @@ public class TalkManager : MonoBehaviour
         }
     }
 
+    int end_indx = 0;
+    [SerializeField] Sprite[] endingImgList;
+
     private void DisplayLine(TalkLine line)
     {
         // 1. 화자 이름 설정
@@ -176,6 +182,8 @@ public class TalkManager : MonoBehaviour
         // 2. 초상화 설정
         Sprite portrait = _portraits.GetPortrait(line.Speaker, line.PortraitId);
         _view.SetPortrait(portrait);
+
+        if (ending) ending.sprite = endingImgList[end_indx++];
 
         // 3. 텍스트 효과 적용 (ITypeEffect에 위임)
         _typer.Run(line.Text, _view.DialogueTextComponent, OnTypingComplete);

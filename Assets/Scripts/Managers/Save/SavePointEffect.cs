@@ -29,8 +29,6 @@ public class SavePointEffect : MonoBehaviour
         if (!isPlaying) return;
 
         AnimatorStateInfo info = anim.GetCurrentAnimatorStateInfo(0);
-        Debug.Log("현재 상태: " + info.IsName("save_effect")
-                   + " / 해시: " + info.fullPathHash);
 
         if (info.IsName("save_effect") && info.normalizedTime >= 1f)
         {
@@ -38,7 +36,6 @@ public class SavePointEffect : MonoBehaviour
             if (sr != null)
                 sr.enabled = false;
 
-            Debug.Log("*****sprite off");
             anim.Play("Idle", 0, 0f);
         }
     }

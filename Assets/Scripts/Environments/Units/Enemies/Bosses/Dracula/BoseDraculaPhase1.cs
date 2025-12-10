@@ -427,6 +427,6 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
         GetComponent<D1_AnimatorController>().PlayDeath();
 
 
-        gameObject.SetActive(false);
+        Destroy(gameObject, 1f);
     }
 }
