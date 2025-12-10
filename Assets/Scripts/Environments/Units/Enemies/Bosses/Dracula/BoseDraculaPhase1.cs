@@ -103,6 +103,11 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
     // --- 패턴 루틴 ---
     private IEnumerator PatternRoutine()
     {
+        while (Vector3.Distance(playerTransform.position, transform.position) > 6f)
+        {
+            yield return null;
+        }
+
         yield return new WaitForSeconds(0.5f);
 
         while (!isDead)
@@ -232,6 +237,7 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
                 destPos = transform.position;
             }
 
+            Debug.Log("add");
             GameObject minion = Instantiate(creaturePrefab, Vector3Int.CeilToInt(destPos), Quaternion.identity);
             Debug.Log(Vector3Int.CeilToInt(destPos));
             activeMinions.Add(minion);

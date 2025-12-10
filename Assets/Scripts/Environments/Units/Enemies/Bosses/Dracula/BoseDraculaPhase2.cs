@@ -109,6 +109,11 @@ public class BoseDraculaPhase2 : MonoBehaviour, IDamageable, IAttacker
     // --- 패턴 루틴 ---
     private IEnumerator Phase2PatternRoutine()
     {
+        while (Vector3.Distance(playerTransform.position, transform.position) > 5f)
+        {
+            yield return null;
+        }
+
         yield return new WaitForSeconds(1.5f);
 
         while (!isDead)
