@@ -483,7 +483,7 @@
       { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "무슨소리지?" },
       { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "눈앞에는 영화에서나 볼 법한 좀비가 있었다." },
       { "speaker": "주인공", "portrait": 3, "effect": 0, "text": "이번엔 좀비야? 근데... 이 녀석들은 반사할 수 있는 공격이 없는데?" },
-      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "그래! 영화에서 좀비는 햇빛을 싫어하니까 가로등도 어느정도 되지 않을까? 한번 시험해보자." },
+      { "speaker": "주인공", "portrait": 2, "effect": 0, "text": "그래! 영화에서 좀비는 햇빛을 싫어하니까 가로등도 어느정도 되지 않을까? 한번 시험해보자."},
       { "speaker": "Guide", "portrait": 2, "effect": 0, "text": "거울은 가로등의 빛을 반사하여 적을 공격할 수 있습니다. 빛을 반사하여 적을 맞추면 지속적인 데미지를 넣을 수 있습니다." }
     ]
   },
@@ -509,15 +509,35 @@
       { "speaker": "드라큘라", "portrait": 0, "effect": 0, "text": "인간들을 구하러 온건가?" },
       { "speaker": "드라큘라", "portrait": 0, "effect": 0, "text": "원한다면 풀어주지." },
       { "speaker": "드라큘라", "portrait": 0, "effect": 0, "text": "날 쓰러뜨린다면 말이야!" },
+      { "speaker": "주인공", "portrait": 1, "effect": 0, "text": "인간들이 잡혀있는 줄도 몰랐는데…." },
+      { "speaker": "주인공", "portrait": 1, "effect": 0, "text": "그래, 가보자!" },
       { "speaker": "Guide", "portrait": 5, "effect": 0, "text": "드라큘라는 어느 적보다 강력합니다. 주변 지형을 잘 이용하여 전투하세요!" }
     ]
   },
   {
     "sceneId": 410,
     "lines": [
-      { "speaker": "주인공", "portrait": 1, "effect": 0, "text": "역시 최종보스라 그런지 정말 강력했어." },
-      { "speaker": "사람들", "portrait": 0, "effect": 0, "text": "저 괴물을 쓰러뜨리다니! 넌 우리들의 영웅이야!" },
-      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "결국 모든 적을 쓰러뜨린 나는 사람들을 구하고 영웅으로 칭송받고 유명인사와 같은 대학 생활을 즐겼다고 한다." }
+      { "speaker": "드라큘라", "portrait": 0, "effect": 0, "text": "\"크으윽… 용서하지 않겠….\"" },
+      { "speaker": "주인공", "portrait": 0, "effect": 0, "text": "\"처치했다!\"" },
+      { "speaker": "주인공", "portrait": 1, "effect": 0, "text": "\"역시 최종보스라 그런지 정말 강력했어.\"" },
+      { "speaker": "주인공", "portrait": 0, "effect": 1, "text": "우연히 최종보스까지 처치했다니…. 얼떨떨한 기분이다." },
+      { "speaker": "주인공", "portrait": 2, "effect": 1, "text": "\"그럼 이제 잡혔다던 사람들을 구하러… 어?\"" },
+      { "speaker": "주인공", "portrait": 2, "effect": 2, "text": "그 순간 손에 꼭 쥐여져있던 방패가 스르르 아래로 떨어졌다." },
+      { "speaker": "거울", "portrait": 0, "effect": 2, "text": "…빠각!" },
+      { "speaker": "주인공", "portrait": 3, "effect": 2, "text": "\"안돼! 내 거울!!!\"" },
+      { "speaker": "", "portrait": 0, "effect": 3, "text": "…" },
+      { "speaker": "", "portrait": 0, "effect": 3, "text": "……" },
+      { "speaker": "", "portrait": 0, "effect": 3, "text": "…………" },
+      { "speaker": "주인공", "portrait": 3, "effect": 4, "text": "\"……헉!\"" },
+      { "speaker": "주인공", "portrait": 3, "effect": 4, "text": "눈이 번뜩 떠졌다." },
+      { "speaker": "주인공", "portrait": 1, "effect": 4, "text": "이 익숙한 천장은……" },
+      { "speaker": "주인공", "portrait": 0, "effect": 4, "text": "세종대학교 기숙사임이 틀림 없었다." },
+      { "speaker": "주인공", "portrait": 0, "effect": 4, "text": "\"뭐지…?\"" },
+      { "speaker": "주인공", "portrait": 0, "effect": 4, "text": "혼란스러운 마음을 다잡고, 침대 맡의 거울에 무의식적으로 손을 올렸다." },
+      { "speaker": "주인공", "portrait": 3, "effect": 4, "text": "\"……아얏!\"" },
+      { "speaker": "주인공", "portrait": 0, "effect": 4, "text": "거울은 깨져있었다." },
+      { "speaker": "주인공", "portrait": 0, "effect": 4, "text": "…………" },
+      { "speaker": "주인공", "portrait": 0, "effect": 4, "text": "그렇게 영웅의 상처만 남은 나의 영웅담은 끝났다." }
     ]
   }
 ]
