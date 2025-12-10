@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a790428b9285148b5f83575abcfc87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 100
   healthBar: {fileID: 4695688116257837455}
   maxRage: 100
   ragePerLightning: 20
@@ -232,6 +232,7 @@ MonoBehaviour:
   hitDuration: 0.5
   hitColor: {r: 0.3, g: 0.5, b: 1, a: 1}
   fadeDuration: 1
+  effectPlayer: {fileID: 0}
 --- !u!1 &5217952405099459922
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,6 +354,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 6363503356201179938}
   sprite: {fileID: 0}
+  castDuration: 0.4
+  teleportDuration: 0.5
+  dashDuration: 0.3
+  berserkFlashDuration: 0.4
 --- !u!1001 &4125386951040226368
 PrefabInstance:
   m_ObjectHideFlags: 0

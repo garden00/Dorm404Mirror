@@ -35,15 +35,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // test¿ë ÄÚµå
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            int currentSceneNumber = SceneController.Instance.SceneNumber + 1;
-            currentSceneNumber %= 6;
-            SceneController.Instance.LoadScene(currentSceneNumber);
-
-        }
-
         if(playerStatusData.CurrentState == PlayerState.Dead)
         {
             playerStatusData.ResetData();
@@ -84,7 +75,7 @@ public class GameManager : MonoBehaviour
         PlayerManager.Instance.Status.ResetData();
 
         if (saveData.PlayerSaveData.pos != Vector3.zero)
-            yield return PlayerManager.Instance.transform.position = saveData.PlayerSaveData.pos;
+            yield return PlayerManager.Instance.transform.position =  Vector3Int.CeilToInt(saveData.PlayerSaveData.pos);
 
 
         CameraManager.Instance.Teleport(saveData.PlayerSaveData.pos);

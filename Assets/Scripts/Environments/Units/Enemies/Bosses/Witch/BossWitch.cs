@@ -74,7 +74,7 @@ public class BossWitch : MonoBehaviour, IDamageable, IAttacker, IEffectable
         animCtrl.PlayHit();
 
         currentHealth -= damageInfo.damage;
-        Debug.Log($"¸¶³à Ã¼·Â: {currentHealth}");
+        healthBar.UpdateHealth(currentHealth, maxHealth);
 
         switch (damageInfo.projectileEffect)
         {
