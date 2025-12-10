@@ -12,6 +12,9 @@ public class Scarecrow : MonoBehaviour, IDamageable, IAttacker
 
     public float ThrowCycleTime => throwCycleTime;
 
+    [Header("공격 범위 설정")]
+    [SerializeField] private float attackRange = 5f;   //  허수아비 주변 원 범위 (인스펙터에서 조절)
+
     [Header("체력 관련")]
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private UnitHealthBar healthBar;
@@ -20,14 +23,16 @@ public class Scarecrow : MonoBehaviour, IDamageable, IAttacker
 
     private ScarecrowAnimatorController animatorController;
 
-
     public int CurrentHealth
     {
         get => currentHealth;
         set
         {
             currentHealth = Mathf.Clamp(value, 0, maxHealth);
-            healthBar.UpdateHealth(currentHealth, maxHealth);
+
+            if (healthBar != null)
+                healthBar.UpdateHealth(currentHealth, maxHealth);
+
             if (currentHealth <= 0 && !isDead)
             {
                 Die();
@@ -50,11 +55,10 @@ public class Scarecrow : MonoBehaviour, IDamageable, IAttacker
 
     void Update()
     {
-        if (!isDead)
-        {
-            UpdateDirectionToPlayer();
-            ThrowCycle();
-        }
+        if (isDead) return;
+
+        UpdateDirectionToPlayer();
+        ThrowCycle();   //  여기서 범위 체크까지 같이 처리
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -62,8 +66,7 @@ public class Scarecrow : MonoBehaviour, IDamageable, IAttacker
         if (other.gameObject.CompareTag("Player"))
         {
             DamageInfo info = new DamageInfo(this, AttackType.Melee, damage);
-
-            other.gameObject.GetComponent<IDamageable>().ReceiveAttack(info);
+            other.gameObject.GetComponent<IDamageable>()?.ReceiveAttack(info);
         }
     }
 
@@ -85,6 +88,7 @@ public class Scarecrow : MonoBehaviour, IDamageable, IAttacker
             case 3: throwDirection = EightDirection.Right; break;
         }
     }
+
     int GetDirectionIndex(Vector2 dir)
     {
         // 0: down, 1: left, 2: up, 3: right
@@ -109,9 +113,24 @@ public class Scarecrow : MonoBehaviour, IDamageable, IAttacker
         if (throwTimer > throwCycleTime)
         {
             throwTimer = 0f;
-            ThrowProjectile();
-            animatorController?.PlayAttack(); // 공격 애니메이션
+
+            //  공격 범위 안에 플레이어가 있을 때만 발사
+            if (IsPlayerInRange())
+            {
+                ThrowProjectile();
+                animatorController?.PlayAttack(); // 공격 애니메이션
+            }
         }
+    }
+
+    //  플레이어가 원 범위 안에 있는지 검사하는 함수
+    private bool IsPlayerInRange()
+    {
+        if (PlayerManager.Instance == null) return false;
+
+        Vector3 playerPos = PlayerManager.Instance.transform.position;
+        float sqrDist = (playerPos - transform.position).sqrMagnitude;
+        return sqrDist <= attackRange * attackRange;
     }
 
     private void ThrowProjectile()
@@ -132,6 +151,7 @@ public class Scarecrow : MonoBehaviour, IDamageable, IAttacker
 
         proj.Fire(transform.position, throwDirection.VectorNormalized, gameObject.tag);
     }
+
     private void Die()
     {
         isDead = true;
@@ -145,4 +165,10 @@ public class Scarecrow : MonoBehaviour, IDamageable, IAttacker
         gameObject.SetActive(false);
     }
 
+    //  에디터에서 공격 범위 원을 보이게 하는 기즈모
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 }
