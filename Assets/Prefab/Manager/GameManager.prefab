@@ -1350,10 +1350,11 @@ MonoBehaviour:
   portraitProvider: {fileID: 2158975447456571323}
   ending: {fileID: 0}
   endingImgList:
-  - {fileID: 21300000, guid: 4ec56d291787f1c4eb6d7c0386a1c11f, type: 3}
-  - {fileID: 21300000, guid: e5527446cd68b074396bfb8cf12b9b61, type: 3}
-  - {fileID: 21300000, guid: 683654b687d3d634693d79cbbfdb01d9, type: 3}
-  - {fileID: 21300000, guid: 2a007c1abc65fae4e814a1eec816aa8c, type: 3}
+  - {fileID: 21300000, guid: 4b24b17ce2347684b904638945e29564, type: 3}
+  - {fileID: 21300000, guid: 418c954c92c01594b946ef8ac9a495f7, type: 3}
+  - {fileID: 21300000, guid: 229bb2b28c537404e9561a32786c3607, type: 3}
+  - {fileID: 21300000, guid: aade22e4f3692f84aadff5e0dede6d38, type: 3}
+  - {fileID: 21300000, guid: 8506f094284fea9438d0a26a3df91377, type: 3}
 --- !u!1 &7490298432195546030
 GameObject:
   m_ObjectHideFlags: 0
