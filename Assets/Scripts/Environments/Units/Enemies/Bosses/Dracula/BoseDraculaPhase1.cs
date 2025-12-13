@@ -427,6 +427,8 @@ public class BoseDraculaPhase1 : MonoBehaviour, IDamageable, IAttacker
         GetComponent<D1_AnimatorController>().PlayDeath();
 
 
+        EnemyManager.Instance.NotifyBossDead();
         Destroy(gameObject, 1f);
     }
+
 }

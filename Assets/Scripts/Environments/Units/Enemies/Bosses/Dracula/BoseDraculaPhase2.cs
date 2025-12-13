@@ -241,6 +241,8 @@ public class BoseDraculaPhase2 : MonoBehaviour, IDamageable, IAttacker
         effectPlayer?.ForceHide();
         GetComponent<D2_AnimatorController>().PlayDeath();
 
+        EnemyManager.Instance.NotifyBossDead();
+
         Destroy(gameObject, 1f); // 또는 엔딩 연출
     }
 }
