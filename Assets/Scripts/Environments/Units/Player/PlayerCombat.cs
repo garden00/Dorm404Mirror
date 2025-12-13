@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering.Universal;
 using static UnityEngine.GraphicsBuffer;
 
 // 할꺼 : 카메라 관련
@@ -14,6 +16,8 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
 
     private SpriteRenderer arrowRenderer;
     private Color arrowOriginalColor;
+
+    [SerializeField] Light2D light2D;
 
     [Header("Settings")]
     [SerializeField] private float invincibleTime = 1.0f;
@@ -109,10 +113,35 @@ public class PlayerCombat : MonoBehaviour, IDamageable, IEffectable
 
     private void ReflectProjectile(IProjectile projectile)
     {
+        StartCoroutine(light());
+
         Vector3 reflectVec = Vector3.Reflect(projectile.MoveDirection, shield.Direction.normalized);
         projectile.Reflect(transform.position, reflectVec, gameObject.tag);
 
         OnReflectEvent?.Invoke();
+    }
+
+    [SerializeField] float lt = 0.3f;
+    float lightTimer = 0;
+    IEnumerator light()
+    {
+        light2D.intensity = 1;
+        lightTimer = 0;
+
+        while(lightTimer < lt)
+        {
+            while (lightTimer < lt)
+            {
+                lightTimer += Time.unscaledDeltaTime;
+
+                light2D.intensity = Mathf.Lerp(1, 0, lightTimer / lt);
+
+                yield return null;
+            }
+        }
+
+        light2D.intensity = 0;
+
     }
 
     private void TakeDamage(DamageInfo damageInfo)
